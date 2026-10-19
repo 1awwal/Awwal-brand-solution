@@ -4,6 +4,18 @@
   window.addEventListener('load', () => setTimeout(() => { loader?.classList.add('done'); document.body.classList.remove('loading'); }, 380), { once: true });
   setTimeout(() => loader?.classList.add('done'), 1700);
 
+  const fitBrandWordmarks = () => document.querySelectorAll('.brand-wordmark').forEach(group => {
+    const lines = [...group.querySelectorAll('.brand-line')];
+    lines.forEach(line => { line.style.transform = 'scaleX(1)'; });
+    const widths = lines.map(line => line.getBoundingClientRect().width);
+    const target = Math.min(group.clientWidth, Math.max(...widths));
+    lines.forEach((line, index) => {
+      if (widths[index]) line.style.transform = `scaleX(${target / widths[index]})`;
+    });
+  });
+  window.addEventListener('resize', fitBrandWordmarks, { passive: true });
+  if (document.fonts?.ready) document.fonts.ready.then(fitBrandWordmarks); else fitBrandWordmarks();
+
   const nav = document.querySelector('.nav-wrap');
   const onScroll = () => nav?.classList.toggle('scrolled', window.scrollY > 30);
   onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
