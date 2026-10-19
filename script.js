@@ -23,8 +23,8 @@
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && overlay.classList.contains('open')) setMenu(false); });
 
   const translations = {
-    '.hero .kicker': ['FIRST IN VISION. PRECISE IN EXECUTION.', 'الأول في الرؤية. دقيق في التنفيذ.'],
-    '.hero h1': ['WE BUILD<br>BRANDS THAT<br><span>COME FIRST<span class="period">.</span></span>', 'نبني<br>علامات تجارية<br><span>تأتي أولاً<span class="period">.</span></span>'],
+    '.hero .kicker': ['YOUR FIRST CHOICE.', 'خيارك الأول.'],
+    '.hero h1': ['YOUR <span>FIRST</span><br>CHOICE', 'خيارك<br><span>الأول</span>'],
     '.hero-bottom p': ['Strategy, identity and digital experiences<br>for brands ready to move culture forward.', 'استراتيجية وهوية وتجارب رقمية<br>لعلامات تصنع فرقاً في الثقافة.'],
     '.round-link span': ['EXPLORE<br>OUR WORK', 'اكتشف<br>أعمالنا'],
     '.manifesto h2': ['WE START<br>WITH THE <em>FIRST</em><br>IDEA<span class="amber">.</span>', 'نبدأ<br>بالفكرة <em>الأولى</em><br>دائماً<span class="amber">.</span>'],
@@ -44,8 +44,8 @@
     '.work-head p': ['Every project begins with a question worth answering.<br>Here’s where those questions can lead.', 'يبدأ كل مشروع بسؤال يستحق الإجابة.<br>وهنا نرى إلى أين يمكن أن يقودنا.'],
     '.principles-head h2': ['GOOD WORK<br>IS <em>INTENTIONAL.</em>', 'العمل الجيد<br><em>مدروس.</em>'],
     '.principles-head p': ['Clear thinking. Thoughtful making.<br>Progress you can feel.', 'فكر واضح. تنفيذ متقن.<br>وتقدم تلمسه.'],
-    '.cta-content h2': ['READY TO PUT<br>YOUR BRAND <em>FIRST?</em>', 'هل أنت مستعد<br>لوضع علامتك <em>أولاً؟</em>'],
-    '.cta-content p': ['Let’s shape an identity, campaign or digital experience<br>that moves your brand forward.', 'لنصنع هوية أو حملة أو تجربة رقمية<br>تدفع علامتك إلى الأمام.'],
+    '.cta-content h2': ['LET’S GIVE<br>YOUR BRAND<br><em>CPR.</em>', 'لنمنح علامتك<br><em>إنعاشاً.</em>'],
+    '.cta-content p': ['Clarity. Presence. Recognition.<br>Let’s bring your brand back to life and make it ready to lead.', 'وضوح. حضور. تميّز.<br>لنمنح علامتك حياة جديدة ونهيئها للريادة.'],
     '.cta-content .button': ['START A PROJECT <i>↗</i>', 'ابدأ مشروعاً <i>↗</i>'],
   };
   const servicesAr = ['استراتيجية العلامة ومكانتها', 'الهوية البصرية والتصميم', 'عالم العلامة ومطبوعاتها', 'الحملات والمحتوى', 'النمو الرقمي والاجتماعي'];
@@ -86,13 +86,13 @@
       ['.principle-grid article:nth-child(3) h3', 'CULTURE', 'الثقافة'],['.principle-grid article:nth-child(3) p', 'Make work that understands where it comes from and knows where it can go.', 'نصنع عملاً يعرف جذوره ويستشرف آفاقه.'],
       ['.principle-grid article:nth-child(4) h3', 'IMPACT', 'الأثر'],['.principle-grid article:nth-child(4) p', 'Build for the moment, and for all the moments that follow it.', 'نصنع للحظة، ولكل ما يأتي بعدها.'],
       ['.process-line span:nth-child(1)', 'DISCOVER', 'اكتشف'],['.process-line span:nth-child(2)', 'DEFINE', 'حدّد'],['.process-line span:nth-child(3)', 'DESIGN', 'صمّم'],['.process-line span:nth-child(4)', 'DEVELOP', 'طوّر'],['.process-line span:nth-child(5)', 'DELIVER', 'أطلق'],
-      ['.cta-content .eyebrow', 'YOUR NEXT CHAPTER STARTS HERE', 'فصل علامتك القادم يبدأ هنا'],
+      ['.cta-content .eyebrow', 'YOUR BRAND, BACK IN MOTION', 'نعيد علامتك إلى الواجهة'],
       ['.form-heading span:first-child', 'HAVE A PROJECT IN MIND?', 'هل لديك مشروع في ذهنك؟'],['.form-heading span:last-child', 'LET’S TALK ↘', 'لنتحدث ↘'],
       ['.form-submit', 'SEND YOUR NOTE ↗', 'أرسل رسالتك ↗'],['.form-status', 'This opens your email app with your message ready to send.', 'يفتح هذا تطبيق البريد برسالتك جاهزة للإرسال.'],
       ['.footer-links:nth-child(2) .eyebrow', 'EXPLORE', 'اكتشف'],['.footer-links:nth-child(2) a:nth-of-type(1)', 'About', 'عن أول'],['.footer-links:nth-child(2) a:nth-of-type(2)', 'Services', 'الخدمات'],['.footer-links:nth-child(2) a:nth-of-type(3)', 'Selected work', 'أعمال مختارة'],['.footer-links:nth-child(2) a:nth-of-type(4)', 'Our approach', 'منهجيتنا'],
       ['.footer-links:nth-child(3) .eyebrow', 'SAY HELLO', 'تواصل معنا'],['.footer-links:nth-child(4) .eyebrow', 'FOLLOW ALONG', 'تابعنا'],['.footer-links:nth-child(4) span:last-child', 'Social links coming soon', 'روابط التواصل قريباً'],
       ['.footer-bottom span:first-child', '© AWWAL BRAND SOLUTIONS 2025', '© أول للحلول التجارية ٢٠٢٥'],['.footer-bottom span:nth-child(2)', 'أول — FIRST, BY DESIGN.', 'أول — الأول، بتصميمه.'],['.footer-bottom a', 'BACK TO TOP ↑', 'العودة للأعلى ↑'],
-      ['.scroll-cue span', 'SCROLL TO DISCOVER', 'مرر لاكتشاف المزيد'],['.hero-top .eyebrow', 'INDEPENDENT CREATIVE STUDIO · RIYADH', 'استوديو إبداعي مستقل · الرياض'],['.hero-side', 'BRAND THINKING / 24°42′ N 46°40′ E', 'فكر العلامة / ٢٤°٤٢′ شمالاً ٤٦°٤٠′ شرقاً'],
+      ['.scroll-cue span', 'SCROLL TO DISCOVER', 'مرر لاكتشاف المزيد'],['.hero-top .eyebrow', 'SAUDI ARABIA', 'السعودية'],['.hero-side', 'BRAND THINKING / 24°42′ N 46°40′ E', 'فكر العلامة / ٢٤°٤٢′ شمالاً ٤٦°٤٠′ شرقاً'],
     ];
     metadata.forEach(([selector, en, arabic]) => putPair(selector, en, arabic));
     document.querySelector('.footer-brand p').innerHTML = ar ? 'نبني ما<br>يأتي أولاً.' : 'Building what<br>comes first.';
@@ -106,7 +106,7 @@
     const workDescriptionsAr = ['نظام هوية · توجيه فني','حملة · توجيه إبداعي','تجربة رقمية · محتوى'];
     document.querySelectorAll('.work-info h3').forEach((n,i)=>n.textContent=ar?workTitlesAr[i]:workTitlesEn[i]);
     document.querySelectorAll('.work-info p').forEach((n,i)=>n.textContent=ar?workDescriptionsAr[i]:workDescriptionsEn[i]);
-    document.querySelectorAll('.work-note').forEach(n=>n.textContent=ar?'نماذج بصرية مختارة. يمكن استبدال الصور وتفاصيل الحالات بأعمال عملاء معتمدة.':'Selected visual studies. Project imagery and case details can be replaced with approved client work.');
+    document.querySelectorAll('.work-note').forEach(n=>n.textContent=ar?'مراجع بصرية ونماذج تطبيقية للعلامات، معروضة كتصورات توضيحية.':'Brand references and mockups shown as illustrative studies.');
     navItems.forEach(link => { link.textContent = ar ? link.dataset.ar : link.dataset.en; });
     document.querySelectorAll('.service-title').forEach((node, i) => node.textContent = ar ? servicesAr[i] : ['Brand strategy & positioning','Visual identity & design','Brand worlds & collateral','Campaigns & content','Digital & social growth'][i]);
     document.querySelectorAll('.service-desc').forEach((node, i) => node.textContent = ar ? serviceDescsAr[i] : ['Find your place. Define your voice.','A world people recognise and remember.','Profiles, print and every detail between.','Ideas built to travel further.','Strategy, media and momentum.'][i]);
@@ -169,9 +169,12 @@
   const paletteDownloadButton = document.querySelector('.palette-download-button');
   const paletteDownloadStatus = document.querySelector('.palette-download-status');
   const palettes = {
-    core: { name: 'Awwal Core', filename: 'awwal-core', primaryName: 'Navy', accentName: 'Amber' },
-    desert: { name: 'Desert', filename: 'awwal-desert', primaryName: 'Pine', accentName: 'Sand' },
-    mono: { name: 'Monochrome', filename: 'awwal-monochrome', primaryName: 'Ink', accentName: 'Stone' },
+    core: { name: 'Awwal Official', filename: 'awwal-official', colors: [
+      { name: 'Dark Blue', hex: '#000080', role: 'Primary' },
+      { name: 'Cinematic Amber', hex: '#FFB703', role: 'Secondary' },
+      { name: 'White', hex: '#FFFFFF', role: 'Accent' },
+      { name: 'Black', hex: '#000000', role: 'Neutral' },
+    ] },
   };
   const savePaletteFile = (blob, filename) => {
     if (!blob) return;
@@ -184,34 +187,31 @@
     const selected = document.querySelector('.palette-option.active');
     if (!selected || !paletteFormat) return;
     const palette = palettes[selected.dataset.palette];
-    const colors = [
-      { name: palette.primaryName, hex: selected.dataset.primary },
-      { name: palette.accentName, hex: selected.dataset.accent },
-    ];
+    const colors = palette.colors;
     const format = paletteFormat.value;
     if (format === 'css') {
-      const css = `:root {\n  --${colors[0].name.toLowerCase()}: ${colors[0].hex};\n  --${colors[1].name.toLowerCase()}: ${colors[1].hex};\n}\n`;
+      const css = `:root {\n  --dark-blue: ${colors[0].hex};\n  --cinematic-amber: ${colors[1].hex};\n  --white: ${colors[2].hex};\n  --black: ${colors[3].hex};\n}\n`;
       savePaletteFile(new Blob([css], { type: 'text/css;charset=utf-8' }), `${palette.filename}.css`);
     } else if (format === 'json') {
       const json = JSON.stringify({ name: palette.name, colors }, null, 2);
       savePaletteFile(new Blob([json], { type: 'application/json' }), `${palette.filename}.json`);
     } else {
       const canvas = document.createElement('canvas');
-      canvas.width = 1200; canvas.height = 620;
+      canvas.width = 1200; canvas.height = 760;
       const context = canvas.getContext('2d');
-      context.fillStyle = '#f7f6f2'; context.fillRect(0, 0, canvas.width, canvas.height);
-      context.fillStyle = '#111'; context.font = '500 24px monospace';
+      context.fillStyle = '#FFFFFF'; context.fillRect(0, 0, canvas.width, canvas.height);
+      context.fillStyle = '#000000'; context.font = '500 24px monospace';
       context.fillText('AWWAL / COLOR DIRECTION', 64, 74);
       context.font = '700 42px Arial'; context.fillText(palette.name.toUpperCase(), 64, 132);
-      const swatches = [
-        { x: 64, color: colors[0], label: colors[0].name },
-        { x: 612, color: colors[1], label: colors[1].name },
-      ];
-      swatches.forEach(({ x, color, label }) => {
-        context.fillStyle = color.hex; context.fillRect(x, 178, 524, 300);
-        context.fillStyle = '#111'; context.font = '500 22px monospace';
-        context.fillText(label.toUpperCase(), x, 530);
-        context.font = '700 32px monospace'; context.fillText(color.hex, x, 578);
+      colors.forEach((color, index) => {
+        const x = 64 + (index % 2) * 548;
+        const y = 178 + Math.floor(index / 2) * 265;
+        context.fillStyle = color.hex; context.fillRect(x, y, 524, 205);
+        context.strokeStyle = '#000000'; context.lineWidth = color.hex === '#FFFFFF' ? 2 : 0;
+        if (color.hex === '#FFFFFF') context.strokeRect(x, y, 524, 205);
+        context.fillStyle = '#000000'; context.font = '500 22px monospace';
+        context.fillText(`${color.name.toUpperCase()} / ${color.role.toUpperCase()}`, x, y + 237);
+        context.font = '700 32px monospace'; context.fillText(color.hex, x, y + 262);
       });
       canvas.toBlob(blob => savePaletteFile(blob, `${palette.filename}.png`), 'image/png');
     }
