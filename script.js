@@ -25,7 +25,7 @@
   const translations = {
     '.hero .kicker': ['YOUR FIRST CHOICE.', 'خيارك الأول.'],
     '.hero h1': ['YOUR <span>FIRST</span><br>CHOICE', 'خيارك<br><span>الأول</span>'],
-    '.hero-bottom p': ['Strategy, identity and digital experiences<br>for brands ready to move culture forward.', 'استراتيجية وهوية وتجارب رقمية<br>لعلامات تصنع فرقاً في الثقافة.'],
+    '.hero-bottom p': ['Brand strategy, logo and poster design, websites, digital marketing and social media management in Saudi Arabia.', 'استراتيجية العلامة وتصميم الشعارات والملصقات والمواقع والتسويق الرقمي وإدارة التواصل الاجتماعي في السعودية.'],
     '.round-link span': ['EXPLORE<br>OUR WORK', 'اكتشف<br>أعمالنا'],
     '.manifesto h2': ['WE START<br>WITH THE <em>FIRST</em><br>IDEA<span class="amber">.</span>', 'نبدأ<br>بالفكرة <em>الأولى</em><br>دائماً<span class="amber">.</span>'],
     '.manifesto-copy .eyebrow': ['ABOUT AWWAL', 'عن أول'],
@@ -33,7 +33,7 @@
     '.manifesto-copy p:not(.lead)': ['We shape and elevate identities through strategic thinking, innovative design and cinematic precision—bridging cultural authenticity with the possibilities of tomorrow.', 'نصوغ الهويات ونرتقي بها عبر التفكير الاستراتيجي والتصميم المبتكر والدقة السينمائية، لنصل بين أصالة الثقافة وإمكانات الغد.'],
     '.text-link': ['GET TO KNOW OUR APPROACH <i>↗</i>', 'اكتشف منهجيتنا <i>↗</i>'],
     '.services-head h2': ['FROM IDENTITY<br>TO <em>IMPACT.</em>', 'من الهوية<br>إلى <em>الأثر.</em>'],
-    '.services-head p': ['One connected practice to make your brand matter—at every touchpoint.', 'منظومة متكاملة تجعل لعلامتك حضوراً مؤثراً في كل نقطة تواصل.'],
+    '.services-head p': ['From brand strategy and logo design to poster design, websites, digital marketing and social media management, we build brands that matter at every touchpoint.', 'من استراتيجية العلامة وتصميم الشعارات والملصقات إلى المواقع والتسويق الرقمي وإدارة التواصل الاجتماعي، نبني علامات مؤثرة في كل نقطة تواصل.'],
     '.service-tail span:last-child': ['GOOD WORK STARTS WITH A GOOD QUESTION <b>↘</b>', 'كل عمل جيد يبدأ بسؤال جيد <b>↘</b>'],
     '.feature-text h2': ['MAKE IT<br><em>MEAN</em><br>SOMETHING.', 'اصنع<br><em>معنى</em><br>يبقى.'],
     '.feature-text p': ['A brand is more than a logo. It’s the feeling, language and experience that make every encounter unmistakably yours.', 'العلامة أكثر من شعار؛ إنها شعور ولغة وتجربة تجعل كل لقاء بها مميزاً ولا يُنسى.'],
@@ -48,8 +48,8 @@
     '.cta-content p': ['Clarity. Presence. Recognition.<br>Let’s bring your brand back to life and make it ready to lead.', 'وضوح. حضور. تميّز.<br>لنمنح علامتك حياة جديدة ونهيئها للريادة.'],
     '.cta-content .button': ['START A PROJECT <i>↗</i>', 'ابدأ مشروعاً <i>↗</i>'],
   };
-  const servicesAr = ['استراتيجية العلامة ومكانتها', 'الهوية البصرية والتصميم', 'عالم العلامة ومطبوعاتها', 'الحملات والمحتوى', 'النمو الرقمي والاجتماعي'];
-  const serviceDescsAr = ['اكتشف موقعك. وحدد صوتك.', 'عالم يعرفه الناس ويتذكرونه.', 'الملفات التعريفية والمطبوعات وكل التفاصيل.', 'أفكار صممت لتصل أبعد.', 'استراتيجية وإعلام وزخم.'];
+  const servicesAr = ['استراتيجية العلامة وبناؤها', 'تصميم الشعارات والهوية البصرية', 'تصميم الملصقات والحملات والمحتوى', 'الملفات التعريفية والمطبوعات', 'تصميم وتطوير المواقع', 'التسويق الرقمي وإدارة التواصل الاجتماعي'];
+  const serviceDescsAr = ['تموضع واضح واسم واتجاه متماسك للعلامة.', 'شعارات مميزة وأنظمة هوية بصرية متكاملة.', 'إبداع مطبوع ورقمي يجمعه مفهوم واحد.', 'ملفات تعريفية ومواد تحمل علامتك بانسجام.', 'مواقع متجاوبة وتجربة رقمية واضحة.', 'استراتيجية محتوى ونشر ونمو عبر منصات التواصل.'];
   const navItems = [...document.querySelectorAll('.desktop-nav a')];
   let language = 'en';
   const switchLanguage = () => {
@@ -80,7 +80,7 @@
       ['.feature-foot span:first-child', 'IDENTITY SYSTEMS / PRINT / CAMPAIGN', 'أنظمة هوية / مطبوعات / حملات'],
       ['.feature-foot span:last-child', 'DESIGNED WITH PURPOSE. MADE TO LAST.', 'صُممت لهدف. وصُنعت لتدوم.'],
       ['.service-tail span:first-child', 'STRATEGY / DESIGN / DIGITAL', 'استراتيجية / تصميم / رقمي'],
-      ['.service-row:nth-child(1) .service-num', '01', '٠١'],['.service-row:nth-child(2) .service-num', '02', '٠٢'],['.service-row:nth-child(3) .service-num', '03', '٠٣'],['.service-row:nth-child(4) .service-num', '04', '٠٤'],['.service-row:nth-child(5) .service-num', '05', '٠٥'],
+      ['.service-row:nth-child(1) .service-num', '01', '٠١'],['.service-row:nth-child(2) .service-num', '02', '٠٢'],['.service-row:nth-child(3) .service-num', '03', '٠٣'],['.service-row:nth-child(4) .service-num', '04', '٠٤'],['.service-row:nth-child(5) .service-num', '05', '٠٥'],['.service-row:nth-child(6) .service-num', '06', '٠٦'],
       ['.principle-grid article:nth-child(1) h3', 'VISION', 'الرؤية'],['.principle-grid article:nth-child(1) p', 'See the opportunity beneath the obvious. Begin with possibility, then give it direction.', 'نرى الفرصة وراء المألوف. نبدأ بالاحتمال ثم نمنحه اتجاهاً واضحاً.'],
       ['.principle-grid article:nth-child(2) h3', 'PRECISION', 'الدقة'],['.principle-grid article:nth-child(2) p', 'Every choice has a reason. Every detail earns its place in the bigger picture.', 'لكل اختيار سبب، ولكل تفصيل مكانه في الصورة الأكبر.'],
       ['.principle-grid article:nth-child(3) h3', 'CULTURE', 'الثقافة'],['.principle-grid article:nth-child(3) p', 'Make work that understands where it comes from and knows where it can go.', 'نصنع عملاً يعرف جذوره ويستشرف آفاقه.'],
@@ -90,7 +90,7 @@
       ['.form-heading span:first-child', 'HAVE A PROJECT IN MIND?', 'هل لديك مشروع في ذهنك؟'],['.form-heading span:last-child', 'LET’S TALK ↘', 'لنتحدث ↘'],
       ['.form-submit', 'SEND YOUR NOTE ↗', 'أرسل رسالتك ↗'],['.form-status', 'This opens your email app with your message ready to send.', 'يفتح هذا تطبيق البريد برسالتك جاهزة للإرسال.'],
       ['.footer-links:nth-child(2) .eyebrow', 'EXPLORE', 'اكتشف'],['.footer-links:nth-child(2) a:nth-of-type(1)', 'About', 'عن أول'],['.footer-links:nth-child(2) a:nth-of-type(2)', 'Services', 'الخدمات'],['.footer-links:nth-child(2) a:nth-of-type(3)', 'Selected work', 'أعمال مختارة'],['.footer-links:nth-child(2) a:nth-of-type(4)', 'Our approach', 'منهجيتنا'],
-      ['.footer-links:nth-child(3) .eyebrow', 'SAY HELLO', 'تواصل معنا'],['.footer-links:nth-child(4) .eyebrow', 'FOLLOW ALONG', 'تابعنا'],['.footer-links:nth-child(4) span:last-child', 'Social links coming soon', 'روابط التواصل قريباً'],
+      ['.footer-links:nth-child(3) .eyebrow', 'SAY HELLO', 'تواصل معنا'],['.footer-links:nth-child(4) .eyebrow', 'FOLLOW ALONG', 'تابعنا'],['.footer-links:nth-child(4) a', 'Instagram @1.awwal ↗', 'إنستغرام @1.awwal ↗'],
       ['.footer-bottom span:first-child', '© AWWAL BRAND SOLUTIONS 2025', '© أول للحلول التجارية ٢٠٢٥'],['.footer-bottom span:nth-child(2)', 'أول — FIRST, BY DESIGN.', 'أول — الأول، بتصميمه.'],['.footer-bottom a', 'BACK TO TOP ↑', 'العودة للأعلى ↑'],
       ['.scroll-cue span', 'SCROLL TO DISCOVER', 'مرر لاكتشاف المزيد'],['.hero-top .eyebrow', 'SAUDI ARABIA', 'السعودية'],['.hero-side', 'BRAND THINKING / 24°42′ N 46°40′ E', 'فكر العلامة / ٢٤°٤٢′ شمالاً ٤٦°٤٠′ شرقاً'],
     ];
@@ -99,7 +99,7 @@
     const formLabels = ar ? ['الاسم','الشركة','البريد الإلكتروني','الهاتف','ما الخدمة المطلوبة؟','ميزانية المشروع','أخبرنا عن مشروعك'] : ['Name','Company','Email','Phone','What do you need?','Project budget','Tell us a little about it'];
     document.querySelectorAll('.form-grid label').forEach((label, i) => { const input = label.querySelector('input,select,textarea'); label.childNodes[0].textContent = `${formLabels[i]} `; if (input?.placeholder) input.placeholder = ar ? ({'Your name':'الاسم الكامل','Company name':'اسم الشركة','you@company.com':'name@company.com','+966':'+966','Optional':'اختياري','A few words about your project…':'اكتب نبذة قصيرة عن مشروعك…'}[input.placeholder] || input.placeholder) : ({'الاسم الكامل':'Your name','اسم الشركة':'Company name','name@company.com':'you@company.com','اختياري':'Optional','اكتب نبذة قصيرة عن مشروعك…':'A few words about your project…'}[input.placeholder] || input.placeholder); });
     const select = document.querySelector('.form-grid select');
-    if (select) [...select.options].forEach((option, i) => { if (!i) option.textContent = ar ? 'اختر خدمة' : 'Select a service'; else if (ar) option.textContent = ['تصميم العلامة والهوية البصرية','الشعار والهوية البصرية','الملف التعريفي والمطبوعات','التسويق الرقمي والإعلان','تحسين محركات البحث والتواصل الاجتماعي','الحملات','أخرى'][i-1]; else option.textContent = ['Branding & graphic design','Logo & visual identity','Brand profile & print','Digital marketing & advertising','SEO & social media','Campaigns','Other'][i-1]; });
+    if (select) [...select.options].forEach((option, i) => { if (!i) option.textContent = ar ? 'اختر خدمة' : 'Select a service'; else if (ar) option.textContent = ['استراتيجية العلامة وبناؤها','تصميم الشعارات والهوية البصرية','تصميم الملصقات والحملات','الملفات التعريفية والمطبوعات','تصميم وتطوير المواقع','التسويق الرقمي وإدارة التواصل الاجتماعي','أخرى'][i-1]; else option.textContent = ['Brand strategy & branding','Logo design & visual identity','Poster design & campaigns','Brand profiles & print','Website design & development','Digital marketing & social media management','Other'][i-1]; });
     const workTitlesEn = ['Form, feeling & first principles','A different point of view','Stories for a screen-first world'];
     const workTitlesAr = ['الشكل والشعور والمبادئ الأولى','منظور مختلف','حكايات لعالم الشاشات'];
     const workDescriptionsEn = ['Identity system · Art direction','Campaign · Creative direction','Digital experience · Content'];
@@ -108,8 +108,8 @@
     document.querySelectorAll('.work-info p').forEach((n,i)=>n.textContent=ar?workDescriptionsAr[i]:workDescriptionsEn[i]);
     document.querySelectorAll('.work-note').forEach(n=>n.textContent=ar?'مراجع بصرية ونماذج تطبيقية للعلامات، معروضة كتصورات توضيحية.':'Brand references and mockups shown as illustrative studies.');
     navItems.forEach(link => { link.textContent = ar ? link.dataset.ar : link.dataset.en; });
-    document.querySelectorAll('.service-title').forEach((node, i) => node.textContent = ar ? servicesAr[i] : ['Brand strategy & positioning','Visual identity & design','Brand worlds & collateral','Campaigns & content','Digital & social growth'][i]);
-    document.querySelectorAll('.service-desc').forEach((node, i) => node.textContent = ar ? serviceDescsAr[i] : ['Find your place. Define your voice.','A world people recognise and remember.','Profiles, print and every detail between.','Ideas built to travel further.','Strategy, media and momentum.'][i]);
+    document.querySelectorAll('.service-title').forEach((node, i) => node.textContent = ar ? servicesAr[i] : ['Brand strategy & branding','Logo design & visual identity','Poster design, campaigns & content','Brand profiles, stationery & print','Website design & development','Digital marketing & social media management'][i]);
+    document.querySelectorAll('.service-desc').forEach((node, i) => node.textContent = ar ? serviceDescsAr[i] : ['Positioning, naming and a clear brand direction.','Distinctive logos and complete visual identity systems.','Print and digital creative built around one idea.','Company profiles and branded materials, made cohesive.','Responsive websites with a clear brand experience.','Content strategy, publishing and growth across social platforms.'][i]);
     document.querySelectorAll('.lang').forEach(langButton => {
       langButton.querySelectorAll('span').forEach((span, i) => span.classList.toggle('active', ar ? i === 1 : i === 0));
       langButton.setAttribute('aria-label', ar ? 'Switch to English' : 'Switch to Arabic');
