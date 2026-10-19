@@ -117,3 +117,96 @@ html[dir=rtl] .palette-explorer{margin-left:auto;margin-right:0}html[dir=rtl] .p
 .palette-download-status{margin:8px 0 0;font:8px/1.6 var(--mono);color:rgba(0,0,0,.52)}
 html[dir=rtl] .palette-download{direction:rtl}html[dir=rtl] .palette-download select{text-align:right;padding:8px 9px 8px 24px}
 @media(max-width:720px){.palette-download{flex-wrap:wrap;gap:8px}.palette-download label{flex-basis:100%}.palette-download select{min-width:0}.palette-download-button{padding:9px}}
+
+
+/* Awwal editorial direction: open typography, bold poster-like moments, and a quieter hero. */
+:root{--gutter:clamp(24px,6vw,108px)}
+.nav-wrap{height:88px;padding-inline:var(--gutter);border-bottom-color:rgba(255,255,255,.12)}
+.nav-wrap.scrolled{height:74px}
+.desktop-nav{gap:clamp(18px,2.35vw,38px)}
+.desktop-nav a{letter-spacing:.17em}
+.nav-cta{padding:14px 19px;letter-spacing:.14em}
+.hero{min-height:760px;height:min(100svh,980px);padding:105px var(--gutter) 62px}
+.hero-grid{display:none}
+.hero-copy{width:min(75%,1040px);padding-top:clamp(38px,7vh,92px)}
+.hero .kicker{letter-spacing:.27em;margin-bottom:30px}
+.hero h1{font-size:clamp(70px,10.4vw,154px);line-height:.91;letter-spacing:-.025em;max-width:1050px}
+.hero h1>span{color:var(--amber)}
+.hero-bottom{gap:clamp(28px,6vw,90px);margin-top:46px}
+.hero-bottom p{max-width:390px;letter-spacing:.035em;line-height:1.95}
+.round-link{width:106px;height:106px;flex:none;letter-spacing:.12em}
+.hero-art{width:min(39vw,560px);right:5vw;top:24%;opacity:.72}
+.hero-art .art-ring,.hero-art .art-bar,.hero-art .art-stamp{display:none}
+.hero-art .art-disc{inset:21%;border-width:1px;border-color:rgba(255,183,3,.8);background:transparent;box-shadow:none}
+.hero-art .art-disc img{width:37%;height:auto;object-fit:contain;filter:brightness(0) invert(1);opacity:.9}
+.hero-art .art-caption{bottom:4%;left:4%;font-size:9px;letter-spacing:.2em}
+.hero-side{display:none}
+.scroll-cue{left:auto;right:var(--gutter);bottom:50px;letter-spacing:.2em}
+.section-meta,.feature-top,.feature-foot{letter-spacing:.18em}
+.section-pad{padding-block:clamp(100px,12vw,176px)}
+.manifesto-grid{gap:9vw;padding-top:clamp(84px,10vw,148px)}
+.manifesto h2,.services h2,.feature h2,.work h2,.principles h2,.cta-content h2{letter-spacing:-.045em;line-height:.93}
+.manifesto-copy p,.services-head p,.work-head p,.principles-head p{letter-spacing:.015em;line-height:1.95}
+.services-head,.work-head,.principles-head{margin-top:clamp(78px,10vw,140px);margin-bottom:clamp(48px,6vw,80px)}
+.service-row{min-height:116px;grid-template-columns:60px 1.12fr 1fr 38px;gap:22px}
+.service-title{letter-spacing:-.025em}
+.service-desc{line-height:1.8;letter-spacing:.025em}
+.service-tail{letter-spacing:.16em}
+.feature-layout{gap:9vw;padding-block:clamp(88px,10vw,140px)}
+.paper{box-shadow:0 22px 38px rgba(0,0,0,.16)}
+.statement{min-height:660px;background:var(--blue);padding:clamp(100px,12vw,170px) var(--gutter) 70px}
+.statement-orbit{display:none}
+.statement h2{font-size:clamp(60px,10.4vw,154px);line-height:.94;letter-spacing:-.025em;margin:48px 0}
+.statement-bottom{letter-spacing:.18em}
+.work-grid{gap:clamp(24px,3vw,48px);align-items:start}
+.work-visual{isolation:isolate;transition:transform .55s cubic-bezier(.2,.75,.2,1)}
+.work-visual:hover{transform:translateY(-7px)}
+.work-visual .visual-word,.work-visual .visual-type,.work-visual .stack-card strong{letter-spacing:-.025em}
+.work-info{padding-top:18px}
+.work-info h3{letter-spacing:-.025em}
+.work-note{letter-spacing:.08em;line-height:1.8}
+.principle-grid article{padding:28px 24px 38px}
+.principle-grid p{line-height:1.9;letter-spacing:.015em}
+.process-line{letter-spacing:.18em}
+.cta-content h2{letter-spacing:-.04em;line-height:.93}
+.cta-content p{line-height:1.95;letter-spacing:.02em}
+.footer-main{padding-top:30px}
+.footer-links{line-height:1.9;letter-spacing:.015em}
+.footer-bottom{letter-spacing:.14em}
+@media(max-width:900px){
+ .desktop-nav{gap:14px}.desktop-nav a{font-size:9px;letter-spacing:.1em}
+ .hero-copy{width:min(82%,900px)}.hero-art{width:43vw;right:3vw;top:29%;opacity:.48}
+ .service-row{grid-template-columns:46px 1.1fr 1fr 32px;gap:14px}
+}
+@media(max-width:720px){
+ .nav-wrap{height:70px}.nav-wrap.scrolled{height:64px}.brand{width:160px}.brand-logo{max-height:49px}
+ .hero{min-height:720px;height:min(92svh,860px);padding:85px var(--gutter) 82px}
+ .hero-copy{width:100%;padding-top:clamp(54px,9vh,88px)}
+ .hero .kicker{font-size:9px;letter-spacing:.21em;margin-bottom:25px}
+ .hero h1{font-size:clamp(62px,13.5vw,100px);line-height:.96;letter-spacing:-.025em}
+ .hero-bottom{align-items:flex-start;gap:22px;margin-top:32px}
+ .hero-bottom p{font-size:11px;max-width:250px;line-height:1.8}
+ .round-link{width:78px;height:78px;font-size:7px}
+ .round-link b{width:21px;height:21px}
+ .hero-art{width:56vw;right:-3vw;top:auto;bottom:7%;opacity:.25}
+ .hero-art .art-disc{inset:21%}
+ .hero-art .art-caption{display:none}
+ .scroll-cue{right:var(--gutter);bottom:30px;font-size:7px}
+ .section-pad{padding-block:86px}
+ .manifesto-grid{padding-block:68px 55px;gap:42px}
+ .services-head,.work-head,.principles-head{margin:68px 0 42px;gap:25px}
+ .service-row{min-height:88px;grid-template-columns:32px 1fr 25px;gap:10px}
+ .service-title{font-size:clamp(16px,4.3vw,21px)}
+ .service-desc,.service-preview{display:none}
+ .statement{min-height:570px;padding-block:90px 45px}
+ .statement h2{font-size:clamp(53px,12.5vw,90px);line-height:1;letter-spacing:-.025em;margin:38px 0}
+ .feature-layout{padding-block:58px;gap:58px}
+ .work-grid{gap:34px}
+ .work-visual:hover{transform:none}
+ .principle-grid article{padding:20px 12px 28px}
+ .footer-main{padding-top:0}
+}
+html[dir=rtl] .hero-copy{margin-left:auto}
+html[dir=rtl] .hero-art{right:auto;left:5vw}
+html[dir=rtl] .scroll-cue{right:auto;left:var(--gutter)}
+html[dir=rtl] .hero h1{letter-spacing:0}
