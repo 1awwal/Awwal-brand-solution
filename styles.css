@@ -749,3 +749,15 @@ form.contact-form .form-status{margin:14px 2px 0;line-height:1.7}
 
 /* Center the eye motif across the hero. */
 .one-eyes-corner{left:50%;right:auto;transform:translateX(-50%)}
+
+
+/* Slow moving color fields create a flowing gradient across the hero. */
+.hero{
+ background-size:170% 170%,170% 170%,100% 100%;
+ animation:hero-gradient-flow 20s ease-in-out infinite alternate
+}
+@keyframes hero-gradient-flow{
+ from{background-position:0% 45%,100% 55%,0% 0%}
+ to{background-position:100% 55%,0% 45%,0% 0%}
+}
+@media(prefers-reduced-motion:reduce){.hero{animation:none}}
