@@ -702,3 +702,23 @@ html[dir=rtl] .hero h1{letter-spacing:0}
  .service-row .service-preview,.service-row .service-desc{display:none}
  .service-row .service-arrow{grid-column:3;grid-row:1}
 }
+
+
+/* Comfortable inset spacing for the contact form panel. */
+form.contact-form{
+ padding:clamp(28px,4vw,48px);
+}
+form.contact-form .form-heading{
+ padding:0 0 18px;margin:0 0 28px;gap:18px
+}
+form.contact-form .form-grid{gap:24px 26px}
+form.contact-form .form-submit{
+ margin-top:22px;padding:22px 30px;border-radius:8px
+}
+form.contact-form .form-status{margin:14px 2px 0;line-height:1.7}
+@media(max-width:720px){
+ form.contact-form{padding:22px}
+ form.contact-form .form-heading{margin-bottom:22px}
+ form.contact-form .form-grid{gap:19px 15px}
+ form.contact-form .form-submit{margin-top:18px;padding:18px 20px}
+}
