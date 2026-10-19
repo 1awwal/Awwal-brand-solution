@@ -132,7 +132,7 @@
     document.body.classList.add('cursor-enabled');
     window.addEventListener('mousemove', e => { cursor.style.left = `${e.clientX}px`; cursor.style.top = `${e.clientY}px`; }, { passive: true });
     document.querySelectorAll('.work-visual,.service-row,.button,.nav-cta').forEach(el => {
-      el.addEventListener('mouseenter', () => { cursor.classList.add('active'); cursor.querySelector('span').textContent = el.classList.contains('service-row') ? 'EXPLORE' : el.classList.contains('button') || el.classList.contains('nav-cta') ? 'START' : 'VIEW'; });
+      el.addEventListener('mouseenter', () => cursor.classList.add('active'));
       el.addEventListener('mouseleave', () => cursor.classList.remove('active'));
     });
   }
@@ -164,6 +164,59 @@
     if (primarySwatch) primarySwatch.textContent = option.dataset.primary;
     if (accentSwatch) accentSwatch.textContent = option.dataset.accent;
   }));
+
+  const paletteFormat = document.querySelector('#palette-format');
+  const paletteDownloadButton = document.querySelector('.palette-download-button');
+  const paletteDownloadStatus = document.querySelector('.palette-download-status');
+  const palettes = {
+    core: { name: 'Awwal Core', filename: 'awwal-core', primaryName: 'Navy', accentName: 'Amber' },
+    desert: { name: 'Desert', filename: 'awwal-desert', primaryName: 'Pine', accentName: 'Sand' },
+    mono: { name: 'Monochrome', filename: 'awwal-monochrome', primaryName: 'Ink', accentName: 'Stone' },
+  };
+  const savePaletteFile = (blob, filename) => {
+    if (!blob) return;
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url; link.download = filename; link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  };
+  paletteDownloadButton?.addEventListener('click', () => {
+    const selected = document.querySelector('.palette-option.active');
+    if (!selected || !paletteFormat) return;
+    const palette = palettes[selected.dataset.palette];
+    const colors = [
+      { name: palette.primaryName, hex: selected.dataset.primary },
+      { name: palette.accentName, hex: selected.dataset.accent },
+    ];
+    const format = paletteFormat.value;
+    if (format === 'css') {
+      const css = `:root {\n  --${colors[0].name.toLowerCase()}: ${colors[0].hex};\n  --${colors[1].name.toLowerCase()}: ${colors[1].hex};\n}\n`;
+      savePaletteFile(new Blob([css], { type: 'text/css;charset=utf-8' }), `${palette.filename}.css`);
+    } else if (format === 'json') {
+      const json = JSON.stringify({ name: palette.name, colors }, null, 2);
+      savePaletteFile(new Blob([json], { type: 'application/json' }), `${palette.filename}.json`);
+    } else {
+      const canvas = document.createElement('canvas');
+      canvas.width = 1200; canvas.height = 620;
+      const context = canvas.getContext('2d');
+      context.fillStyle = '#f7f6f2'; context.fillRect(0, 0, canvas.width, canvas.height);
+      context.fillStyle = '#111'; context.font = '500 24px monospace';
+      context.fillText('AWWAL / COLOR DIRECTION', 64, 74);
+      context.font = '700 42px Arial'; context.fillText(palette.name.toUpperCase(), 64, 132);
+      const swatches = [
+        { x: 64, color: colors[0], label: colors[0].name },
+        { x: 612, color: colors[1], label: colors[1].name },
+      ];
+      swatches.forEach(({ x, color, label }) => {
+        context.fillStyle = color.hex; context.fillRect(x, 178, 524, 300);
+        context.fillStyle = '#111'; context.font = '500 22px monospace';
+        context.fillText(label.toUpperCase(), x, 530);
+        context.font = '700 32px monospace'; context.fillText(color.hex, x, 578);
+      });
+      canvas.toBlob(blob => savePaletteFile(blob, `${palette.filename}.png`), 'image/png');
+    }
+    if (paletteDownloadStatus) paletteDownloadStatus.textContent = language === 'ar' ? `تم تنزيل لوحة ${palette.name}.` : `${palette.name} palette downloaded.`;
+  });
 
   const form = document.querySelector('.contact-form');
   form.addEventListener('submit', event => {
