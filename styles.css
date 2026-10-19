@@ -733,3 +733,8 @@ form.contact-form .form-status{margin:14px 2px 0;line-height:1.7}
  }
  .principles-head{max-width:100%;overflow:hidden}
 }
+
+
+/* Keep the full-screen menu out of view and out of the hit area while closed. */
+.menu-overlay{visibility:hidden;pointer-events:none;transition:transform .7s cubic-bezier(.76,0,.24,1),visibility 0s linear .7s}
+.menu-overlay.open{visibility:visible;pointer-events:auto;transition:transform .7s cubic-bezier(.76,0,.24,1),visibility 0s}
