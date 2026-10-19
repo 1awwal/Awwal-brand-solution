@@ -142,7 +142,22 @@
   const cursor = document.querySelector('.cursor');
   if (matchMedia('(pointer:fine)').matches && !reduced) {
     document.body.classList.add('cursor-enabled');
-    window.addEventListener('mousemove', e => { cursor.style.left = `${e.clientX}px`; cursor.style.top = `${e.clientY}px`; }, { passive: true });
+    let lastTape = null;
+    window.addEventListener('mousemove', e => {
+      cursor.style.left = `${e.clientX}px`; cursor.style.top = `${e.clientY}px`;
+      const point = { x: e.clientX, y: e.clientY };
+      if (!lastTape || Math.hypot(point.x - lastTape.x, point.y - lastTape.y) >= 72) {
+        const tape = document.createElement('span');
+        tape.className = 'cursor-tape';
+        tape.setAttribute('aria-hidden', 'true');
+        tape.textContent = 'FIRST';
+        tape.style.left = `${point.x}px`; tape.style.top = `${point.y}px`;
+        tape.style.setProperty('--tape-angle', `${Math.round(Math.random() * 28 - 14)}deg`);
+        document.body.append(tape);
+        window.setTimeout(() => tape.remove(), 720);
+        lastTape = point;
+      }
+    }, { passive: true });
     document.querySelectorAll('.work-visual,.service-row,.button,.nav-cta').forEach(el => {
       el.addEventListener('mouseenter', () => cursor.classList.add('active'));
       el.addEventListener('mouseleave', () => cursor.classList.remove('active'));
@@ -235,8 +250,22 @@
     event.preventDefault();
     if (!form.reportValidity()) return;
     const values = new FormData(form);
-    const subject = encodeURIComponent(`Project enquiry — ${values.get('name')}`);
-    const body = encodeURIComponent(`Name: ${values.get('name')}\nCompany: ${values.get('company') || '—'}\nEmail: ${values.get('email')}\nPhone: ${values.get('phone') || '—'}\nService: ${values.get('service')}\nBudget: ${values.get('budget') || '—'}\n\n${values.get('message')}`);
+    const clean = (field, limit, multiline = false) => {
+      const text = String(values.get(field) || '').normalize('NFC')
+        .replace(multiline ? /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g : /[\u0000-\u001F\u007F]/g, ' ');
+      return (multiline ? text.replace(/[^\S\n]+/g, ' ').replace(/\n{3,}/g, '\n\n') : text.replace(/\s+/g, ' '))
+        .trim()
+        .slice(0, limit);
+    };
+    const name = clean('name', 100);
+    const company = clean('company', 120) || '—';
+    const email = clean('email', 254);
+    const phone = clean('phone', 30) || '—';
+    const service = clean('service', 80);
+    const budget = clean('budget', 40) || '—';
+    const message = clean('message', 2000, true);
+    const subject = encodeURIComponent(`Project enquiry — ${name}`);
+    const body = encodeURIComponent(`Name: ${name}\nCompany: ${company}\nEmail: ${email}\nPhone: ${phone}\nService: ${service}\nBudget: ${budget}\n\n${message}`);
     document.querySelector('.form-status').textContent = language === 'ar' ? 'يفتح هذا تطبيق البريد برسالتك جاهزة للإرسال.' : 'Opening your email app with your message ready to send.';
     window.location.href = `mailto:hello@awwalbrands.com?subject=${subject}&body=${body}`;
   });
