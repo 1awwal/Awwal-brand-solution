@@ -4,14 +4,14 @@ This is a plain static website. It needs no build tools or server-side runtime.
 
 ## Connect GitHub to Cloudflare Pages
 
-1. Push this repository to GitHub.
-2. In Cloudflare, open **Workers & Pages** and create a Pages project using **Connect to Git**.
-3. Choose the GitHub repository and set:
+1. In Cloudflare, open **Workers & Pages** and create a Pages project using **Connect to Git**.
+2. Choose the GitHub repository `1awwal/Awwal-brand-solution` and set:
    - **Production branch:** `main`
    - **Framework preset:** `None`
-   - **Build command:** leave blank (or use `exit 0` if the dashboard requires a command)
-   - **Build output directory:** `/` (the repository root, where `index.html` is located)
-4. Save and deploy. Cloudflare Pages will publish future pushes to `main` automatically.
+   - **Build command:** `exit 0`
+   - **Build output directory:** `.` (the repository root, where `index.html` is located)
+   - **Root directory:** leave blank (the repository root)
+3. Save and deploy. Cloudflare Pages will publish future pushes to `main` automatically.
 
 ## Connect a custom domain
 
