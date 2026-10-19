@@ -111,8 +111,8 @@
     document.querySelectorAll('.service-title').forEach((node, i) => node.textContent = ar ? servicesAr[i] : ['Brand strategy & branding','Logo design & visual identity','Poster design, campaigns & content','Brand profiles, stationery & print','Website design & development','Digital marketing & social media management'][i]);
     document.querySelectorAll('.service-desc').forEach((node, i) => node.textContent = ar ? serviceDescsAr[i] : ['Positioning, naming and a clear brand direction.','Distinctive logos and complete visual identity systems.','Print and digital creative built around one idea.','Company profiles and branded materials, made cohesive.','Responsive websites with a clear brand experience.','Content strategy, publishing and growth across social platforms.'][i]);
     document.querySelectorAll('.lang').forEach(langButton => {
-      langButton.querySelectorAll('span').forEach((span, i) => span.classList.toggle('active', ar ? i === 1 : i === 0));
-      langButton.setAttribute('aria-label', ar ? 'Switch to English' : 'Switch to Arabic');
+      langButton.textContent = ar ? 'English' : 'العربية';
+      langButton.setAttribute('aria-label', ar ? 'Switch to English' : 'التبديل إلى العربية');
     });
     document.querySelector('.menu-overlay nav').dir = ar ? 'rtl' : 'ltr';
   };
