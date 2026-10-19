@@ -104,3 +104,11 @@ body.cursor-enabled,body.cursor-enabled a,body.cursor-enabled button{cursor:none
 .palette-copy{display:grid;gap:4px;min-width:0}.palette-copy strong{font:9px var(--mono);letter-spacing:.04em;white-space:nowrap}.palette-copy small{font:7px var(--mono);letter-spacing:.04em;color:rgba(0,0,0,.5);white-space:nowrap}
 html[dir=rtl] .palette-explorer{margin-left:auto;margin-right:0}html[dir=rtl] .palette-option{text-align:right;direction:rtl}html[dir=rtl] .palette-swatches{direction:ltr}
 @media(max-width:720px){.palette-explorer{width:100%;margin:0 0 35px}.palette-options{gap:5px}.palette-option{gap:6px;padding:8px 5px}.palette-swatches i{width:12px;height:22px}.palette-copy strong{font-size:8px}.palette-copy small{font-size:6px}}
+.palette-download{display:flex;align-items:center;gap:9px;margin-top:12px}
+.palette-download label{font:7px var(--mono);letter-spacing:.08em;color:rgba(0,0,0,.55)}
+.palette-download select{min-width:130px;flex:1;border:1px solid rgba(0,0,0,.18);padding:8px 24px 8px 9px;background:transparent;color:var(--black);font:9px var(--mono)}
+.palette-download-button{display:inline-flex;align-items:center;justify-content:space-between;gap:14px;border:0;padding:9px 11px;background:var(--blue);color:white;font:8px var(--mono);letter-spacing:.08em;white-space:nowrap;transition:background .2s,transform .2s}
+.palette-download-button:hover{background:#171717;transform:translateY(-1px)}.palette-download-button i{font-style:normal;font-size:14px;line-height:1}
+.palette-download-status{margin:8px 0 0;font:8px/1.6 var(--mono);color:rgba(0,0,0,.52)}
+html[dir=rtl] .palette-download{direction:rtl}html[dir=rtl] .palette-download select{text-align:right;padding:8px 9px 8px 24px}
+@media(max-width:720px){.palette-download{flex-wrap:wrap;gap:8px}.palette-download label{flex-basis:100%}.palette-download select{min-width:0}.palette-download-button{padding:9px}}
