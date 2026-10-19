@@ -91,3 +91,16 @@ body.cursor-enabled,body.cursor-enabled a,body.cursor-enabled button{cursor:none
 .cursor img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;mix-blend-mode:difference}
 .cursor.active,body.cursor-enabled .cursor{transform:translate(-50%,-50%) scale(1)}
 @media(max-width:720px){.one-eyes-corner{right:var(--gutter);bottom:78px;width:58px;height:34px}html[dir=rtl] .one-eyes-corner{right:var(--gutter);left:auto}.one-eyes-corner .one-eyes{top:0;left:0;width:100%;gap:7%}.one-eyes-corner .one-eyes i{width:24px;height:9px}}
+.feature-art{--palette-primary:var(--blue);--palette-accent:var(--amber)}
+.paper-front{background:var(--palette-primary)}
+.swatch-blue{background:var(--palette-primary)}.swatch-amber{background:var(--palette-accent)}
+.palette-explorer{margin:8px 0 46px auto;width:min(52%,610px);border-top:1px solid rgba(0,0,0,.16);padding-top:17px}
+.palette-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;font:9px var(--mono);letter-spacing:.12em;color:rgba(0,0,0,.58)}
+.palette-heading a{display:inline-flex;align-items:center}.palette-heading img{display:block;width:76px;height:auto;object-fit:contain}
+.palette-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.palette-option{display:flex;align-items:center;gap:9px;min-width:0;text-align:left;padding:9px 8px;border:1px solid rgba(0,0,0,.13);background:transparent;color:var(--black);transition:border-color .2s,background .2s}
+.palette-option:hover,.palette-option.active{border-color:var(--blue);background:rgba(0,0,128,.035)}
+.palette-swatches{display:flex;flex:0 0 auto}.palette-swatches i{display:block;width:15px;height:26px;background:var(--chip);border:1px solid rgba(0,0,0,.1)}.palette-swatches i+i{margin-left:-4px}
+.palette-copy{display:grid;gap:4px;min-width:0}.palette-copy strong{font:9px var(--mono);letter-spacing:.04em;white-space:nowrap}.palette-copy small{font:7px var(--mono);letter-spacing:.04em;color:rgba(0,0,0,.5);white-space:nowrap}
+html[dir=rtl] .palette-explorer{margin-left:auto;margin-right:0}html[dir=rtl] .palette-option{text-align:right;direction:rtl}html[dir=rtl] .palette-swatches{direction:ltr}
+@media(max-width:720px){.palette-explorer{width:100%;margin:0 0 35px}.palette-options{gap:5px}.palette-option{gap:6px;padding:8px 5px}.palette-swatches i{width:12px;height:22px}.palette-copy strong{font-size:8px}.palette-copy small{font-size:6px}}
