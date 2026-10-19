@@ -761,3 +761,31 @@ form.contact-form .form-status{margin:14px 2px 0;line-height:1.7}
  to{background-position:100% 55%,0% 45%,0% 0%}
 }
 @media(prefers-reduced-motion:reduce){.hero{animation:none}}
+
+/* Comfortable contact fields, phone layout, and playful pointer tape. */
+form.contact-form .form-grid input,
+form.contact-form .form-grid select,
+form.contact-form .form-grid textarea{
+  width:100%;min-width:0;min-height:48px;padding:12px 14px;border-radius:12px;
+  font-size:15px;letter-spacing:normal;text-transform:none
+}
+form.contact-form .form-grid textarea{min-height:96px}
+form.contact-form .form-grid select{padding-right:38px}
+@media(max-width:640px){
+  form.contact-form .form-grid{grid-template-columns:minmax(0,1fr);gap:20px}
+  form.contact-form .form-grid label.full{grid-column:auto}
+  form.contact-form .form-grid input,
+  form.contact-form .form-grid select,
+  form.contact-form .form-grid textarea{font-size:16px}
+}
+.cursor-tape{
+  position:fixed;z-index:79;pointer-events:none;width:52px;height:18px;display:grid;place-items:center;
+  background:repeating-linear-gradient(135deg,rgba(255,255,255,.16) 0 3px,transparent 3px 6px),var(--amber);
+  color:var(--blue);font:700 7px/1 var(--mono);letter-spacing:.1em;box-shadow:0 2px 8px rgba(0,0,0,.16);
+  transform:translate(-50%,-50%) rotate(var(--tape-angle)) scale(.55);animation:tape-drift .72s ease-out forwards
+}
+@keyframes tape-drift{
+  20%{opacity:1;transform:translate(-50%,-50%) rotate(var(--tape-angle)) scale(1)}
+  100%{opacity:0;transform:translate(-50%,-85%) rotate(calc(var(--tape-angle) + 12deg)) scale(.78)}
+}
+@media(pointer:coarse){.cursor-tape{display:none}}
