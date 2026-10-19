@@ -149,6 +149,22 @@
     }, { passive: true });
   }
 
+  const paletteOptions = [...document.querySelectorAll('.palette-option')];
+  const featureArt = document.querySelector('.feature-art');
+  paletteOptions.forEach(option => option.addEventListener('click', () => {
+    paletteOptions.forEach(button => {
+      const active = button === option;
+      button.classList.toggle('active', active);
+      button.setAttribute('aria-pressed', String(active));
+    });
+    featureArt?.style.setProperty('--palette-primary', option.dataset.primary);
+    featureArt?.style.setProperty('--palette-accent', option.dataset.accent);
+    const primarySwatch = document.querySelector('.swatch-blue');
+    const accentSwatch = document.querySelector('.swatch-amber');
+    if (primarySwatch) primarySwatch.textContent = option.dataset.primary;
+    if (accentSwatch) accentSwatch.textContent = option.dataset.accent;
+  }));
+
   const form = document.querySelector('.contact-form');
   form.addEventListener('submit', event => {
     event.preventDefault();
