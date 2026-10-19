@@ -129,11 +129,24 @@
 
   const cursor = document.querySelector('.cursor');
   if (matchMedia('(pointer:fine)').matches && !reduced) {
+    document.body.classList.add('cursor-enabled');
     window.addEventListener('mousemove', e => { cursor.style.left = `${e.clientX}px`; cursor.style.top = `${e.clientY}px`; }, { passive: true });
     document.querySelectorAll('.work-visual,.service-row,.button,.nav-cta').forEach(el => {
       el.addEventListener('mouseenter', () => { cursor.classList.add('active'); cursor.querySelector('span').textContent = el.classList.contains('service-row') ? 'EXPLORE' : el.classList.contains('button') || el.classList.contains('nav-cta') ? 'START' : 'VIEW'; });
       el.addEventListener('mouseleave', () => cursor.classList.remove('active'));
     });
+  }
+
+  const oneEyes = [...document.querySelectorAll('.one-eyes b')];
+  if (!reduced && oneEyes.length) {
+    window.addEventListener('pointermove', event => {
+      oneEyes.forEach(pupil => {
+        const eye = pupil.parentElement.getBoundingClientRect();
+        const x = Math.max(-1, Math.min(1, (event.clientX - (eye.left + eye.width / 2)) / 120));
+        const y = Math.max(-1, Math.min(1, (event.clientY - (eye.top + eye.height / 2)) / 120));
+        pupil.style.transform = `translate(calc(-50% + ${x * 4}px), calc(-50% + ${y * 3}px))`;
+      });
+    }, { passive: true });
   }
 
   const form = document.querySelector('.contact-form');
