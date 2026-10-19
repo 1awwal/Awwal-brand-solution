@@ -683,3 +683,22 @@ html[dir=rtl] .hero h1{letter-spacing:0}
 @media(prefers-reduced-motion:reduce){
  .service-row{transition:none}
 }
+
+
+/* Service rows contain five items: index, preview, title, description and arrow. */
+.service-row{
+ grid-template-columns:48px 112px minmax(0,1.2fr) minmax(190px,.72fr) 32px;
+ gap:24px;align-items:center
+}
+.service-row .service-preview{width:112px}
+.service-row .service-desc{min-width:0;max-width:29ch;line-height:1.65;overflow-wrap:normal;word-break:normal}
+.service-row .service-arrow{grid-column:5;grid-row:1}
+@media(max-width:1100px) and (min-width:721px){
+ .service-row{grid-template-columns:38px 82px minmax(0,1.1fr) minmax(150px,.72fr) 28px;gap:14px}
+ .service-row .service-preview{width:82px}
+}
+@media(max-width:720px){
+ .service-row{grid-template-columns:32px minmax(0,1fr) 25px;gap:10px}
+ .service-row .service-preview,.service-row .service-desc{display:none}
+ .service-row .service-arrow{grid-column:3;grid-row:1}
+}
