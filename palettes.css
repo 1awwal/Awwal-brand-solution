@@ -179,3 +179,8 @@ html[dir=rtl] .preview-browser small{margin-left:0;margin-right:auto}.palette-pa
   -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)
 }
 .palette-page .palette-text-button .glass-icon{margin-right:7px}
+
+/* Softer squircle glass for the palette controls. */
+.palette-page .glass-icon{border-radius:9px;background:linear-gradient(145deg,rgba(255,255,255,.76),rgba(126,165,255,.42) 52%,rgba(0,0,128,.16));color:var(--blue);box-shadow:inset 0 1px 0 rgba(255,255,255,.86),inset 0 -4px 9px rgba(0,0,128,.08),0 3px 10px rgba(0,0,80,.12)}
+.palette-page .palette-download-button .glass-icon,.palette-page .generate-button .glass-icon,.palette-page .image-upload .glass-icon{color:#fff;background:linear-gradient(145deg,rgba(255,255,255,.46),rgba(118,161,255,.38) 48%,rgba(0,0,128,.28))}
+.palette-page .remove-color{border-radius:8px;background:linear-gradient(145deg,rgba(255,255,255,.76),rgba(126,165,255,.42) 52%,rgba(0,0,128,.16));color:var(--blue);box-shadow:inset 0 1px 0 rgba(255,255,255,.86),0 3px 10px rgba(0,0,80,.12)}
