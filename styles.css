@@ -1172,3 +1172,9 @@ html[data-theme="light"] .campaign-page .campaign-cta{border-color:rgba(10,22,78
 html[data-theme="light"] .campaign-page .campaign-cta span{color:rgba(10,22,78,.64)}
 .theme-toggle:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
 @media(max-width:720px){.theme-toggle{width:36px;height:36px;flex-basis:36px}.nav-actions{gap:14px}html[data-theme="light"] .menu-toggle span{background:#09154f}}
+
+/* Keep the animated hero headline and wordmark readable in light mode. */
+html[data-theme="light"] .nav-wrap .brand-logo{filter:brightness(0) saturate(100%) invert(8%) sepia(66%) saturate(4012%) hue-rotate(229deg) brightness(78%) contrast(140%)!important}
+html[data-theme="light"] .hero h1,html[data-theme="light"] .hero h1>span:not(.hero-gradient-word){color:#09154f!important;-webkit-text-fill-color:#09154f!important}
+html[data-theme="light"] .hero h1 .hero-gradient-word{color:transparent!important;-webkit-text-fill-color:transparent!important;background-image:linear-gradient(112deg,#0b195f 0%,#2c4db7 20%,#8299e4 42%,#192b75 61%,#5f7fda 82%,#102064 100%);filter:none;animation-duration:26s}
+html[data-theme="light"] .hero-copy::before{background:rgba(255,255,255,.36);border:1px solid rgba(255,255,255,.66);box-shadow:inset 0 1px 0 rgba(255,255,255,.82),0 22px 60px rgba(35,57,125,.12)}
