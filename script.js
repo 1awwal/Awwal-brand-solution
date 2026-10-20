@@ -130,7 +130,7 @@
   };
   document.querySelectorAll('.lang').forEach(button => button.addEventListener('click', switchLanguage));
 
-  const revealTargets = document.querySelectorAll('.section-meta,.manifesto-grid,.manifesto-foot,.services-head,.service-row,.feature-layout,.feature-foot,.statement h2,.work-head,.work-card,.principles-head,.principle-grid article,.process-line,.cta-content,.contact-form,.footer-main');
+  const revealTargets = document.querySelectorAll('.section-meta,.manifesto-grid,.manifesto-foot,.services-head,.service-row,.feature-layout,.feature-foot,.statement h2,.work-head,.work-card,.principles-head,.principle-grid article,.process-line,.kinetic-stage,.cta-content,.contact-form,.footer-main');
   revealTargets.forEach(el => el.classList.add('reveal'));
   if ('IntersectionObserver' in window && !reduced) {
     const observer = new IntersectionObserver(entries => entries.forEach(entry => {
