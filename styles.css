@@ -886,3 +886,53 @@ html[dir=rtl] .kinetic-row-bottom .kinetic-track{animation-direction:reverse}
 @media(prefers-reduced-motion:reduce){.menu-toggle,.menu-close{transition:none}}
 
 html[dir=rtl] .round-link b{background:linear-gradient(145deg,rgba(255,255,255,.43),rgba(120,164,255,.3) 42%,rgba(0,0,128,.55));color:#fff}
+
+
+/* Refined white homepage hero and restrained frosted-glass icon surfaces. */
+.nav-wrap:not(.scrolled){color:var(--blue)}
+.nav-wrap:not(.scrolled) .brand-name,.nav-wrap:not(.scrolled) .desktop-nav a{color:var(--blue)}
+.nav-wrap.scrolled .brand-logo{filter:brightness(0) invert(1)}
+.hero{background:#fff;color:#101018}
+.hero-grid{opacity:.35;background-image:linear-gradient(to right,transparent calc(25% - .5px),rgba(0,0,128,.09) 25%,transparent calc(25% + .5px)),linear-gradient(to bottom,transparent calc(50% - .5px),rgba(0,0,128,.08) 50%,transparent calc(50% + .5px))}
+.hero-grid:after{display:none}
+.hero .kicker,.hero h1,.hero h1>span{color:var(--blue)}
+.hero-bottom p{color:rgba(16,16,24,.68)}
+.hero-side,.scroll-cue{color:rgba(0,0,80,.58)}
+.hero-side{color:rgba(0,0,80,.48)}
+.hero-image-main{border-color:rgba(0,0,128,.18);box-shadow:0 24px 70px rgba(0,0,80,.14)}
+.hero-image-float{border-color:rgba(0,0,128,.18);box-shadow:0 16px 42px rgba(0,0,80,.16)}
+.hero-image-tag{color:var(--blue)}
+.hero-glass-pills span{color:var(--blue);border-color:rgba(0,0,128,.3);background:rgba(255,255,255,.7)}
+.one-eyes i{border-color:rgba(0,0,128,.6);background:linear-gradient(145deg,rgba(255,255,255,.9),rgba(120,164,255,.34) 55%,rgba(0,0,128,.1));box-shadow:inset 0 1px 0 #fff,0 4px 14px rgba(0,0,80,.12)}
+.one-eyes i b{background:var(--blue)}
+:is(.nav-cta i,.round-link b,.text-link i,.button i,.service-arrow,.service-tail b,.contact-shortcuts i,.form-submit i,.campaign-cta i){
+  border-radius:9px;
+  background:linear-gradient(145deg,rgba(255,255,255,.72),rgba(126,165,255,.38) 52%,rgba(0,0,128,.16));
+  border-color:rgba(255,255,255,.9);
+  color:var(--blue)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.86),inset 0 -4px 9px rgba(0,0,128,.08),0 3px 10px rgba(0,0,80,.12);
+}
+.button-dark i,.button-blue i,.form-submit i,.service-arrow,.campaign-cta i{color:#fff!important;background:linear-gradient(145deg,rgba(255,255,255,.52),rgba(112,157,255,.35) 48%,rgba(0,0,128,.3))}
+.nav-cta i{background:linear-gradient(145deg,rgba(255,255,255,.56),rgba(255,255,255,.16) 55%,rgba(0,0,128,.12))}
+.round-link{color:var(--blue);border-color:rgba(0,0,128,.4);background:rgba(255,255,255,.5);box-shadow:inset 0 1px 0 rgba(255,255,255,.85),0 10px 26px rgba(0,0,80,.1)}
+.round-link:hover{background:rgba(255,255,255,.78);color:var(--blue);border-color:rgba(0,0,128,.48)}
+.menu-toggle,.menu-close{border-radius:12px}
+.menu-toggle{border-color:rgba(0,0,128,.27);background:linear-gradient(145deg,rgba(255,255,255,.9),rgba(120,164,255,.24));box-shadow:inset 0 1px 0 #fff,0 4px 12px rgba(0,0,80,.1)}
+.menu-toggle span{background:var(--blue)}
+.hero-letter{position:relative;display:inline-block;color:var(--blue)}
+.hero-letter::after{
+  content:attr(data-letter);position:absolute;inset:0;pointer-events:none;
+  color:transparent;background:linear-gradient(110deg,#ffb703 0%,#f0528b 24%,#7252e8 50%,#37b99b 76%,#ffb703 100%);
+  background-size:280% 100%;background-position:var(--spectrum-shift) 50%;
+  background-clip:text;-webkit-background-clip:text;opacity:0;
+}
+.hero-letter.is-colorful::after{opacity:1;transition:none;animation:awwal-letter-spectrum 1.5s linear infinite}
+.hero-letter.is-fading::after{opacity:0;transition:opacity 1.3s ease-out}
+@keyframes awwal-letter-spectrum{to{background-position:100% 50%}}
+@media(max-width:720px){
+  .nav-wrap:not(.scrolled) .brand-name{color:var(--blue)}
+  .hero{background:#fff}
+  .hero .kicker,.hero h1,.hero h1>span{color:var(--blue)}
+  .hero-side,.scroll-cue{color:rgba(0,0,80,.55)}
+}
+@media(prefers-reduced-motion:reduce){.hero-letter::after{display:none!important}.hero-letter{color:var(--blue)!important}}
