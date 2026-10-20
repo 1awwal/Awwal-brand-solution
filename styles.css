@@ -1134,7 +1134,7 @@ html[data-theme="light"] .theme-toggle:hover{background:rgba(255,255,255,.78)}
 html[data-theme="light"] .theme-icon-sun{display:none}html[data-theme="light"] .theme-icon-moon{display:block}
 html[data-theme="light"] .nav-wrap{color:#09154f;background:linear-gradient(180deg,rgba(245,248,255,.68),rgba(245,248,255,.18));}
 html[data-theme="light"] .nav-wrap.scrolled{background:rgba(239,244,255,.72)}
-html[data-theme="light"] .nav-wrap .brand img{filter:brightness(0) saturate(100%) invert(10%) sepia(61%) saturate(3183%) hue-rotate(227deg) brightness(78%) contrast(135%)}
+html[data-theme="light"] .nav-wrap .brand-name{color:#09154f!important}\nhtml[data-theme="light"] .nav-wrap .brand img{filter:brightness(0) saturate(100%) invert(10%) sepia(61%) saturate(3183%) hue-rotate(227deg) brightness(78%) contrast(135%)}
 html[data-theme="light"] .desktop-nav a{color:#09154f}
 html[data-theme="light"] .lang{color:#09154f}
 html[data-theme="light"] .menu-toggle span{background:#09154f}
