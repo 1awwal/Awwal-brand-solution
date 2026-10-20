@@ -936,3 +936,4 @@ html[dir=rtl] .round-link b{background:linear-gradient(145deg,rgba(255,255,255,.
   .hero-side,.scroll-cue{color:rgba(0,0,80,.55)}
 }
 @media(prefers-reduced-motion:reduce){.hero-letter::after{display:none!important}.hero-letter{color:var(--blue)!important}}
+.hero-letter{margin-right:-.085em}
