@@ -95,7 +95,10 @@
     '.manifesto-copy p:not(.lead)': ['We shape and elevate identities through strategic thinking, innovative design and cinematic precision—bridging cultural authenticity with the possibilities of tomorrow.', 'نصوغ الهويات ونرتقي بها عبر التفكير الاستراتيجي والتصميم المبتكر والدقة السينمائية، لنصل بين أصالة الثقافة وإمكانات الغد.'],
     '.text-link': ['GET TO KNOW OUR APPROACH <i>↗</i>', 'اكتشف منهجيتنا <i>↗</i>'],
     '.services-head h2': ['FROM IDENTITY<br>TO <em>IMPACT.</em>', 'من الهوية<br>إلى <em>الأثر.</em>'],
-    '.services-head p': ['From brand strategy and logo design to poster design, websites, digital marketing and social media management, we build brands that matter at every touchpoint.', 'من استراتيجية العلامة وتصميم الشعارات والملصقات إلى المواقع والتسويق الرقمي وإدارة التواصل الاجتماعي، نبني علامات مؤثرة في كل نقطة تواصل.'],
+    '.services-head p': ['We bring identity, content, campaigns and digital experiences together—giving every brand a thoughtful, consistent presence.', 'نجمع الهوية والمحتوى والحملات والتجارب الرقمية لنمنح كل علامة حضوراً متناسقاً ومدروساً.'],
+    '.packages-heading .eyebrow': ['WAYS TO WORK TOGETHER', 'طرق للعمل معاً'],
+    '.packages-heading h3': ['THOUGHTFUL STARTS.<br><em>CONNECTED SUPPORT.</em>', 'بدايات مدروسة.<br><em>ودعم متكامل.</em>'],
+    '.packages-heading p': ['Flexible, coordinated packages shaped around your goals and the scale of your project.', 'باقات مرنة ومتكاملة تُصمم وفق أهدافك ونطاق مشروعك.'],
     '.service-tail span:last-child': ['GOOD WORK STARTS WITH A GOOD QUESTION <b>↘</b>', 'كل عمل جيد يبدأ بسؤال جيد <b>↘</b>'],
     '.feature-text h2': ['MAKE IT<br><em>MEAN</em><br>SOMETHING.', 'اصنع<br><em>معنى</em><br>يبقى.'],
     '.feature-text p': ['A brand is more than a logo. It’s the feeling, language and experience that make every encounter unmistakably yours.', 'العلامة أكثر من شعار؛ إنها شعور ولغة وتجربة تجعل كل لقاء بها مميزاً ولا يُنسى.'],
@@ -110,8 +113,14 @@
     '.cta-content p': ['Clarity. Presence. Recognition.<br>Let’s bring your brand back to life and make it ready to lead.', 'وضوح. حضور. تميّز.<br>لنمنح علامتك حياة جديدة ونهيئها للريادة.'],
     '.cta-content .button': ['START A PROJECT <i>↗</i>', 'ابدأ مشروعاً <i>↗</i>'],
   };
-  const servicesAr = ['استراتيجية العلامة وبناؤها', 'تصميم الشعارات والهوية البصرية', 'تصميم الملصقات والحملات والمحتوى', 'الملفات التعريفية والمطبوعات', 'تصميم وتطوير المواقع', 'التسويق الرقمي وإدارة التواصل الاجتماعي'];
-  const serviceDescsAr = ['تموضع واضح واسم واتجاه متماسك للعلامة.', 'شعارات مميزة وأنظمة هوية بصرية متكاملة.', 'إبداع مطبوع ورقمي يجمعه مفهوم واحد.', 'ملفات تعريفية ومواد تحمل علامتك بانسجام.', 'مواقع متجاوبة وتجربة رقمية واضحة.', 'استراتيجية محتوى ونشر ونمو عبر منصات التواصل.'];
+  const servicesEn = ['Brand Identity & Graphic Design','Digital Marketing & Advertising','Photography & Video Production','Website Design & Management'];
+  const servicesAr = ['هوية العلامة والتصميم الجرافيكي','التسويق الرقمي والإعلانات','التصوير وإنتاج الفيديو','تصميم المواقع وإدارتها'];
+  const serviceDescsEn = ['Logos, profiles, posters, brochures, cards, stationery and banners—unified by a clear identity.','SEO, social media management, Google & Meta ads, and integrated campaigns.','Event coverage, live content, corporate and product shoots, with editing.','Business and e-commerce websites, from design to hosting and ongoing care.'];
+  const serviceDescsAr = ['هوية مميزة ومتناسقة في كل نقطة تواصل.','استراتيجية وتواصل اجتماعي وتحسين بحث وحملات مدفوعة.','تغطية فعاليات ومحتوى مباشر وتصوير مؤسسي ومنتجات مع التحرير.','مواقع أعمال ومتاجر إلكترونية من التصميم والاستضافة إلى الإدارة المستمرة.'];
+  const packagesEn = ['Complete Brand Launch','Monthly Social Media','Corporate & Private Events','Advertising Campaign'];
+  const packagesAr = ['إطلاق علامة متكامل','إدارة التواصل الاجتماعي شهرياً','الفعاليات المؤسسية والخاصة','حملة إعلانية'];
+  const packagesDescEn = ['Build a clear foundation and bring your new brand to market with confidence.','Keep your channels active with a considered rhythm of content and community care.','Capture the atmosphere and key moments with professional event coverage.','Connect a strong creative idea to the right audience across digital channels.'];
+  const packagesDescAr = ['أسّس علامتك وأطلقها إلى السوق بثقة ووضوح.','حافظ على حضور قنواتك بمحتوى منتظم وعناية بالمجتمع.','وثّق الأجواء واللحظات المهمة بتغطية احترافية للفعاليات.','اربط فكرة إبداعية قوية بالجمهور المناسب عبر القنوات الرقمية.'];
   const navItems = [...document.querySelectorAll('.desktop-nav a')];
   let language = 'en';
   const switchLanguage = () => {
@@ -142,7 +151,7 @@
       ['.feature-foot span:first-child', 'IDENTITY SYSTEMS / PRINT / CAMPAIGN', 'أنظمة هوية / مطبوعات / حملات'],
       ['.feature-foot span:last-child', 'DESIGNED WITH PURPOSE. MADE TO LAST.', 'صُممت لهدف. وصُنعت لتدوم.'],
       ['.service-tail span:first-child', 'STRATEGY / DESIGN / DIGITAL', 'استراتيجية / تصميم / رقمي'],
-      ['.service-row:nth-child(1) .service-num', '01', '٠١'],['.service-row:nth-child(2) .service-num', '02', '٠٢'],['.service-row:nth-child(3) .service-num', '03', '٠٣'],['.service-row:nth-child(4) .service-num', '04', '٠٤'],['.service-row:nth-child(5) .service-num', '05', '٠٥'],['.service-row:nth-child(6) .service-num', '06', '٠٦'],
+      ['.service-row:nth-child(1) .service-num', '01', '٠١'],['.service-row:nth-child(2) .service-num', '02', '٠٢'],['.service-row:nth-child(3) .service-num', '03', '٠٣'],['.service-row:nth-child(4) .service-num', '04', '٠٤'],
       ['.principle-grid article:nth-child(1) h3', 'VISION', 'الرؤية'],['.principle-grid article:nth-child(1) p', 'See the opportunity beneath the obvious. Begin with possibility, then give it direction.', 'نرى الفرصة وراء المألوف. نبدأ بالاحتمال ثم نمنحه اتجاهاً واضحاً.'],
       ['.principle-grid article:nth-child(2) h3', 'PRECISION', 'الدقة'],['.principle-grid article:nth-child(2) p', 'Every choice has a reason. Every detail earns its place in the bigger picture.', 'لكل اختيار سبب، ولكل تفصيل مكانه في الصورة الأكبر.'],
       ['.principle-grid article:nth-child(3) h3', 'CULTURE', 'الثقافة'],['.principle-grid article:nth-child(3) p', 'Make work that understands where it comes from and knows where it can go.', 'نصنع عملاً يعرف جذوره ويستشرف آفاقه.'],
@@ -161,7 +170,12 @@
     const formLabels = ar ? ['الاسم','الشركة','البريد الإلكتروني','الهاتف','ما الخدمة المطلوبة؟','ميزانية المشروع','أخبرنا عن مشروعك'] : ['Name','Company','Email','Phone','What do you need?','Project budget','Tell us a little about it'];
     document.querySelectorAll('.form-grid label').forEach((label, i) => { const input = label.querySelector('input,select,textarea'); label.childNodes[0].textContent = `${formLabels[i]} `; if (input?.placeholder) input.placeholder = ar ? ({'Your name':'الاسم الكامل','Company name':'اسم الشركة','you@company.com':'name@company.com','+966':'+966','Optional':'اختياري','A few words about your project…':'اكتب نبذة قصيرة عن مشروعك…'}[input.placeholder] || input.placeholder) : ({'الاسم الكامل':'Your name','اسم الشركة':'Company name','name@company.com':'you@company.com','اختياري':'Optional','اكتب نبذة قصيرة عن مشروعك…':'A few words about your project…'}[input.placeholder] || input.placeholder); });
     const select = document.querySelector('.form-grid select');
-    if (select) [...select.options].forEach((option, i) => { if (!i) option.textContent = ar ? 'اختر خدمة' : 'Select a service'; else if (ar) option.textContent = ['استراتيجية العلامة وبناؤها','تصميم الشعارات والهوية البصرية','تصميم الملصقات والحملات','الملفات التعريفية والمطبوعات','تصميم وتطوير المواقع','التسويق الرقمي وإدارة التواصل الاجتماعي','أخرى'][i-1]; else option.textContent = ['Brand strategy & branding','Logo design & visual identity','Poster design & campaigns','Brand profiles & print','Website design & development','Digital marketing & social media management','Other'][i-1]; });
+    if (select) {
+      const optionLabels = ar
+        ? ['اختر خدمة','هوية العلامة والتصميم الجرافيكي','التسويق الرقمي والإعلانات','التصوير وإنتاج الفيديو','تصميم المواقع وإدارتها','إطلاق علامة متكامل','إدارة التواصل الاجتماعي شهرياً','الفعاليات المؤسسية والخاصة','حملة إعلانية','أخرى']
+        : ['Select a service','Brand identity & graphic design','Digital marketing & advertising','Photography & video production','Website design & management','Complete brand launch','Monthly social media','Corporate & private events','Advertising campaign','Other'];
+      [...select.options].forEach((option,i)=>option.textContent=optionLabels[i]);
+    }
     const workTitlesEn = ['Form, feeling & first principles','A different point of view','Stories for a screen-first world'];
     const workTitlesAr = ['الشكل والشعور والمبادئ الأولى','منظور مختلف','حكايات لعالم الشاشات'];
     const workDescriptionsEn = ['Identity system · Art direction','Campaign · Creative direction','Digital experience · Content'];
@@ -170,8 +184,12 @@
     document.querySelectorAll('.work-info p').forEach((n,i)=>n.textContent=ar?workDescriptionsAr[i]:workDescriptionsEn[i]);
     document.querySelectorAll('.work-note').forEach(n=>n.textContent=ar?'مراجع بصرية ونماذج تطبيقية للعلامات، معروضة كتصورات توضيحية.':'Brand references and mockups shown as illustrative studies.');
     navItems.forEach(link => { link.textContent = ar ? link.dataset.ar : link.dataset.en; });
-    document.querySelectorAll('.service-title').forEach((node, i) => node.textContent = ar ? servicesAr[i] : ['Brand strategy & branding','Logo design & visual identity','Poster design, campaigns & content','Brand profiles, stationery & print','Website design & development','Digital marketing & social media management'][i]);
-    document.querySelectorAll('.service-desc').forEach((node, i) => node.textContent = ar ? serviceDescsAr[i] : ['Positioning, naming and a clear brand direction.','Distinctive logos and complete visual identity systems.','Print and digital creative built around one idea.','Company profiles and branded materials, made cohesive.','Responsive websites with a clear brand experience.','Content strategy, publishing and growth across social platforms.'][i]);
+    document.querySelectorAll('.service-title').forEach((node, i) => node.textContent = (ar ? servicesAr : servicesEn)[i]);
+    document.querySelectorAll('.service-desc').forEach((node, i) => node.textContent = (ar ? serviceDescsAr : serviceDescsEn)[i]);
+    document.querySelectorAll('.service-package-card h4').forEach((node, i) => node.textContent = (ar ? packagesAr : packagesEn)[i]);
+    document.querySelectorAll('.service-package-card p').forEach((node, i) => node.textContent = (ar ? packagesDescAr : packagesDescEn)[i]);
+    const packageIncludes = ar ? ['استراتيجية · هوية · تطبيقات أساسية','تخطيط · محتوى إبداعي · إدارة القنوات','تصوير · فيديو · ملخصات محررة','فكرة الحملة · إعلانات Google وMeta · تحسين'] : ['Strategy · Identity · Core brand applications','Planning · Creative content · Channel management','Photography · Video · Edited highlights','Campaign concept · Google & Meta ads · Optimisation'];
+    document.querySelectorAll('.package-includes').forEach((node, i) => node.textContent = packageIncludes[i]);
     document.querySelectorAll('.lang').forEach(langButton => {
       langButton.textContent = ar ? 'English' : 'العربية';
       langButton.setAttribute('aria-label', ar ? 'Switch to English' : 'التبديل إلى العربية');
@@ -181,7 +199,7 @@
   };
   document.querySelectorAll('.lang').forEach(button => button.addEventListener('click', switchLanguage));
 
-  const revealTargets = document.querySelectorAll('.section-meta,.manifesto-grid,.manifesto-foot,.services-head,.service-row,.feature-layout,.feature-foot,.statement h2,.work-head,.work-card,.principles-head,.principle-grid article,.process-line,.kinetic-stage,.cta-content,.contact-form,.footer-main');
+  const revealTargets = document.querySelectorAll('.section-meta,.manifesto-grid,.manifesto-foot,.services-head,.service-row,.service-package-card,.feature-layout,.feature-foot,.statement h2,.work-head,.work-card,.principles-head,.principle-grid article,.process-line,.kinetic-stage,.cta-content,.contact-form,.footer-main');
   revealTargets.forEach(el => el.classList.add('reveal'));
   if ('IntersectionObserver' in window && !reduced) {
     const observer = new IntersectionObserver(entries => entries.forEach(entry => {
