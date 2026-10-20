@@ -890,7 +890,7 @@ html[dir=rtl] .round-link b{background:linear-gradient(145deg,rgba(255,255,255,.
 
 /* Refined white homepage hero and restrained frosted-glass icon surfaces. */
 .nav-wrap:not(.scrolled){color:var(--blue)}
-.nav-wrap:not(.scrolled) .brand-name,.nav-wrap:not(.scrolled) .desktop-nav a{color:var(--blue)}
+.nav-wrap:not(.scrolled) .brand-name,.nav-wrap:not(.scrolled) .desktop-nav a{color:#fff}
 .nav-wrap.scrolled .brand-logo{filter:brightness(0) invert(1)}
 .hero{background:#fff;color:#101018}
 .hero-grid{opacity:.35;background-image:linear-gradient(to right,transparent calc(25% - .5px),rgba(0,0,128,.09) 25%,transparent calc(25% + .5px)),linear-gradient(to bottom,transparent calc(50% - .5px),rgba(0,0,128,.08) 50%,transparent calc(50% + .5px))}
@@ -930,7 +930,7 @@ html[dir=rtl] .round-link b{background:linear-gradient(145deg,rgba(255,255,255,.
 .hero-letter.is-fading::after{opacity:0;transition:opacity 1.3s ease-out}
 @keyframes awwal-letter-spectrum{to{background-position:100% 50%}}
 @media(max-width:720px){
-  .nav-wrap:not(.scrolled) .brand-name{color:var(--blue)}
+  .nav-wrap:not(.scrolled) .brand-name{color:#fff}
   .hero{background:#fff}
   .hero .kicker,.hero h1,.hero h1>span{color:var(--blue)}
   .hero-side,.scroll-cue{color:rgba(0,0,80,.55)}
