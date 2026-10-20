@@ -1252,3 +1252,13 @@ html[data-theme="light"] .table-step.is-active{border-left-color:#a77500}
  .table-step h3{font-size:30px;margin:16px 0 12px}.table-step p{font-size:16px;line-height:1.6}.table-step-note{font-size:10px;margin-top:22px}
 }
 @media(prefers-reduced-motion:reduce){.table-scene,.table-digital,.table-step,.table-scroll-progress i{transition:none!important}}
+
+/* Keep navigation readable above the light work surface. */
+html[data-theme="light"] .nav-wrap .desktop-nav a{color:#10204d;opacity:.9}
+html[data-theme="light"] .nav-wrap .desktop-nav a:hover{color:#2948b8;opacity:1}
+
+.nav-wrap{gap:20px}
+.nav-wrap .desktop-nav{position:static;left:auto;transform:none;flex:1;min-width:0;justify-content:center;gap:clamp(11px,1.1vw,22px)}
+.nav-wrap .desktop-nav a{white-space:nowrap}
+.nav-wrap .brand,.nav-wrap .nav-actions{flex-shrink:0}
+@media(max-width:1180px){.nav-wrap .desktop-nav{display:none}.nav-wrap .menu-toggle{display:block}}
