@@ -184,3 +184,8 @@ html[dir=rtl] .preview-browser small{margin-left:0;margin-right:auto}.palette-pa
 .palette-page .glass-icon{border-radius:9px;background:linear-gradient(145deg,rgba(255,255,255,.76),rgba(126,165,255,.42) 52%,rgba(0,0,128,.16));color:var(--blue);box-shadow:inset 0 1px 0 rgba(255,255,255,.86),inset 0 -4px 9px rgba(0,0,128,.08),0 3px 10px rgba(0,0,80,.12)}
 .palette-page .palette-download-button .glass-icon,.palette-page .generate-button .glass-icon,.palette-page .image-upload .glass-icon{color:#fff;background:linear-gradient(145deg,rgba(255,255,255,.46),rgba(118,161,255,.38) 48%,rgba(0,0,128,.28))}
 .palette-page .remove-color{border-radius:8px;background:linear-gradient(145deg,rgba(255,255,255,.76),rgba(126,165,255,.42) 52%,rgba(0,0,128,.16));color:var(--blue);box-shadow:inset 0 1px 0 rgba(255,255,255,.86),0 3px 10px rgba(0,0,80,.12)}
+
+html[data-theme="light"] .palette-nav{background:rgba(238,243,255,.72);border-bottom-color:transparent}
+html[data-theme="light"] .palette-nav .desktop-nav a,html[data-theme="light"] .palette-nav-home{color:#09154f}
+html[data-theme="light"] .palette-nav .brand-logo{filter:brightness(0) saturate(100%) invert(10%) sepia(61%) saturate(3183%) hue-rotate(227deg) brightness(78%) contrast(135%)}
+html[data-theme="dark"] .palette-nav{background:rgba(0,0,80,.48);border-bottom-color:transparent}
