@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developers.cloudflare.com/workers/wrangler/config-schema.json",
+  "name": "awwal-brand-solution",
+  "compatibility_date": "2026-10-21",
+  "preview_urls": true,
+  "assets": {
+    "directory": "./",
+    "not_found_handling": "404-page"
+  },
+  "previews": {}
+}
