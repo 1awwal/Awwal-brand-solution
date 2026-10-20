@@ -1,61 +1,6 @@
 (() => {
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const homeHero = document.querySelector('.hero');
-  const heroHeading = homeHero?.querySelector('h1');
-  const letterTimers = new WeakMap();
-  const wrapHeroLetters = () => {
-    if (!heroHeading || document.documentElement.lang === 'ar' || reduced) return;
-    const walker = document.createTreeWalker(heroHeading, NodeFilter.SHOW_TEXT);
-    const nodes = [];
-    while (walker.nextNode()) nodes.push(walker.currentNode);
-    let letterIndex = 0;
-    nodes.forEach(node => {
-      const fragment = document.createDocumentFragment();
-      const parts = node.textContent.match(/\\s+|[^\\s]+/g) || [];
-      parts.forEach(part => {
-        if (/^\\s+$/.test(part)) {
-          fragment.append(document.createTextNode(part));
-          return;
-        }
-        const word = document.createElement('span');
-        word.className = 'hero-word';
-        for (const character of part) {
-          const letter = document.createElement('span');
-          letter.className = 'hero-letter';
-          letter.dataset.letter = character;
-          letter.style.setProperty('--spectrum-shift', `${(letterIndex * 11) % 100}%`);
-          letter.textContent = character;
-          word.append(letter);
-          letterIndex += 1;
-        }
-        fragment.append(word);
-      });
-      node.replaceWith(fragment);
-    });
-  };
-
-  if (homeHero && heroHeading && !reduced) {
-    wrapHeroLetters();
-    heroHeading.addEventListener('pointerover', event => {
-      if (event.pointerType !== 'mouse') return;
-      const letter = event.target.closest('.hero-letter');
-      if (!letter || !heroHeading.contains(letter)) return;
-      window.clearTimeout(letterTimers.get(letter));
-      letter.classList.remove('is-colorful', 'is-fading');
-      void letter.offsetWidth;
-      letter.classList.add('is-colorful');
-      letterTimers.set(letter, window.setTimeout(() => {
-        if (!letter.isConnected) return;
-        letter.classList.remove('is-colorful');
-        letter.classList.add('is-fading');
-        letterTimers.set(letter, window.setTimeout(() => {
-          letter.classList.remove('is-fading');
-        }, 1300));
-      }, 3000));
-    });
-  }
-
   const loader = document.querySelector('.loader');
   window.addEventListener('load', () => setTimeout(() => { loader?.classList.add('done'); document.body.classList.remove('loading'); }, 380), { once: true });
   setTimeout(() => loader?.classList.add('done'), 1700);
@@ -201,7 +146,6 @@
       langButton.setAttribute('aria-label', ar ? 'Switch to English' : 'التبديل إلى العربية');
     });
     document.querySelector('.menu-overlay nav').dir = ar ? 'rtl' : 'ltr';
-    wrapHeroLetters();
   };
   document.querySelectorAll('.lang').forEach(button => button.addEventListener('click', switchLanguage));
 
