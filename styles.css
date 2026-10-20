@@ -1196,7 +1196,7 @@ html[data-theme="light"] .hero h1 .hero-gradient-word{
 .table-showcase{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(285px,.55fr);gap:clamp(28px,5vw,84px);align-items:start;margin-top:clamp(36px,6vw,86px);position:relative}
 .table-frame{position:sticky;top:calc(var(--nav-h,82px) + 20px);height:min(66svh,690px);min-height:420px;margin:0;overflow:hidden;border-radius:28px;background:#111a2b;isolation:isolate;box-shadow:0 30px 90px rgba(4,10,36,.22);border:1px solid rgba(255,255,255,.26)}
 .table-frame::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(4,10,24,.06),transparent 42%,rgba(3,10,26,.22));z-index:2}
-.table-scene,.table-digital{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform 1.2s cubic-bezier(.18,.72,.2,1);will-change:transform,opacity}
+.table-scene,.table-digital{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform 1.2s cubic-bezier(.18,.72,.2,1),object-position 1.2s cubic-bezier(.18,.72,.2,1);will-change:transform,opacity,object-position}
 .table-scene{object-position:center;transform:scale(1.1)}
 .table-digital{opacity:0;object-position:center 58%;transform:scale(1.04)}
 .table-frame.is-digital .table-digital{opacity:1;transform:scale(1)}
