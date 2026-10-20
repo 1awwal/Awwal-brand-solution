@@ -1104,7 +1104,7 @@ html[dir=rtl] .hero{background:radial-gradient(ellipse 72% 74% at 82% 18%,rgba(7
 
 
 /* Liquid-glass folder icon for the project CTA. */
-.nav-cta{gap:14px}
+.nav-cta{gap:14px;min-width:204px;justify-content:space-between;white-space:nowrap}
 .nav-cta .folder-icon{display:block;width:40px;height:33px;flex:0 0 auto;overflow:visible;filter:drop-shadow(0 4px 8px rgba(0,12,72,.24));transition:transform .35s cubic-bezier(.2,.8,.2,1),filter .35s}
 .folder-icon .folder-back{fill:url(#folderBack);stroke:rgba(224,241,255,.85);stroke-width:1.25}
 .folder-icon .folder-front{fill:url(#folderGlass);stroke:rgba(255,255,255,.9);stroke-width:1.4}
