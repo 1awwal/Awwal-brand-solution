@@ -23,7 +23,7 @@
     <nav class="desktop-nav" aria-label="Main navigation">
       <a href="index.html#home">Home</a><a href="index.html#about">About</a><a href="index.html#services">Services</a><a href="campaigns.html">Campaigns</a><a href="palettes.html" aria-current="page">Palettes</a><a href="index.html#contact">Contact</a>
     </nav>
-    <div class="nav-actions"><a class="palette-nav-home" href="index.html#home">HOME ↗</a><a class="nav-cta" href="index.html#contact"><span>Start a project</span><i>↗</i></a></div>
+    <div class="nav-actions"><a class="palette-nav-home" href="index.html#home">HOME <span class="glass-icon" aria-hidden="true">↗</span></a><a class="nav-cta" href="index.html#contact"><span>Start a project</span><i>↗</i></a></div>
   </header>
   <main class="palette-page">
     <section class="palette-intro">
@@ -31,7 +31,7 @@
         <p class="kicker">AWWAL / COLOR STUDIO</p>
         <h1 class="color-motion-title">Find your<br><em>color story.</em></h1>
         <p class="palette-intro-lead">Start with a feeling. Explore palettes, adjust every shade, and download a set of colors made for your next idea.</p>
-        <a class="palette-scroll-link" href="#studio">EXPLORE THE PALETTES <span>↓</span></a>
+        <a class="palette-scroll-link" href="#studio">EXPLORE THE PALETTES <span class="glass-icon" aria-hidden="true">↓</span></a>
       </div>
       <div class="palette-intro-art" aria-hidden="true"><div class="palette-orbit"></div><div class="palette-art-label">COLOR IS A<br>FIRST IMPRESSION</div><div class="palette-art-stack"><i></i><i></i><i></i><i></i><i></i></div><span>AW / 01</span></div>
     </section>
@@ -41,7 +41,7 @@
         <div class="generator-controls">
           <label>COLORS<select id="generator-count" aria-label="Number of colors"><option>3</option><option>4</option><option selected>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></label>
           <label>HARMONY<select id="generator-harmony" aria-label="Color harmony"><option value="random">Surprise me</option><option value="analogous">Analogous</option><option value="complementary">Complementary</option><option value="triadic">Triadic</option><option value="monochrome">Monochrome</option></select></label>
-          <button class="generate-button" id="generate-palette" type="button">GENERATE <span>↻</span></button>
+          <button class="generate-button" id="generate-palette" type="button">GENERATE <span class="glass-icon" aria-hidden="true">↻</span></button>
         </div>
       </div>
       <div class="palette-studio">
@@ -60,16 +60,16 @@
         <div class="palette-list" id="palette-list" aria-label="Palette ideas"></div>
       </div>
       <section class="palette-builder" aria-labelledby="builder-title">
-        <div class="palette-section-heading builder-heading"><div><span class="eyebrow dark">02 / MAKE IT YOURS</span><h2 id="builder-title">Your palette.</h2></div><div class="builder-top-actions"><button type="button" class="palette-reset" id="save-palette">SAVE ♡</button><button type="button" class="palette-reset" id="share-palette">SHARE ↗</button></div></div>
+        <div class="palette-section-heading builder-heading"><div><span class="eyebrow dark">02 / MAKE IT YOURS</span><h2 id="builder-title">Your palette.</h2></div><div class="builder-top-actions"><button type="button" class="palette-reset" id="save-palette">SAVE <span class="glass-icon" aria-hidden="true">♡</span></button><button type="button" class="palette-reset" id="share-palette">SHARE <span class="glass-icon" aria-hidden="true">↗</span></button></div></div>
         <p class="builder-description">Choose a palette, then tap any color to change it. Add or remove shades to make the set your own.</p>
         <div class="palette-name-line"><input id="current-palette-name" aria-label="Palette name" maxlength="48" value="Desert Bloom"><span id="color-count-label">05 COLORS</span></div>
         <div class="palette-import"><label for="palette-import-input">PASTE COLOR CODES</label><div><input id="palette-import-input" type="text" placeholder="#123456, #FFB703, #FFFFFF"><button type="button" id="import-colors">IMPORT</button></div></div>
         <div class="palette-swatches" id="palette-swatches" aria-live="polite"></div>
-        <div class="palette-builder-actions"><button type="button" class="palette-text-button" id="add-color">＋ ADD A COLOR</button><button type="button" class="palette-text-button" id="copy-colors">COPY COLOR CODES</button></div>
-        <button type="button" class="palette-reset" id="start-blank">START A BLANK PALETTE ↻</button>
+        <div class="palette-builder-actions"><button type="button" class="palette-text-button" id="add-color"><span class="glass-icon" aria-hidden="true">＋</span> ADD A COLOR</button><button type="button" class="palette-text-button" id="copy-colors">COPY COLOR CODES</button></div>
+        <button type="button" class="palette-reset" id="start-blank">START A BLANK PALETTE <span class="glass-icon" aria-hidden="true">↻</span></button>
         <div class="palette-download-panel">
           <label for="download-format">DOWNLOAD YOUR PALETTE</label>
-          <div><select id="download-format" aria-label="Download format"><option value="png">PNG palette card</option><option value="svg">SVG palette card</option><option value="ase">Adobe Swatch Exchange (ASE)</option><option value="css">CSS variables</option><option value="json">JSON tokens</option><option value="tailwind">Tailwind config</option><option value="txt">Text swatches</option></select><button type="button" class="palette-download-button" id="download-palette">DOWNLOAD <span>↓</span></button></div>
+          <div><select id="download-format" aria-label="Download format"><option value="png">PNG palette card</option><option value="svg">SVG palette card</option><option value="ase">Adobe Swatch Exchange (ASE)</option><option value="css">CSS variables</option><option value="json">JSON tokens</option><option value="tailwind">Tailwind config</option><option value="txt">Text swatches</option></select><button type="button" class="palette-download-button" id="download-palette">DOWNLOAD <span class="glass-icon" aria-hidden="true">↓</span></button></div>
         </div>
         <p class="palette-status" id="palette-status" aria-live="polite">Your colors are ready to customize.</p>
         <p class="palette-note">Colors are a starting point. Check contrast and accessibility before using them in your final design.</p>
@@ -93,7 +93,7 @@
           </div>
         </div>
         <div class="tool-panel" id="tool-image" role="tabpanel" aria-labelledby="tab-image" hidden>
-          <div class="tool-panel-copy"><span class="tool-label">IMAGE PICKER</span><h3>Find colors in a picture.</h3><p>Choose a local image. It stays in your browser; nothing is uploaded.</p><label class="image-upload" for="image-picker">CHOOSE AN IMAGE <span>＋</span><input id="image-picker" type="file" accept="image/*"></label><label class="extract-count" for="extract-count">COLORS TO EXTRACT<select id="extract-count"><option>3</option><option>4</option><option selected>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></label><button class="generate-button" type="button" id="extract-colors" disabled>USE THESE COLORS ↗</button></div>
+          <div class="tool-panel-copy"><span class="tool-label">IMAGE PICKER</span><h3>Find colors in a picture.</h3><p>Choose a local image. It stays in your browser; nothing is uploaded.</p><label class="image-upload" for="image-picker">CHOOSE AN IMAGE <span class="glass-icon" aria-hidden="true">＋</span><input id="image-picker" type="file" accept="image/*"></label><label class="extract-count" for="extract-count">COLORS TO EXTRACT<select id="extract-count"><option>3</option><option>4</option><option selected>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></label><button class="generate-button" type="button" id="extract-colors" disabled>USE THESE COLORS <span class="glass-icon" aria-hidden="true">↗</span></button></div>
           <div class="image-picker-stage" id="image-picker-stage"><p>Choose a photo or artwork to start.</p><img id="source-image" alt="Selected image for color extraction" hidden><canvas id="image-canvas" hidden></canvas></div>
         </div>
         <div class="tool-panel" id="tool-contrast" role="tabpanel" aria-labelledby="tab-contrast" hidden>
@@ -114,7 +114,7 @@
       </section>
     </section>
   </main>
-  <footer class="palette-footer"><a href="index.html#home">AWWAL BRANDS</a><span>BUILT TO BE DISTINCT.</span><a href="index.html#contact">LET’S MAKE SOMETHING ↗</a></footer>
+  <footer class="palette-footer"><a href="index.html#home">AWWAL BRANDS</a><span>BUILT TO BE DISTINCT.</span><a href="index.html#contact">LET’S MAKE SOMETHING <span class="glass-icon" aria-hidden="true">↗</span></a></footer>
   <script src="palettes.js" defer></script>
 </body>
 </html>
