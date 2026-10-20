@@ -37,7 +37,7 @@
 
   const translations = {
     '.hero .kicker': ['BRAND STRATEGY / IDENTITY / DIGITAL', 'استراتيجية العلامة / الهوية / الرقمي'],
-    '.hero h1': ['AWWAL IS YOUR<br><span>FIRST CHOICE</span>', 'أول هو خيارك<br><span>الأول</span>'],
+    '.hero h1': ['<span class="hero-gradient-word">AWWAL</span> IS YOUR<br><span><span class="hero-gradient-word">FIRST</span> CHOICE</span>', '<span class="hero-gradient-word">أول</span> هو خيارك<br><span><span class="hero-gradient-word">الأول</span></span>'],
     '.hero-bottom p': ['Brand strategy, logo and poster design, websites, digital marketing and social media management in Saudi Arabia.', 'استراتيجية العلامة وتصميم الشعارات والملصقات والمواقع والتسويق الرقمي وإدارة التواصل الاجتماعي في السعودية.'],
     '.round-link span': ['EXPLORE<br>OUR WORK', 'اكتشف<br>أعمالنا'],
     '.manifesto h2': ['WE START<br>WITH THE <em>FIRST</em><br>IDEA<span class="amber">.</span>', 'نبدأ<br>بالفكرة <em>الأولى</em><br>دائماً<span class="amber">.</span>'],
