@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#000080">
+  <meta name="description" content="Explore, customize and download color palettes for your brand with Awwal's Palette Studio.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Awwal Brands">
+  <meta property="og:title" content="Palette Studio | Awwal Brands">
+  <meta property="og:description" content="Find a color direction, make it your own, and download your palette.">
+  <link rel="icon" type="image/png" href="assets/awwal-mark-navy.png">
+  <title>Palette Studio | Awwal Brands</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Noto+Sans+Arabic:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="palettes.css">
+</head>
+<body class="palette-site">
+  <header class="nav-wrap palette-nav">
+    <a class="brand" href="index.html#home" aria-label="Awwal Brands home"><img class="brand-logo" src="assets/awwal-horizontal-logo.png" alt="Awwal Brands"></a>
+    <nav class="desktop-nav" aria-label="Main navigation">
+      <a href="index.html#home">Home</a><a href="index.html#about">About</a><a href="index.html#services">Services</a><a href="campaigns.html">Campaigns</a><a href="palettes.html" aria-current="page">Palettes</a><a href="index.html#contact">Contact</a>
+    </nav>
+    <div class="nav-actions"><a class="palette-nav-home" href="index.html#home">HOME ↗</a><a class="nav-cta" href="index.html#contact"><span>Start a project</span><i>↗</i></a></div>
+  </header>
+  <main class="palette-page">
+    <section class="palette-intro">
+      <div class="palette-intro-copy">
+        <p class="kicker">AWWAL / COLOR STUDIO</p>
+        <h1>Find your<br><em>color story.</em></h1>
+        <p class="palette-intro-lead">Start with a feeling. Explore palettes, adjust every shade, and download a set of colors made for your next idea.</p>
+        <a class="palette-scroll-link" href="#studio">EXPLORE THE PALETTES <span>↓</span></a>
+      </div>
+      <div class="palette-intro-art" aria-hidden="true"><div class="palette-orbit"></div><div class="palette-art-label">COLOR IS A<br>FIRST IMPRESSION</div><div class="palette-art-stack"><i></i><i></i><i></i><i></i><i></i></div><span>AW / 01</span></div>
+    </section>
+    <section class="palette-studio" id="studio">
+      <div class="palette-library">
+        <div class="palette-section-heading"><div><span class="eyebrow dark">01 / GET INSPIRED</span><h2>Choose a mood.</h2></div><span class="palette-count" id="palette-count">08 PALETTES</span></div>
+        <div class="palette-filters" role="group" aria-label="Filter palettes by mood">
+          <button type="button" class="palette-filter is-active" data-filter="all" aria-pressed="true">All</button>
+          <button type="button" class="palette-filter" data-filter="warm" aria-pressed="false">Warm</button>
+          <button type="button" class="palette-filter" data-filter="cool" aria-pressed="false">Cool</button>
+          <button type="button" class="palette-filter" data-filter="earthy" aria-pressed="false">Earthy</button>
+          <button type="button" class="palette-filter" data-filter="fresh" aria-pressed="false">Fresh</button>
+          <button type="button" class="palette-filter" data-filter="bold" aria-pressed="false">Bold</button>
+        </div>
+        <div class="palette-list" id="palette-list" aria-label="Palette ideas"></div>
+      </div>
+      <section class="palette-builder" aria-labelledby="builder-title">
+        <div class="palette-section-heading builder-heading"><div><span class="eyebrow dark">02 / MAKE IT YOURS</span><h2 id="builder-title">Your palette.</h2></div><button type="button" class="palette-reset" id="start-blank">START FRESH ↻</button></div>
+        <p class="builder-description">Choose a palette, then tap any color to change it. Add or remove shades to make the set your own.</p>
+        <div class="palette-name-line"><span id="current-palette-name">Desert Bloom</span><span id="color-count">05 COLORS</span></div>
+        <div class="palette-swatches" id="palette-swatches" aria-live="polite"></div>
+        <div class="palette-builder-actions"><button type="button" class="palette-text-button" id="add-color">＋ ADD A COLOR</button><button type="button" class="palette-text-button" id="copy-colors">COPY COLOR CODES</button></div>
+        <div class="palette-download-panel">
+          <label for="download-format">DOWNLOAD YOUR PALETTE</label>
+          <div><select id="download-format" aria-label="Download format"><option value="png">PNG image</option><option value="css">CSS variables</option><option value="json">JSON tokens</option></select><button type="button" class="palette-download-button" id="download-palette">DOWNLOAD <span>↓</span></button></div>
+        </div>
+        <p class="palette-status" id="palette-status" aria-live="polite">Your colors are ready to customize.</p>
+        <p class="palette-note">Colors are a starting point. Check contrast and accessibility before using them in your final design.</p>
+      </section>
+    </section>
+  </main>
+  <footer class="palette-footer"><a href="index.html#home">AWWAL BRANDS</a><span>BUILT TO BE DISTINCT.</span><a href="index.html#contact">LET’S MAKE SOMETHING ↗</a></footer>
+  <script src="palettes.js" defer></script>
+</body>
+</html>
