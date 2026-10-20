@@ -233,6 +233,30 @@
     });
   }
 
+  const glassPanel = document.querySelector('.hero-copy');
+  if (glassPanel && matchMedia('(pointer:fine)').matches && !reduced) {
+    let glassFrame = 0;
+    glassPanel.addEventListener('pointermove', event => {
+      const bounds = glassPanel.getBoundingClientRect();
+      const px = Math.min(1, Math.max(0, (event.clientX - bounds.left) / bounds.width));
+      const py = Math.min(1, Math.max(0, (event.clientY - bounds.top) / bounds.height));
+      cancelAnimationFrame(glassFrame);
+      glassFrame = requestAnimationFrame(() => {
+        glassPanel.style.setProperty('--glass-x', `${(px * 100).toFixed(1)}%`);
+        glassPanel.style.setProperty('--glass-y', `${(py * 100).toFixed(1)}%`);
+        glassPanel.style.setProperty('--glass-tilt-x', `${((px - .5) * 1.2).toFixed(2)}deg`);
+        glassPanel.style.setProperty('--glass-tilt-y', `${((.5 - py) * 1.2).toFixed(2)}deg`);
+      });
+    }, { passive: true });
+    glassPanel.addEventListener('pointerleave', () => {
+      cancelAnimationFrame(glassFrame);
+      glassPanel.style.setProperty('--glass-x', '24%');
+      glassPanel.style.setProperty('--glass-y', '16%');
+      glassPanel.style.setProperty('--glass-tilt-x', '0deg');
+      glassPanel.style.setProperty('--glass-tilt-y', '0deg');
+    }, { passive: true });
+  }
+
   const oneEyes = [...document.querySelectorAll('.one-eyes b')];
   if (!reduced && oneEyes.length) {
     window.addEventListener('pointermove', event => {
