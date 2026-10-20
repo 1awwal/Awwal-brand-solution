@@ -1115,6 +1115,6 @@ html[dir=rtl] .hero{background:radial-gradient(ellipse 72% 74% at 82% 18%,rgba(7
 
 
 /* Keep the header readable over the blue hero and its glass surfaces. */
-.nav-wrap .brand-name,.nav-wrap .desktop-nav a{color:#fff}
+html:not([dir=rtl]) .nav-wrap .brand-name,html:not([dir=rtl]) .nav-wrap .desktop-nav a{color:#fff}
 .nav-wrap .brand-logo{filter:brightness(0) invert(1)}
-.nav-wrap .desktop-nav a:hover{color:var(--amber)}
+html:not([dir=rtl]) .nav-wrap .desktop-nav a:hover{color:var(--amber)}
