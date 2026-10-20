@@ -1101,3 +1101,14 @@ html[dir=rtl] .hero{background:radial-gradient(ellipse 72% 74% at 82% 18%,rgba(7
  .showcase-controls{grid-template-columns:minmax(50px,1fr) auto auto;gap:10px}
  .showcase-dialog-scene{height:52vh;min-height:285px}
 }
+
+
+/* Liquid-glass folder icon for the project CTA. */
+.nav-cta{gap:14px}
+.nav-cta .folder-icon{display:block;width:40px;height:33px;flex:0 0 auto;overflow:visible;filter:drop-shadow(0 4px 8px rgba(0,12,72,.24));transition:transform .35s cubic-bezier(.2,.8,.2,1),filter .35s}
+.folder-icon .folder-back{fill:url(#folderBack);stroke:rgba(224,241,255,.85);stroke-width:1.25}
+.folder-icon .folder-front{fill:url(#folderGlass);stroke:rgba(255,255,255,.9);stroke-width:1.4}
+.folder-icon .folder-shine{fill:none;stroke:rgba(255,255,255,.78);stroke-width:1;stroke-linecap:round}
+.nav-cta:hover .folder-icon{transform:translateY(-2px) scale(1.08);filter:drop-shadow(0 7px 12px rgba(0,12,72,.32))}
+@media(max-width:720px){.nav-cta .folder-icon{width:38px;height:31px}}
+@media(prefers-reduced-motion:reduce){.nav-cta .folder-icon{transition:none}}
