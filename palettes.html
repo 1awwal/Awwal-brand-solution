@@ -29,37 +29,88 @@
     <section class="palette-intro">
       <div class="palette-intro-copy">
         <p class="kicker">AWWAL / COLOR STUDIO</p>
-        <h1>Find your<br><em>color story.</em></h1>
+        <h1 class="color-motion-title">Find your<br><em>color story.</em></h1>
         <p class="palette-intro-lead">Start with a feeling. Explore palettes, adjust every shade, and download a set of colors made for your next idea.</p>
         <a class="palette-scroll-link" href="#studio">EXPLORE THE PALETTES <span>↓</span></a>
       </div>
       <div class="palette-intro-art" aria-hidden="true"><div class="palette-orbit"></div><div class="palette-art-label">COLOR IS A<br>FIRST IMPRESSION</div><div class="palette-art-stack"><i></i><i></i><i></i><i></i><i></i></div><span>AW / 01</span></div>
     </section>
-    <section class="palette-studio" id="studio">
+    <section class="palette-studio-shell" id="studio">
+      <div class="palette-command-bar">
+        <div><span class="eyebrow dark">YOUR COLOR WORKBENCH</span><p>Generate a direction, keep what works, and shape the rest.</p></div>
+        <div class="generator-controls">
+          <label>COLORS<select id="generator-count" aria-label="Number of colors"><option>3</option><option>4</option><option selected>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></label>
+          <label>HARMONY<select id="generator-harmony" aria-label="Color harmony"><option value="random">Surprise me</option><option value="analogous">Analogous</option><option value="complementary">Complementary</option><option value="triadic">Triadic</option><option value="monochrome">Monochrome</option></select></label>
+          <button class="generate-button" id="generate-palette" type="button">GENERATE <span>↻</span></button>
+        </div>
+      </div>
+      <div class="palette-studio">
       <div class="palette-library">
         <div class="palette-section-heading"><div><span class="eyebrow dark">01 / GET INSPIRED</span><h2>Choose a mood.</h2></div><span class="palette-count" id="palette-count">08 PALETTES</span></div>
         <div class="palette-filters" role="group" aria-label="Filter palettes by mood">
           <button type="button" class="palette-filter is-active" data-filter="all" aria-pressed="true">All</button>
+          <button type="button" class="palette-filter" data-filter="neutral" aria-pressed="false">Neutral</button>
           <button type="button" class="palette-filter" data-filter="warm" aria-pressed="false">Warm</button>
           <button type="button" class="palette-filter" data-filter="cool" aria-pressed="false">Cool</button>
           <button type="button" class="palette-filter" data-filter="earthy" aria-pressed="false">Earthy</button>
           <button type="button" class="palette-filter" data-filter="fresh" aria-pressed="false">Fresh</button>
           <button type="button" class="palette-filter" data-filter="bold" aria-pressed="false">Bold</button>
         </div>
+        <label class="palette-search-label" for="palette-search">SEARCH PALETTES<input id="palette-search" type="search" placeholder="Try “coastal” or “warm”"></label>
         <div class="palette-list" id="palette-list" aria-label="Palette ideas"></div>
       </div>
       <section class="palette-builder" aria-labelledby="builder-title">
-        <div class="palette-section-heading builder-heading"><div><span class="eyebrow dark">02 / MAKE IT YOURS</span><h2 id="builder-title">Your palette.</h2></div><button type="button" class="palette-reset" id="start-blank">START FRESH ↻</button></div>
+        <div class="palette-section-heading builder-heading"><div><span class="eyebrow dark">02 / MAKE IT YOURS</span><h2 id="builder-title">Your palette.</h2></div><div class="builder-top-actions"><button type="button" class="palette-reset" id="save-palette">SAVE ♡</button><button type="button" class="palette-reset" id="share-palette">SHARE ↗</button></div></div>
         <p class="builder-description">Choose a palette, then tap any color to change it. Add or remove shades to make the set your own.</p>
-        <div class="palette-name-line"><span id="current-palette-name">Desert Bloom</span><span id="color-count">05 COLORS</span></div>
+        <div class="palette-name-line"><input id="current-palette-name" aria-label="Palette name" maxlength="48" value="Desert Bloom"><span id="color-count-label">05 COLORS</span></div>
+        <div class="palette-import"><label for="palette-import-input">PASTE COLOR CODES</label><div><input id="palette-import-input" type="text" placeholder="#123456, #FFB703, #FFFFFF"><button type="button" id="import-colors">IMPORT</button></div></div>
         <div class="palette-swatches" id="palette-swatches" aria-live="polite"></div>
         <div class="palette-builder-actions"><button type="button" class="palette-text-button" id="add-color">＋ ADD A COLOR</button><button type="button" class="palette-text-button" id="copy-colors">COPY COLOR CODES</button></div>
+        <button type="button" class="palette-reset" id="start-blank">START A BLANK PALETTE ↻</button>
         <div class="palette-download-panel">
           <label for="download-format">DOWNLOAD YOUR PALETTE</label>
-          <div><select id="download-format" aria-label="Download format"><option value="png">PNG image</option><option value="css">CSS variables</option><option value="json">JSON tokens</option></select><button type="button" class="palette-download-button" id="download-palette">DOWNLOAD <span>↓</span></button></div>
+          <div><select id="download-format" aria-label="Download format"><option value="png">PNG palette card</option><option value="svg">SVG palette card</option><option value="ase">Adobe Swatch Exchange (ASE)</option><option value="css">CSS variables</option><option value="json">JSON tokens</option><option value="tailwind">Tailwind config</option><option value="txt">Text swatches</option></select><button type="button" class="palette-download-button" id="download-palette">DOWNLOAD <span>↓</span></button></div>
         </div>
         <p class="palette-status" id="palette-status" aria-live="polite">Your colors are ready to customize.</p>
         <p class="palette-note">Colors are a starting point. Check contrast and accessibility before using them in your final design.</p>
+      </section>
+      </div>
+      <section class="palette-tools" aria-labelledby="tools-title">
+        <div class="palette-section-heading"><div><span class="eyebrow dark">03 / COLOR TOOLS</span><h2 id="tools-title">Make it work.</h2></div><p>Test your colors in real design situations.</p></div>
+        <div class="tool-tabs" role="tablist" aria-label="Palette tools">
+          <button type="button" role="tab" id="tab-preview" aria-selected="true" aria-controls="tool-preview" data-tool="preview">Preview</button>
+          <button type="button" role="tab" id="tab-image" aria-selected="false" aria-controls="tool-image" data-tool="image">Pick from image</button>
+          <button type="button" role="tab" id="tab-contrast" aria-selected="false" aria-controls="tool-contrast" data-tool="contrast">Contrast</button>
+          <button type="button" role="tab" id="tab-variations" aria-selected="false" aria-controls="tool-variations" data-tool="variations">Variations</button>
+          <button type="button" role="tab" id="tab-gradient" aria-selected="false" aria-controls="tool-gradient" data-tool="gradient">Gradient</button>
+          <button type="button" role="tab" id="tab-saved" aria-selected="false" aria-controls="tool-saved" data-tool="saved">Saved <span id="saved-count">0</span></button>
+        </div>
+        <div class="tool-panel" id="tool-preview" role="tabpanel" aria-labelledby="tab-preview">
+          <div class="tool-panel-copy"><span class="tool-label">BRAND PREVIEW</span><h3>See your palette in place.</h3><p>Try your colors on a simple brand and web layout.</p></div>
+          <div class="brand-preview" id="brand-preview">
+            <div class="preview-browser"><span></span><span></span><span></span><small>YOUR BRAND</small></div>
+            <div class="preview-content"><div class="preview-logo">A<span>W</span></div><span class="preview-tag">MADE TO MEAN MORE</span><h4>Make room<br>for <em>what’s next.</em></h4><p>Distinct ideas deserve a clear point of view.</p><button type="button">DISCOVER MORE ↗</button><div class="preview-art"><i></i><i></i><i></i></div></div>
+          </div>
+        </div>
+        <div class="tool-panel" id="tool-image" role="tabpanel" aria-labelledby="tab-image" hidden>
+          <div class="tool-panel-copy"><span class="tool-label">IMAGE PICKER</span><h3>Find colors in a picture.</h3><p>Choose a local image. It stays in your browser; nothing is uploaded.</p><label class="image-upload" for="image-picker">CHOOSE AN IMAGE <span>＋</span><input id="image-picker" type="file" accept="image/*"></label><label class="extract-count" for="extract-count">COLORS TO EXTRACT<select id="extract-count"><option>3</option><option>4</option><option selected>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></label><button class="generate-button" type="button" id="extract-colors" disabled>USE THESE COLORS ↗</button></div>
+          <div class="image-picker-stage" id="image-picker-stage"><p>Choose a photo or artwork to start.</p><img id="source-image" alt="Selected image for color extraction" hidden><canvas id="image-canvas" hidden></canvas></div>
+        </div>
+        <div class="tool-panel" id="tool-contrast" role="tabpanel" aria-labelledby="tab-contrast" hidden>
+          <div class="tool-panel-copy"><span class="tool-label">ACCESSIBILITY CHECK</span><h3>Make every word readable.</h3><p>Check text against a background using WCAG contrast guidance.</p></div>
+          <div class="contrast-tool"><label>TEXT COLOR<select id="contrast-foreground"></select></label><label>BACKGROUND<select id="contrast-background"></select></label><div class="contrast-sample" id="contrast-sample"><strong>Readable by design.</strong><span>Small text deserves clear contrast.</span></div><div class="contrast-result" id="contrast-result" aria-live="polite"></div></div>
+        </div>
+        <div class="tool-panel" id="tool-variations" role="tabpanel" aria-labelledby="tab-variations" hidden>
+          <div class="tool-panel-copy"><span class="tool-label">COLOR EXPLORER</span><h3>Explore a new direction.</h3><p>Build shades, analogous, complementary, triadic, warm, or cool variations from your first color.</p><div class="variation-actions"><button type="button" data-variation="shades">Shades</button><button type="button" data-variation="analogous">Analogous</button><button type="button" data-variation="complementary">Complementary</button><button type="button" data-variation="triadic">Triadic</button><button type="button" data-variation="warm">Warmer</button><button type="button" data-variation="cool">Cooler</button><button type="button" data-variation="deuteranopia">Deuteranopia</button><button type="button" data-variation="protanopia">Protanopia</button><button type="button" data-variation="tritanopia">Tritanopia</button></div></div>
+          <div class="variation-results" id="variation-results" aria-live="polite"></div>
+        </div>
+        <div class="tool-panel" id="tool-gradient" role="tabpanel" aria-labelledby="tab-gradient" hidden>
+          <div class="tool-panel-copy"><span class="tool-label">GRADIENT BUILDER</span><h3>Blend your colors.</h3><p>Choose two colors from your palette, pick a direction, and copy or download the CSS.</p><div class="gradient-controls"><label>FROM<select id="gradient-from"></select></label><label>TO<select id="gradient-to"></select></label><label>DIRECTION<select id="gradient-direction"><option value="90deg">Left to right</option><option value="135deg">Diagonal</option><option value="180deg">Top to bottom</option><option value="45deg">Bottom left</option></select></label><button type="button" class="palette-text-button" id="copy-gradient">COPY CSS</button><button type="button" class="palette-text-button" id="download-gradient">DOWNLOAD CSS</button></div></div>
+          <div class="gradient-preview" id="gradient-preview"><span>AWWAL / GRADIENT STUDY</span></div>
+        </div>
+        <div class="tool-panel" id="tool-saved" role="tabpanel" aria-labelledby="tab-saved" hidden>
+          <div class="tool-panel-copy"><span class="tool-label">YOUR LIBRARY</span><h3>Palettes saved here.</h3><p>Saved palettes stay on this device in this browser.</p></div><div class="saved-palettes" id="saved-palettes"></div>
+        </div>
       </section>
     </section>
   </main>
