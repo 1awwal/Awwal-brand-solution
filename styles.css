@@ -944,3 +944,23 @@ html[dir=rtl] .round-link b{background:linear-gradient(145deg,rgba(255,255,255,.
 @media(max-width:980px){.package-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-copy{width:66%}.hero-art{width:min(44vw,540px);right:0}}
 @media(max-width:720px){.hero-copy{width:100%;padding:26px 22px;border-radius:18px}.hero{min-height:740px;height:auto;padding-bottom:88px}.hero-art{width:68vw;right:-8vw;top:auto;bottom:2%;opacity:.82}.hero-bottom{gap:24px}.hero h1{font-size:clamp(54px,12vw,92px)}.packages-heading{grid-template-columns:1fr;gap:15px}.packages-heading .eyebrow{grid-column:auto}.packages-heading p{max-width:none}.package-grid{grid-template-columns:1fr}.service-package-card{min-height:0;padding:20px}.service-package-card h4{margin-top:15px}.hero-side{display:none}}
 @media(prefers-reduced-motion:reduce){.service-package-card{transition:none}}
+
+
+/* Keep the editorial labels, but gather them into readable clusters instead of edge-to-edge strips. */
+.section-meta,.feature-top,.feature-foot,.service-tail,.manifesto-foot,.statement-bottom,.footer-bottom,.form-heading{display:flex;justify-content:flex-start;align-items:center;flex-wrap:wrap;gap:10px 14px;}
+.section-meta{width:fit-content;max-width:100%;margin-bottom:16px;padding:0;border:0;}
+.section-meta span,.feature-top>span,.feature-foot>span,.service-tail>span,.manifesto-foot>span,.statement-bottom>span,.footer-bottom>span,.form-heading>span{display:inline-flex;align-items:center;width:auto;max-width:100%;padding:7px 11px;border:1px solid rgba(25,51,122,.12);border-radius:999px;background:rgba(255,255,255,.58);line-height:1.45;}
+.section-meta.light span,.service-tail>span,.statement-bottom>span,.form-heading>span{border-color:rgba(255,255,255,.18);background:rgba(255,255,255,.075);}
+.feature-top,.feature-foot,.service-tail,.manifesto-foot,.statement-bottom,.footer-bottom,.form-heading{width:fit-content;max-width:100%;}
+.manifesto-foot{border:0;padding:0;margin-top:22px;gap:10px 12px;color:rgba(0,0,0,.62);}
+.manifesto-foot .arabic-note{font-size:12px;}
+.service-tail{margin-top:24px;gap:10px 12px;}
+.service-tail span:last-child{max-width:none;text-align:left;}
+.service-tail b{margin-inline-start:8px;}
+.feature-top,.feature-foot{gap:10px 12px;color:rgba(0,0,0,.62);}
+.feature-foot{margin-top:22px;}
+.statement-bottom{gap:10px 12px;color:rgba(255,255,255,.68);}
+.footer-bottom{border:0;padding:0;margin-top:18px;color:rgba(255,255,255,.62);}
+.form-heading{border:0;gap:10px 12px;}
+html[dir=rtl] .section-meta,html[dir=rtl] .feature-top,html[dir=rtl] .feature-foot,html[dir=rtl] .service-tail,html[dir=rtl] .manifesto-foot,html[dir=rtl] .statement-bottom,html[dir=rtl] .footer-bottom,html[dir=rtl] .form-heading{justify-content:flex-start;}
+@media(max-width:720px){.section-meta,.feature-top,.feature-foot,.service-tail,.manifesto-foot,.statement-bottom,.footer-bottom,.form-heading{gap:8px}.section-meta span,.feature-top>span,.feature-foot>span,.service-tail>span,.manifesto-foot>span,.statement-bottom>span,.footer-bottom>span,.form-heading>span{padding:6px 9px}.section-meta{margin-bottom:12px}.manifesto-foot .arabic-note{display:inline-flex}.service-tail span:last-child{max-width:none;text-align:left}.footer-bottom{align-items:flex-start}}
