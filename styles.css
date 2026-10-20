@@ -1024,3 +1024,13 @@ html[dir=rtl] .hero{background:var(--blue);color:#fff}html[dir=rtl] .hero h1,htm
 .hero-letter::after{display:none!important}.hero .kicker{color:rgba(255,255,255,.78)}.hero-bottom p{color:rgba(255,255,255,.84)}.hero-side,.scroll-cue{color:rgba(255,255,255,.7)}
 @media(max-width:720px){.hero{background:radial-gradient(ellipse 90% 60% at 80% 12%,rgba(70,104,231,.44),transparent 60%),radial-gradient(ellipse 70% 50% at 15% 90%,rgba(37,57,170,.38),transparent 74%),linear-gradient(130deg,#000080 0%,#070b57 55%,#111d78 100%)}.hero h1,.hero h1>span{color:#fff!important}.hero-copy{background:linear-gradient(142deg,rgba(220,232,255,.18),rgba(125,157,255,.1) 42%,rgba(23,39,120,.2) 100%);-webkit-backdrop-filter:blur(30px) saturate(170%);backdrop-filter:blur(30px) saturate(170%)}}
 html[dir=rtl] .hero{background:radial-gradient(ellipse 72% 74% at 82% 18%,rgba(70,104,231,.5),transparent 58%),radial-gradient(ellipse 54% 54% at 18% 88%,rgba(37,57,170,.42),transparent 72%),radial-gradient(ellipse 36% 40% at 48% 44%,rgba(255,183,3,.1),transparent 72%),linear-gradient(128deg,#000080 0%,#070b57 52%,#111d78 100%);color:#fff}
+
+
+/* Tune hero typography and animate only the two brand words in white and blue. */
+.hero h1{letter-spacing:-.025em;word-spacing:.16em;line-height:1.02;text-wrap:balance}
+.hero h1>span{color:#fff!important}
+.hero h1 .hero-gradient-word{display:inline-block;white-space:nowrap;color:transparent!important;-webkit-text-fill-color:transparent;background-image:linear-gradient(112deg,#fff 0%,#dce8ff 19%,#8cb5ff 38%,#4f7fe0 55%,#eef4ff 75%,#9dc0ff 100%);background-size:260% 100%;background-position:0% 50%;background-clip:text;-webkit-background-clip:text;animation:awwal-liquid-word 20s ease-in-out infinite alternate;filter:drop-shadow(0 0 24px rgba(139,177,255,.18))}
+.hero h1>span .hero-gradient-word{animation-delay:-10s}
+@keyframes awwal-liquid-word{0%{background-position:0% 50%}50%{background-position:52% 50%}100%{background-position:100% 50%}}
+@media(max-width:720px){.hero h1{letter-spacing:-.035em;word-spacing:.1em;line-height:1.06}.hero h1 .hero-gradient-word{animation-duration:24s}}
+@media(prefers-reduced-motion:reduce){.hero h1 .hero-gradient-word{animation:none;background-position:46% 50%}}
