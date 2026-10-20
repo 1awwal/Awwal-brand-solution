@@ -1,5 +1,80 @@
 (() => {
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const homeHero = document.querySelector('.hero');
+  if (homeHero && !reduced) {
+    const motionStyles = document.createElement('style');
+    motionStyles.textContent = `
+      .hero::before {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        inset: -18%;
+        pointer-events: none;
+        opacity: .72;
+        background:
+          radial-gradient(ellipse at 76% 38%, rgba(255,183,3,.3), transparent 30%),
+          radial-gradient(ellipse at 61% 74%, rgba(58,128,255,.45), transparent 36%),
+          radial-gradient(ellipse at 35% 45%, rgba(184,74,255,.16), transparent 32%);
+        background-size: 145% 145%;
+        animation: awwal-home-flow 13s ease-in-out infinite alternate;
+      }
+      @keyframes awwal-home-flow {
+        from { transform: translate3d(-2%, -1%, 0) scale(1); background-position: 0% 30%; }
+        to { transform: translate3d(2%, 1%, 0) scale(1.08); background-position: 100% 70%; }
+      }
+      .hero h1 > span {
+        background: linear-gradient(110deg, #ffb703 0%, #ff625a 25%, #ac83ff 50%, #48d2ad 76%, #ffb703 100%);
+        background-size: 260% 100%;
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        animation: awwal-home-spectrum 8s ease-in-out infinite;
+      }
+      @keyframes awwal-home-spectrum {
+        0%, 100% { background-position: 0% 50%; filter: hue-rotate(0deg); }
+        50% { background-position: 100% 50%; filter: hue-rotate(22deg); }
+      }
+      .awwal-pointer-glow {
+        position: fixed;
+        z-index: 6;
+        inset: 0 auto auto 0;
+        width: 148px;
+        height: 148px;
+        border-radius: 50%;
+        pointer-events: none;
+        opacity: 0;
+        transform: translate3d(var(--pointer-x, -200px), var(--pointer-y, -200px), 0) translate(-50%, -50%) scale(.72);
+        background: radial-gradient(circle, rgba(255,183,3,.2), rgba(86,123,255,.15) 38%, transparent 72%);
+        filter: blur(4px);
+        mix-blend-mode: screen;
+        transition: opacity .32s, transform .32s;
+      }
+      .awwal-pointer-glow.is-visible { opacity: .9; transform: translate3d(var(--pointer-x), var(--pointer-y), 0) translate(-50%, -50%) scale(1); }
+      @media (prefers-reduced-motion: reduce) {
+        .hero::before, .hero h1 > span { animation: none !important; }
+        .awwal-pointer-glow { display: none !important; }
+      }
+    `;
+    document.head.append(motionStyles);
+
+    if (matchMedia('(pointer: fine)').matches) {
+      const glow = document.createElement('span');
+      glow.className = 'awwal-pointer-glow';
+      glow.setAttribute('aria-hidden', 'true');
+      document.body.append(glow);
+      let hideGlowTimer;
+      window.addEventListener('pointermove', event => {
+        if (event.pointerType === 'touch') return;
+        glow.style.setProperty('--pointer-x', `${event.clientX}px`);
+        glow.style.setProperty('--pointer-y', `${event.clientY}px`);
+        glow.classList.add('is-visible');
+        window.clearTimeout(hideGlowTimer);
+        hideGlowTimer = window.setTimeout(() => glow.classList.remove('is-visible'), 900);
+      }, { passive: true });
+      document.documentElement.addEventListener('pointerleave', () => glow.classList.remove('is-visible'));
+    }
+  }
+
   const loader = document.querySelector('.loader');
   window.addEventListener('load', () => setTimeout(() => { loader?.classList.add('done'); document.body.classList.remove('loading'); }, 380), { once: true });
   setTimeout(() => loader?.classList.add('done'), 1700);
