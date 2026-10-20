@@ -1060,3 +1060,16 @@ html[dir=rtl] .hero{background:radial-gradient(ellipse 72% 74% at 82% 18%,rgba(7
 .showcase-dialog-shell{min-height:100%;padding:clamp(22px,4vw,48px);display:flex;flex-direction:column;position:relative}.showcase-close{position:absolute;z-index:20;right:clamp(20px,4vw,45px);top:clamp(16px,3vw,31px);width:44px;height:44px;border-radius:50%;border:1px solid rgba(36,63,160,.2);background:rgba(255,255,255,.68);color:#142a78;font-size:25px;cursor:pointer}.showcase-dialog-meta{display:flex;justify-content:space-between;padding-right:65px;color:rgba(14,31,102,.58);font:8px var(--mono);letter-spacing:.16em}.showcase-dialog-scene{height:min(62vh,620px);min-height:320px;margin:auto 0;perspective:1200px}.showcase-dialog-scene .showcase-stage{height:100%;border-radius:24px;box-shadow:0 32px 90px rgba(12,31,103,.2),inset 0 1px 0 white}.showcase-dialog-scene .object{filter:drop-shadow(0 18px 24px rgba(17,35,92,.12))}.showcase-dialog-bottom{display:flex;align-items:flex-end;justify-content:space-between;gap:20px}.showcase-dialog-bottom h3{margin:0;color:#0a174b;font:600 clamp(22px,3vw,38px)/1.1 Poppins,sans-serif;letter-spacing:-.04em}.showcase-dialog-bottom p{margin:9px 0 0;color:rgba(15,28,76,.58);font:9px var(--mono);letter-spacing:.1em}body.showcase-zoom-open{overflow:hidden}
 @media(max-width:720px){.showcase-intro{font-size:7px;gap:16px}.showcase-hint{max-width:145px;text-align:right;line-height:1.7}.showcase-viewport{padding:8px 22px 22px;margin:0 -22px}.showcase-slide{flex-basis:min(84vw,430px)}.showcase-stage{height:min(98vw,440px);min-height:320px;border-radius:23px}.stage-index{top:17px;left:17px;font-size:7px}.stage-caption{left:17px;bottom:17px;font-size:7px}.slide-footer{font-size:7px}.showcase-controls{gap:14px}.showcase-arrows button{width:38px;height:38px}.showcase-dialog{width:calc(100vw - 18px);height:calc(100dvh - 18px);border-radius:23px}.showcase-dialog-shell{padding:19px}.showcase-dialog-meta{font-size:6px;padding-right:54px}.showcase-dialog-scene{height:56vh;min-height:310px}.showcase-dialog-scene .showcase-stage{border-radius:18px}.showcase-close{right:16px;top:13px;width:38px;height:38px}.showcase-dialog-bottom{align-items:center}.showcase-dialog-bottom h3{font-size:21px}.showcase-dialog-bottom p{font-size:7px}.dialog-arrows{gap:5px}.dialog-arrows button{width:36px;height:36px}.logo-plaque{border-radius:17px}.brand-glyph{width:64px;height:64px;font-size:43px}.logo-plaque b{font-size:13px}.logo-plaque small{font-size:5px}}
 @media(prefers-reduced-motion:reduce){.showcase-stage,.object,.stage-glint,.showcase-dialog[open]{transition:none!important;animation:none!important}.showcase-viewport{scroll-behavior:auto}}
+
+
+/* Let the fixed navigation fade into the section beneath it. */
+.nav-wrap{
+  background:linear-gradient(180deg,rgba(5,10,66,.9) 0%,rgba(5,12,79,.72) 56%,rgba(15,27,116,.12) 100%);
+  border-bottom-color:transparent;
+  -webkit-backdrop-filter:blur(20px) saturate(150%);
+  backdrop-filter:blur(20px) saturate(150%);
+}
+.nav-wrap.scrolled{
+  background:linear-gradient(180deg,rgba(0,0,70,.94) 0%,rgba(0,0,108,.82) 66%,rgba(16,33,128,.35) 100%);
+  border-bottom-color:transparent;
+}
