@@ -161,3 +161,21 @@ html[dir=rtl] .preview-browser small{margin-left:0;margin-right:auto}.palette-pa
 }
 @media(max-width:380px){.palette-swatches{grid-template-columns:repeat(3,minmax(0,1fr))}.palette-count{display:none}.palette-card-meta{align-items:flex-start;flex-direction:column;gap:4px}}
 @media(prefers-reduced-motion:reduce){.palette-card,.palette-filter,.palette-download-button,.palette-card:hover{transition:none;transform:none}}
+
+/* Small palette controls use the same translucent Awwal glass icon language. */
+.palette-page .glass-icon{
+  display:inline-grid;place-items:center;flex:0 0 27px;width:27px;height:27px;
+  border:1px solid rgba(255,255,255,.76);border-radius:50%;
+  background:linear-gradient(145deg,rgba(255,255,255,.48),rgba(120,164,255,.32) 42%,rgba(0,0,128,.52));
+  color:#fff;line-height:1;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.66),inset 0 -5px 10px rgba(0,0,128,.16),0 5px 14px rgba(0,0,70,.16);
+  -webkit-backdrop-filter:blur(14px) saturate(155%);backdrop-filter:blur(14px) saturate(155%)
+}
+.palette-page .palette-reset .glass-icon{margin-left:6px;vertical-align:middle}
+.palette-page .remove-color{
+  width:24px;height:24px;border:1px solid rgba(255,255,255,.8);
+  background:linear-gradient(145deg,rgba(255,255,255,.58),rgba(121,162,255,.35) 48%,rgba(0,0,128,.5));
+  color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.75),0 4px 10px rgba(0,0,70,.18);
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)
+}
+.palette-page .palette-text-button .glass-icon{margin-right:7px}
