@@ -12,19 +12,25 @@
     let letterIndex = 0;
     nodes.forEach(node => {
       const fragment = document.createDocumentFragment();
-      for (const character of node.textContent) {
-        if (/\s/.test(character)) {
-          fragment.append(document.createTextNode(character));
-          continue;
+      const parts = node.textContent.match(/\\s+|[^\\s]+/g) || [];
+      parts.forEach(part => {
+        if (/^\\s+$/.test(part)) {
+          fragment.append(document.createTextNode(part));
+          return;
         }
-        const letter = document.createElement('span');
-        letter.className = 'hero-letter';
-        letter.dataset.letter = character;
-        letter.style.setProperty('--spectrum-shift', `${(letterIndex * 11) % 100}%`);
-        letter.textContent = character;
-        fragment.append(letter);
-        letterIndex += 1;
-      }
+        const word = document.createElement('span');
+        word.className = 'hero-word';
+        for (const character of part) {
+          const letter = document.createElement('span');
+          letter.className = 'hero-letter';
+          letter.dataset.letter = character;
+          letter.style.setProperty('--spectrum-shift', `${(letterIndex * 11) % 100}%`);
+          letter.textContent = character;
+          word.append(letter);
+          letterIndex += 1;
+        }
+        fragment.append(word);
+      });
       node.replaceWith(fragment);
     });
   };
