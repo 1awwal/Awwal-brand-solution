@@ -890,7 +890,7 @@ html[dir=rtl] .round-link b{background:linear-gradient(145deg,rgba(255,255,255,.
 
 /* Refined white homepage hero and restrained frosted-glass icon surfaces. */
 .nav-wrap:not(.scrolled){color:var(--blue)}
-.nav-wrap:not(.scrolled) .brand-name,.nav-wrap:not(.scrolled) .desktop-nav a{color:var(--blue)}
+.nav-wrap:not(.scrolled) .brand-name,.nav-wrap:not(.scrolled) .desktop-nav a{color:#fff}
 .nav-wrap.scrolled .brand-logo{filter:brightness(0) invert(1)}
 .hero{background:#fff;color:#101018}
 .hero-grid{opacity:.35;background-image:linear-gradient(to right,transparent calc(25% - .5px),rgba(0,0,128,.09) 25%,transparent calc(25% + .5px)),linear-gradient(to bottom,transparent calc(50% - .5px),rgba(0,0,128,.08) 50%,transparent calc(50% + .5px))}
@@ -930,7 +930,7 @@ html[dir=rtl] .round-link b{background:linear-gradient(145deg,rgba(255,255,255,.
 .hero-letter.is-fading::after{opacity:0;transition:opacity 1.3s ease-out}
 @keyframes awwal-letter-spectrum{to{background-position:100% 50%}}
 @media(max-width:720px){
-  .nav-wrap:not(.scrolled) .brand-name{color:var(--blue)}
+  .nav-wrap:not(.scrolled) .brand-name{color:#fff}
   .hero{background:#fff}
   .hero .kicker,.hero h1,.hero h1>span{color:var(--blue)}
   .hero-side,.scroll-cue{color:rgba(0,0,80,.55)}
@@ -1073,3 +1073,48 @@ html[dir=rtl] .hero{background:radial-gradient(ellipse 72% 74% at 82% 18%,rgba(7
   background:linear-gradient(180deg,rgba(0,0,70,.94) 0%,rgba(0,0,108,.82) 66%,rgba(16,33,128,.35) 100%);
   border-bottom-color:transparent;
 }
+
+/* Final layout QA: less unused space and safer mockup text bounds. */
+.work.section-pad{padding-top:clamp(64px,7vw,104px);padding-bottom:clamp(68px,7.5vw,108px)}
+.work-head{margin:clamp(36px,5vw,62px) 0 clamp(26px,3.5vw,44px)}
+.work-head h2{max-width:15ch;font-size:clamp(48px,7.1vw,104px);line-height:.94;letter-spacing:-.07em}
+.work-head p{max-width:34ch;line-height:1.7}
+.showcase-intro{margin-bottom:8px}
+.showcase-viewport{padding-top:8px;padding-bottom:16px}
+.showcase-stage{height:clamp(340px,34vw,488px)}
+.showcase-slide{flex-basis:clamp(330px,53vw,720px)}
+.slide-footer{padding-top:11px}
+.showcase-controls{margin-top:6px}
+.work-note{margin-top:18px}
+.stage-caption{max-width:68%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.showcase-stage .object{max-width:100%}
+.showcase-dialog-scene{height:min(58vh,580px);min-height:300px}
+@media(max-width:720px){
+ .work.section-pad{padding-top:74px;padding-bottom:78px}
+ .work-head{margin:54px 0 28px}
+ .work-head h2{font-size:clamp(43px,11.5vw,78px);line-height:.98;letter-spacing:-.06em}
+ .work-head p{margin-top:16px;font-size:11px}
+ .showcase-stage{height:min(82vw,390px);min-height:300px}
+ .showcase-slide{flex-basis:min(86vw,400px)}
+ .showcase-viewport{padding-top:6px;padding-bottom:14px}
+ .stage-caption{max-width:72%;font-size:6px}
+ .showcase-controls{grid-template-columns:minmax(50px,1fr) auto auto;gap:10px}
+ .showcase-dialog-scene{height:52vh;min-height:285px}
+}
+
+
+/* Liquid-glass folder icon for the project CTA. */
+.nav-cta{gap:14px;min-width:204px;justify-content:space-between;white-space:nowrap}
+.nav-cta .folder-icon{display:block;width:40px;height:33px;flex:0 0 auto;overflow:visible;filter:drop-shadow(0 4px 8px rgba(0,12,72,.24));transition:transform .35s cubic-bezier(.2,.8,.2,1),filter .35s}
+.folder-icon .folder-back{fill:url(#folderBack);stroke:rgba(224,241,255,.85);stroke-width:1.25}
+.folder-icon .folder-front{fill:url(#folderGlass);stroke:rgba(255,255,255,.9);stroke-width:1.4}
+.folder-icon .folder-shine{fill:none;stroke:rgba(255,255,255,.78);stroke-width:1;stroke-linecap:round}
+.nav-cta:hover .folder-icon{transform:translateY(-2px) scale(1.08);filter:drop-shadow(0 7px 12px rgba(0,12,72,.32))}
+@media(max-width:720px){.nav-cta .folder-icon{width:38px;height:31px}}
+@media(prefers-reduced-motion:reduce){.nav-cta .folder-icon{transition:none}}
+
+
+/* Keep the header readable over the blue hero and its glass surfaces. */
+html:not([dir=rtl]) .nav-wrap .brand-name,html:not([dir=rtl]) .nav-wrap .desktop-nav a{color:#fff}
+.nav-wrap .brand-logo{filter:brightness(0) invert(1)}
+html:not([dir=rtl]) .nav-wrap .desktop-nav a:hover{color:var(--amber)}

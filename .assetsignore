@@ -1,0 +1,6 @@
+.git/
+.github/
+.assetsignore
+CLOUDFLARE.md
+README.md
+wrangler.jsonc
