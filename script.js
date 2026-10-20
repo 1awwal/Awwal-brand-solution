@@ -244,6 +244,6 @@
     dialog.addEventListener('click',e=>{if(e.target===dialog)close();});dialog.addEventListener('close',()=>document.body.classList.remove('showcase-zoom-open'));
     dialog.addEventListener('keydown',e=>{if(e.key==='ArrowRight')go(active+1);if(e.key==='ArrowLeft')go(active-1);});
     let zoomX=0;dialog.addEventListener('pointerdown',e=>zoomX=e.clientX);dialog.addEventListener('pointerup',e=>{const dx=e.clientX-zoomX;if(Math.abs(dx)>70)go(active+(dx<0?1:-1));});
-    go(0);
+    go(0,false);
   }
 })();
