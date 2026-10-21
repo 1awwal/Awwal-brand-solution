@@ -1274,7 +1274,7 @@ html[data-theme="light"] .nav-wrap .desktop-nav a:hover{color:#2948b8;opacity:1}
 .footer .footer-main{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,.7fr) minmax(0,1.15fr) minmax(0,.8fr);align-items:start;gap:32px clamp(24px,3vw,48px);padding:0 0 40px}
 .footer .footer-main>div{min-width:0}
 .footer .footer-brand .brand{width:min(210px,100%);max-width:100%;height:auto}
-.footer .footer-brand .brand-logo{display:block;width:100%;height:auto;max-height:none;object-fit:contain;object-position:left center}
+.footer .footer-brand .brand-logo[src$="awwal-horizontal-logo.png"]{display:block;width:100%;height:auto;max-height:none;object-fit:contain;object-position:left center}
 .footer .footer-brand p{max-width:12ch;margin:24px 0 0;font-size:clamp(32px,3.2vw,44px);line-height:1.04;letter-spacing:-.055em}
 .footer .footer-links{gap:10px;min-width:0;font-size:14px;line-height:1.6;letter-spacing:0}
 .footer .footer-links .eyebrow{margin:0 0 10px;font-size:10px;line-height:1.6;letter-spacing:.15em}
@@ -1305,3 +1305,4 @@ html[dir=rtl] .footer .footer-brand .brand-logo{object-position:right center}
 }
 html[data-theme="light"] .footer .footer-bottom>a{color:#0a164e}
 html[data-theme="light"] .footer .footer-bottom>span:nth-child(2){color:#755000}
+html[data-theme="light"] .footer .footer-links>span:not(.eyebrow){color:rgba(10,22,78,.78)}
