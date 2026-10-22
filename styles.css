@@ -1330,3 +1330,14 @@ html[data-theme="light"] .founder-page,html[data-theme="light"] .founder-page .f
 .statement h2{margin-top:0;margin-bottom:0}
 .room-topbar,.room-caption-top{justify-content:flex-end}
 html .founder-page .founder-education .founder-section-head h2{margin-top:0}
+
+/* Readable service packages in both appearances. */
+.services .packages-heading p,.services .service-package-card p{font-size:14px;line-height:1.7;color:#e2e8f5}
+.services .package-includes{font-size:12px;line-height:1.65;color:#edf2ff}
+.services .package-index{font-size:11px}
+html[data-theme="light"] .services .service-packages{background:rgba(255,255,255,.6);border-color:rgba(16,32,77,.18)}
+html[data-theme="light"] .services .service-package-card{background:rgba(255,255,255,.88);border-color:rgba(16,32,77,.16)}
+html[data-theme="light"] .services .service-package-card:hover{background:#fff;border-color:rgba(41,72,184,.4)}
+html[data-theme="light"] .services .packages-heading p,html[data-theme="light"] .services .service-package-card p{color:#344466}
+html[data-theme="light"] .services .package-includes{color:#344466;border-color:rgba(16,32,77,.18)}
+html[data-theme="light"] .services .package-index,html[data-theme="light"] .services .packages-heading h3 em{color:#2948b8}
