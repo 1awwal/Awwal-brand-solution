@@ -15,8 +15,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Noto+Sans+Arabic:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script>try{const t=localStorage.getItem("awwal-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="palettes.css">
+  <link rel="stylesheet" href="styles.css?v=20261022-gradients">
+  <link rel="stylesheet" href="palettes.css?v=20261022-gradients">
 <style>html[data-theme="dark"] .palette-site{background:#080d3b;color:#f5f7ff}html[data-theme="dark"] .palette-builder,html[data-theme="dark"] .palette-studio-shell{background:#111847;color:#f4f6ff;border-color:rgba(255,255,255,.14)}html[data-theme="dark"] .palette-card{background:#171f54;color:#f4f6ff;border-color:rgba(255,255,255,.15)}html[data-theme="dark"] .palette-filter{color:#eef2ff;border-color:rgba(255,255,255,.25)}html[data-theme="dark"] .palette-filter:hover,html[data-theme="dark"] .palette-filter.is-active{background:#ffb703;color:#000080;border-color:#ffb703}html[data-theme="dark"] .palette-count,html[data-theme="dark"] .palette-name-line>span:last-child,html[data-theme="dark"] .palette-card-meta small,html[data-theme="dark"] .builder-description,html[data-theme="dark"] .palette-download-panel>label,html[data-theme="dark"] .palette-status,html[data-theme="dark"] .palette-note,html[data-theme="dark"] .generator-controls label,html[data-theme="dark"] .extract-count,html[data-theme="dark"] .gradient-controls label,html[data-theme="dark"] .contrast-tool label,html[data-theme="dark"] .palette-command-bar p{color:rgba(244,246,255,.68)}html[data-theme="dark"] .editable-color-code{color:rgba(244,246,255,.8)}html[data-theme="dark"] .palette-download-panel select,html[data-theme="dark"] .generator-controls select,html[data-theme="dark"] .extract-count select,html[data-theme="dark"] .gradient-controls select,html[data-theme="dark"] .contrast-tool select{background:#0b123f;color:#f5f7ff;border-color:rgba(255,255,255,.22)}html[data-theme="dark"] .palette-footer{background:#030726}html[data-theme="dark"] .palette-studio-shell{border-color:rgba(255,255,255,.12)}html[data-theme="dark"] .palette-site{color:#f5f7ff}html[data-theme="dark"] .palette-site h2,html[data-theme="dark"] .palette-site h3,html[data-theme="dark"] .palette-studio-shell h1,html[data-theme="dark"] .palette-studio-shell h2,html[data-theme="dark"] .palette-studio-shell h3{color:#f5f7ff}html[data-theme="dark"] .palette-site .palette-command-bar,html[data-theme="dark"] .palette-site .palette-workspace,html[data-theme="dark"] .palette-site .palette-saved-panel{background:#111847;color:#f5f7ff}html[data-theme="dark"] .palette-site input,html[data-theme="dark"] .palette-site textarea{background:#0b123f;color:#f5f7ff;border-color:rgba(255,255,255,.22)}</style>
 </head>
 <body class="palette-site">
@@ -30,7 +30,7 @@
   <main class="palette-page">
     <section class="palette-intro">
       <div class="palette-intro-copy">
-        <p class="kicker">AWWAL / COLOR STUDIO</p>
+        
         <h1 class="color-motion-title">Find your<br><em>color story.</em></h1>
         <p class="palette-intro-lead">Start with a feeling. Explore palettes, adjust every shade, and download a set of colors made for your next idea.</p>
         <a class="palette-scroll-link" href="#studio">EXPLORE THE PALETTES <span class="glass-icon" aria-hidden="true">↓</span></a>
@@ -39,7 +39,7 @@
     </section>
     <section class="palette-studio-shell" id="studio">
       <div class="palette-command-bar">
-        <div><span class="eyebrow dark">YOUR COLOR WORKBENCH</span><p>Generate a direction, keep what works, and shape the rest.</p></div>
+        <div><p>Generate a direction, keep what works, and shape the rest.</p></div>
         <div class="generator-controls">
           <label>COLORS<select id="generator-count" aria-label="Number of colors"><option>3</option><option>4</option><option selected>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></label>
           <label>HARMONY<select id="generator-harmony" aria-label="Color harmony"><option value="random">Surprise me</option><option value="analogous">Analogous</option><option value="complementary">Complementary</option><option value="triadic">Triadic</option><option value="monochrome">Monochrome</option></select></label>
@@ -48,7 +48,7 @@
       </div>
       <div class="palette-studio">
       <div class="palette-library">
-        <div class="palette-section-heading"><div><span class="eyebrow dark">01 / GET INSPIRED</span><h2>Choose a mood.</h2></div><span class="palette-count" id="palette-count">08 PALETTES</span></div>
+        <div class="palette-section-heading"><div><h2>Choose a mood.</h2></div><span class="palette-count" id="palette-count">08 PALETTES</span></div>
         <div class="palette-filters" role="group" aria-label="Filter palettes by mood">
           <button type="button" class="palette-filter is-active" data-filter="all" aria-pressed="true">All</button>
           <button type="button" class="palette-filter" data-filter="neutral" aria-pressed="false">Neutral</button>
@@ -62,7 +62,7 @@
         <div class="palette-list" id="palette-list" aria-label="Palette ideas"></div>
       </div>
       <section class="palette-builder" aria-labelledby="builder-title">
-        <div class="palette-section-heading builder-heading"><div><span class="eyebrow dark">02 / MAKE IT YOURS</span><h2 id="builder-title">Your palette.</h2></div><div class="builder-top-actions"><button type="button" class="palette-reset" id="save-palette">SAVE <span class="glass-icon" aria-hidden="true">♡</span></button><button type="button" class="palette-reset" id="share-palette">SHARE <span class="glass-icon" aria-hidden="true">↗</span></button></div></div>
+        <div class="palette-section-heading builder-heading"><div><h2 id="builder-title">Your palette.</h2></div><div class="builder-top-actions"><button type="button" class="palette-reset" id="save-palette">SAVE <span class="glass-icon" aria-hidden="true">♡</span></button><button type="button" class="palette-reset" id="share-palette">SHARE <span class="glass-icon" aria-hidden="true">↗</span></button></div></div>
         <p class="builder-description">Choose a palette, then tap any color to change it. Add or remove shades to make the set your own.</p>
         <div class="palette-name-line"><input id="current-palette-name" aria-label="Palette name" maxlength="48" value="Desert Bloom"><span id="color-count-label">05 COLORS</span></div>
         <div class="palette-import"><label for="palette-import-input">PASTE COLOR CODES</label><div><input id="palette-import-input" type="text" placeholder="#123456, #FFB703, #FFFFFF"><button type="button" id="import-colors">IMPORT</button></div></div>
@@ -78,7 +78,7 @@
       </section>
       </div>
       <section class="palette-tools" aria-labelledby="tools-title">
-        <div class="palette-section-heading"><div><span class="eyebrow dark">03 / COLOR TOOLS</span><h2 id="tools-title">Make it work.</h2></div><p>Test your colors in real design situations.</p></div>
+        <div class="palette-section-heading"><div><h2 id="tools-title">Make it work.</h2></div><p>Test your colors in real design situations.</p></div>
         <div class="tool-tabs" role="tablist" aria-label="Palette tools">
           <button type="button" role="tab" id="tab-preview" aria-selected="true" aria-controls="tool-preview" data-tool="preview">Preview</button>
           <button type="button" role="tab" id="tab-image" aria-selected="false" aria-controls="tool-image" data-tool="image">Pick from image</button>

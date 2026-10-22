@@ -1308,3 +1308,25 @@ html[data-theme="light"] .footer .footer-bottom>span:nth-child(2){color:#755000}
 html[data-theme="light"] .footer .footer-links>span:not(.eyebrow){color:rgba(10,22,78,.78)}
 
 html[data-theme="light"] .footer .footer-links>a:hover{color:#2948b8}
+
+
+/* Subtle brand gradients for page backgrounds in both appearances. */
+:root{--brand-navy-gradient:linear-gradient(135deg,#000080 0%,#09096f 54%,#171781 100%);--brand-cream-gradient:linear-gradient(135deg,#fffdf8 0%,#faf7f2 54%,#f5f3fb 100%);--brand-light-gradient:linear-gradient(135deg,#fafbff 0%,#eef2fc 54%,#f6f4fc 100%);--brand-amber-gradient:linear-gradient(135deg,#ffb703 0%,#ffc125 54%,#f5ad00 100%)}
+body{background:var(--brand-cream-gradient)}
+html[data-theme="dark"] body{background:var(--brand-navy-gradient)}
+html .hero,html[dir="rtl"] .hero,.services,.statement,.principles,.footer,html .campaign-page{background:var(--brand-navy-gradient)}
+.manifesto,.feature{background:var(--brand-cream-gradient)}
+.work{background:linear-gradient(135deg,#0a1235 0%,#111940 55%,#171e48 100%)}
+.cta-section,.brand-ribbon{background:var(--brand-amber-gradient)}
+html[data-theme="light"] .hero,html[data-theme="light"][dir="rtl"] .hero,html[data-theme="light"] .services,html[data-theme="light"] .statement,html[data-theme="light"] .principles,html[data-theme="light"] .work,html[data-theme="light"] .footer,html[data-theme="light"] .campaign-page{background:var(--brand-light-gradient)}
+html .founder-page,html .founder-page .founder-section{background:var(--brand-cream-gradient)}
+html .founder-page .founder-hero,html .founder-page .founder-end{background:var(--brand-navy-gradient)}
+html[data-theme="dark"] .founder-page,html[data-theme="dark"] .founder-page .founder-section{background:linear-gradient(135deg,#070b35 0%,#0d123d 55%,#151a48 100%)}
+html[data-theme="light"] .founder-page,html[data-theme="light"] .founder-page .founder-hero,html[data-theme="light"] .founder-page .founder-section,html[data-theme="light"] .founder-page .founder-end{background:var(--brand-light-gradient)}
+/* Close only the space left by removed decorative label rows. */
+.manifesto .manifesto-grid{padding-top:0}
+.services .services-head,.work .work-head,.principles .principles-head{margin-top:0}
+.feature .feature-layout{padding-top:0}
+.statement h2{margin-top:0;margin-bottom:0}
+.room-topbar,.room-caption-top{justify-content:flex-end}
+html .founder-page .founder-education .founder-section-head h2{margin-top:0}

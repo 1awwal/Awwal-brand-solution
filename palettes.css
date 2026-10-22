@@ -189,3 +189,8 @@ html[data-theme="light"] .palette-nav{background:rgba(238,243,255,.72);border-bo
 html[data-theme="light"] .palette-nav .desktop-nav a,html[data-theme="light"] .palette-nav-home{color:#09154f}
 html[data-theme="light"] .palette-nav .brand-logo{filter:brightness(0) saturate(100%) invert(10%) sepia(61%) saturate(3183%) hue-rotate(227deg) brightness(78%) contrast(135%)}
 html[data-theme="dark"] .palette-nav{background:rgba(0,0,80,.48);border-bottom-color:transparent}
+
+/* Use the brand gradients on page surfaces; keep palette swatches exact. */
+html body.palette-site,.palette-page,.palette-studio-shell,.palette-tools{background:var(--brand-cream-gradient)}
+.palette-intro,.palette-footer{background:var(--brand-navy-gradient)}
+.palette-intro::before{background:none}
