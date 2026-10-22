@@ -1,0 +1,51 @@
+/* Service pages and exact-aspect poster presentation. */
+.service-site,.campaign-page,.service-poster-intro{--content-ink:#f6f8ff;--content-muted:#d1daed;--content-rule:rgba(226,234,255,.22);--content-surface:rgba(255,255,255,.065)}
+html[data-theme="light"] .service-site,html[data-theme="light"] .campaign-page,html[data-theme="light"] .service-poster-intro{--content-ink:#10204d;--content-muted:#344466;--content-rule:rgba(16,32,77,.2);--content-surface:rgba(255,255,255,.86)}
+.service-site{min-height:100svh;padding:120px var(--gutter) 70px;background:var(--brand-navy-gradient);color:var(--content-ink)}
+html[data-theme="light"] .service-site{background:var(--brand-light-gradient)}
+.service-site>*{width:100%;max-width:1360px;margin-inline:auto}
+.service-skip{position:fixed;z-index:1100;left:20px;top:12px;transform:translateY(-180%);padding:12px 16px;border-radius:8px;background:#ffb703;color:#000080}
+.service-skip:focus{transform:none}
+.service-breadcrumb{display:flex;flex-wrap:wrap;gap:8px 12px;font-size:13px;line-height:1.7;color:var(--content-muted);margin-bottom:40px}
+.service-breadcrumb a{text-decoration:underline;text-underline-offset:4px}
+.service-hero{padding-bottom:42px;max-width:1000px;margin-inline-start:max(0px,calc((100% - 1360px)/2))}
+.service-hero h1,.service-overview h1{font-size:clamp(38px,5.4vw,78px);line-height:1.08;letter-spacing:-.055em;margin:0 0 26px;color:var(--content-ink);overflow-wrap:break-word}
+.service-hero>p,.service-overview>div>p{max-width:70ch;font-size:17px;line-height:1.8;color:var(--content-muted);margin:0 0 24px}
+.service-arabic{font-family:'Noto Sans Arabic',sans-serif;line-height:1.95!important;letter-spacing:0}
+.service-hero .button,.service-overview .button,.service-project .button,.service-poster-intro .button{border:1px solid rgba(255,255,255,.35);border-radius:12px;font-size:12px;letter-spacing:.04em;min-height:48px}
+.service-overview{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(260px,.7fr);gap:clamp(28px,6vw,90px);align-items:start}
+.service-overview>.service-poster{width:min(100%,390px);justify-self:end}
+.service-content{padding:46px 0;border-top:1px solid var(--content-rule);margin-top:38px;color:var(--content-ink)}
+.service-content h2{font-size:clamp(28px,3.3vw,44px);line-height:1.2;letter-spacing:-.035em;margin:0 0 22px;color:var(--content-ink)}
+.service-content .service-text{font-size:16px;line-height:1.85;max-width:78ch;color:var(--content-muted);margin:0 0 26px}
+.service-deliverables,.service-catalog{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.service-deliverables article,.service-catalog article{padding:26px;border:1px solid var(--content-rule);border-radius:18px;background:var(--content-surface)}
+.service-content article h3{font-size:21px;line-height:1.35;letter-spacing:-.025em;margin:0 0 12px;color:var(--content-ink)}
+.service-content article p,.service-process p,.service-project p{font-size:15px;line-height:1.8;color:var(--content-muted);margin:0}
+.service-catalog article>a,.service-related a,.service-poster figcaption>a,.service-email{display:inline-block;margin-top:18px;font-size:14px;line-height:1.7;text-decoration:underline;text-underline-offset:5px;color:var(--content-ink)}
+.service-poster-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;align-items:start}
+.service-poster{margin:0;min-width:0;overflow:hidden;border:1px solid var(--content-rule);border-radius:18px;background:var(--content-surface);color:var(--content-ink)}
+.service-poster>a{display:block;background:#000080}
+.service-poster img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:contain}
+.service-poster figcaption{padding:20px}
+.service-poster figcaption h3{font-size:18px;line-height:1.4;margin:0 0 8px;color:var(--content-ink)}
+.service-poster figcaption p{font-size:14px;line-height:1.7;color:var(--content-muted);margin:0}
+.service-poster figcaption>a{margin-top:12px}
+.service-process{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px;padding-left:24px}
+.service-process li{padding:0 12px 0 6px;color:var(--content-muted)}
+.service-process h3{font-size:20px;line-height:1.35;margin:0 0 12px;color:var(--content-ink)}
+.service-faq details{padding:20px 0;border-bottom:1px solid var(--content-rule)}
+.service-faq summary{font-size:17px;line-height:1.55;font-weight:600;cursor:pointer;color:var(--content-ink)}
+.service-faq details p{font-size:15px;line-height:1.8;max-width:78ch;color:var(--content-muted);margin:16px 0 0}
+.service-project .button{margin-top:26px}.service-email{margin-inline-start:24px}
+.service-related{display:flex;flex-wrap:wrap;gap:16px 30px;border-top:1px solid var(--content-rule);padding-top:22px}
+.service-related a{margin-top:0}
+.service-poster-intro{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(230px,.6fr);gap:clamp(28px,5vw,70px);align-items:center;margin-top:70px;color:var(--content-ink)}
+.service-poster-intro>div>h3{font-size:clamp(30px,4vw,52px);line-height:1.16;letter-spacing:-.04em;margin:0 0 22px}
+.service-poster-intro>div>p{max-width:60ch;font-size:16px;line-height:1.85;color:var(--content-muted);margin:0 0 22px}
+.service-poster-intro>.service-poster{width:min(100%,340px);justify-self:end}
+.service-site a:focus-visible,.campaign-page a:focus-visible,.service-poster-intro a:focus-visible,.service-faq summary:focus-visible{outline:3px solid #ffb703;outline-offset:5px}
+html[data-theme="light"] .service-site a:focus-visible,html[data-theme="light"] .campaign-page a:focus-visible,html[data-theme="light"] .service-poster-intro a:focus-visible,html[data-theme="light"] .service-faq summary:focus-visible{outline-color:#2948b8}
+@media(max-width:1000px){.service-poster-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.service-overview,.service-poster-intro{grid-template-columns:minmax(0,1fr) minmax(240px,.75fr);gap:30px}}
+@media(max-width:720px){.service-site{padding-top:100px}.service-breadcrumb{margin-bottom:30px}.service-overview,.service-poster-intro{grid-template-columns:1fr}.service-overview>.service-poster,.service-poster-intro>.service-poster{justify-self:center;width:min(100%,420px)}.service-hero>p,.service-overview>div>p{font-size:16px}.service-deliverables,.service-catalog,.service-process{grid-template-columns:1fr}.service-content{padding-top:32px;margin-top:30px}.service-email{display:block;margin-inline-start:0}.service-process{gap:24px}.service-poster-intro{margin-top:46px}.service-poster-intro>.service-poster{width:min(100%,380px)}}
+@media(max-width:560px){.service-poster-grid{grid-template-columns:1fr}.service-deliverables article,.service-catalog article{padding:22px}.service-hero h1,.service-overview h1{font-size:clamp(34px,9vw,48px)}}
