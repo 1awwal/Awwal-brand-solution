@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://awwalbrands.com/</loc>
-    <lastmod>2026-10-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://awwalbrands.com/founder</loc>
-  </url>
-  <url>
-    <loc>https://awwalbrands.com/campaigns</loc>
-  </url>
-  <url>
-    <loc>https://awwalbrands.com/palettes</loc>
-  </url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url><loc>https://awwalbrands.com/</loc><lastmod>2026-10-22</lastmod><image:image><image:loc>https://awwalbrands.com/assets/awwal-services-overview-1120.webp</image:loc></image:image></url>
+  <url><loc>https://awwalbrands.com/services</loc><lastmod>2026-10-22</lastmod><image:image><image:loc>https://awwalbrands.com/assets/awwal-services-overview-1120.webp</image:loc></image:image></url>
+  <url><loc>https://awwalbrands.com/branding-graphic-design</loc><lastmod>2026-10-22</lastmod><image:image><image:loc>https://awwalbrands.com/assets/awwal-logo-design-1120.webp</image:loc></image:image><image:image><image:loc>https://awwalbrands.com/assets/awwal-company-profile-1120.webp</image:loc></image:image><image:image><image:loc>https://awwalbrands.com/assets/awwal-poster-design-1120.webp</image:loc></image:image><image:image><image:loc>https://awwalbrands.com/assets/awwal-brochure-design-1120.webp</image:loc></image:image><image:image><image:loc>https://awwalbrands.com/assets/awwal-business-cards-1120.webp</image:loc></image:image><image:image><image:loc>https://awwalbrands.com/assets/awwal-product-packaging-1120.webp</image:loc></image:image></url>
+  <url><loc>https://awwalbrands.com/campaigns</loc><lastmod>2026-10-22</lastmod><image:image><image:loc>https://awwalbrands.com/assets/awwal-social-media-management-1120.webp</image:loc></image:image><image:image><image:loc>https://awwalbrands.com/assets/awwal-google-meta-ads-1120.webp</image:loc></image:image></url>
+  <url><loc>https://awwalbrands.com/website-design</loc><lastmod>2026-10-22</lastmod><image:image><image:loc>https://awwalbrands.com/assets/awwal-website-design-1120.webp</image:loc></image:image></url>
+  <url><loc>https://awwalbrands.com/photography-video</loc><lastmod>2026-10-22</lastmod></url>
+  <url><loc>https://awwalbrands.com/founder</loc><lastmod>2026-10-22</lastmod></url>
+  <url><loc>https://awwalbrands.com/palettes</loc><lastmod>2026-10-22</lastmod></url>
 </urlset>
