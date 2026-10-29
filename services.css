@@ -1,6 +1,6 @@
 /* Service pages and exact-aspect poster presentation. */
-.service-site,.campaign-page,.service-poster-intro{--content-ink:#f6f8ff;--content-muted:#d1daed;--content-rule:rgba(226,234,255,.22);--content-surface:rgba(255,255,255,.065)}
-html[data-theme="light"] .service-site,html[data-theme="light"] .campaign-page,html[data-theme="light"] .service-poster-intro{--content-ink:#10204d;--content-muted:#344466;--content-rule:rgba(16,32,77,.2);--content-surface:rgba(255,255,255,.86)}
+.service-site,.campaign-page,.service-poster-intro,.search-discovery{--content-ink:#f6f8ff;--content-muted:#d1daed;--content-rule:rgba(226,234,255,.22);--content-surface:rgba(255,255,255,.065)}
+html[data-theme="light"] .service-site,html[data-theme="light"] .campaign-page,html[data-theme="light"] .service-poster-intro,html[data-theme="light"] .search-discovery{--content-ink:#10204d;--content-muted:#344466;--content-rule:rgba(16,32,77,.2);--content-surface:rgba(255,255,255,.86)}
 .service-site{min-height:100svh;padding:120px var(--gutter) 70px;background:var(--brand-navy-gradient);color:var(--content-ink)}
 html[data-theme="light"] .service-site{background:var(--brand-light-gradient)}
 .service-site>*{width:100%;max-width:1360px;margin-inline:auto}
@@ -82,3 +82,11 @@ html[data-theme="light"] .social-pricing-terms summary:focus-visible{outline-col
 @media(max-width:1150px){.social-pricing-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:720px){.social-pricing-heading{grid-template-columns:1fr;gap:0}.social-plan-custom{align-items:stretch;flex-direction:column}.social-plan-custom .social-plan-cta{align-self:flex-start}}
 @media(max-width:560px){.social-pricing-grid{grid-template-columns:1fr}.social-pricing article.social-plan{padding:26px}.social-pricing .social-plan-featured{padding:25px}.social-plan-price strong{font-size:38px}.social-plan-custom{padding:24px}}
+
+/* Local discovery links remain visible with either theme. */
+.search-discovery{padding:48px var(--gutter);margin:0;max-width:none;background:var(--brand-navy-gradient);color:var(--content-ink)}
+html[data-theme="light"] .search-discovery{background:var(--brand-light-gradient)}
+.search-discovery>*{max-width:1360px;margin-inline:auto}
+.search-discovery .service-related{margin-top:24px}
+
+html[lang="ar"] .service-site h1,html[lang="ar"] .service-site h2,html[lang="ar"] .service-site h3,html[lang="ar"] .service-site .button{letter-spacing:0;line-height:1.5}

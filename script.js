@@ -38,7 +38,7 @@
   const translations = {
     '.hero .kicker': ['BRAND STRATEGY / IDENTITY / DIGITAL', 'استراتيجية العلامة / الهوية / الرقمي'],
     '.hero h1': ['<span class="hero-gradient-word">AWWAL</span> IS YOUR<br><span><span class="hero-gradient-word">FIRST</span> CHOICE</span>', '<span class="hero-gradient-word">أول</span> هو خيارك<br><span><span class="hero-gradient-word">الأول</span></span>'],
-    '.hero-bottom p': ['Brand identity, graphic design, digital marketing, photography and websites for businesses in Dammam, Saudi Arabia.', 'الهوية البصرية والتصميم والتسويق الرقمي والتصوير والمواقع للأعمال في الدمام، المملكة العربية السعودية.'],
+    '.hero-bottom p': ['Brand identity, graphic design, digital marketing, photography and websites for businesses in Dammam, Al Khobar and Jubail, Saudi Arabia.', 'الهوية البصرية والتصميم والتسويق الرقمي والتصوير والمواقع للأعمال في الدمام والخبر والجبيل، المملكة العربية السعودية.'],
     '.round-link span': ['EXPLORE<br>OUR WORK', 'اكتشف<br>أعمالنا'],
     '.manifesto h2': ['WE START<br>WITH THE <em>FIRST</em><br>IDEA<span class="amber">.</span>', 'نبدأ<br>بالفكرة <em>الأولى</em><br>دائماً<span class="amber">.</span>'],
     '.manifesto-copy .eyebrow': ['ABOUT AWWAL', 'عن أول'],
@@ -46,7 +46,7 @@
     '.manifesto-copy p:not(.lead)': ['We shape and elevate identities through strategic thinking, innovative design and cinematic precision—bridging cultural authenticity with the possibilities of tomorrow.', 'نصوغ الهويات ونرتقي بها عبر التفكير الاستراتيجي والتصميم المبتكر والدقة السينمائية، لنصل بين أصالة الثقافة وإمكانات الغد.'],
     '.text-link': ['GET TO KNOW OUR APPROACH <i>↗</i>', 'اكتشف منهجيتنا <i>↗</i>'],
     '.services-head h2': ['FROM IDENTITY<br>TO <em>IMPACT.</em>', 'من الهوية<br>إلى <em>الأثر.</em>'],
-    '.services-head p': ['Brand identity, company profiles, print design, marketing, photography and websites—connected support for Dammam businesses.', 'الهوية والملفات التعريفية والمطبوعات والتسويق والتصوير والمواقع: خدمات مترابطة للأعمال في الدمام.'],
+    '.services-head p': ['Brand identity, company profiles, print design, marketing, photography and websites—connected support for businesses across Dammam, Al Khobar and Jubail.', 'الهوية والملفات التعريفية والمطبوعات والتسويق والتصوير والمواقع: خدمات مترابطة للأعمال في الدمام والخبر والجبيل.'],
     '.packages-heading .eyebrow': ['WAYS TO WORK TOGETHER', 'طرق للعمل معاً'],
     '.packages-heading h3': ['THOUGHTFUL STARTS.<br><em>CONNECTED SUPPORT.</em>', 'بدايات مدروسة.<br><em>ودعم متكامل.</em>'],
     '.packages-heading p': ['Flexible, coordinated packages shaped around your goals and the scale of your project.', 'باقات مرنة ومتكاملة تُصمم وفق أهدافك ونطاق مشروعك.'],
