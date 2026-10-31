@@ -8,3 +8,6 @@
 .contact-form .enquiry-honeypot{display:none!important}
 .contact-form .form-status{overflow-wrap:anywhere}
 .contact-form[aria-busy="true"] .form-submit{opacity:.65;cursor:wait}
+
+.contact-form .enquiry-consent>span:not(.field-error){grid-column:2;grid-row:1;min-width:0;max-width:100%;overflow-wrap:normal}
+.contact-form .enquiry-consent>.field-error{grid-row:2}

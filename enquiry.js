@@ -62,6 +62,17 @@
   if (typeof document === 'undefined') return;
   const form = document.querySelector('.contact-form');
   if (!form) return;
+  // Keep cached pages compatible while the new HTML reaches every visitor.
+  if (!form.querySelector('[name="consent"]')) {
+    const consentLabel = document.createElement('label');
+    consentLabel.className = 'full enquiry-consent';
+    consentLabel.innerHTML = '<input name="consent" type="checkbox" required><span>I agree that Awwal may process and store my details to respond to this enquiry. Submissions are stored using Cloudflare and may be managed using Harvey. The team may contact me by email, phone or WhatsApp.<br><span lang="ar" dir="rtl">أوافق على معالجة بياناتي وتخزينها للرد على طلبي، وقد يتواصل معي الفريق عبر البريد أو الهاتف أو واتساب.</span></span>';
+    form.querySelector('.form-grid').append(consentLabel);
+  }
+  if (!form.querySelector('[name="website"]')) {
+    const trap = document.createElement('input');
+    trap.type = 'hidden'; trap.name = 'website'; form.append(trap);
+  }
   const fields = [...form.querySelectorAll('input:not([name="website"]),select,textarea')];
   let requestKey = crypto.randomUUID();
   let lastPayload = '';
