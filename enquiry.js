@@ -15,8 +15,8 @@
       budget: 'Enter your budget in SAR using digits only.',
       service: 'Please select a service.',
       message: 'Use letters, numbers, spaces, commas, & and hyphens only.',
-      status: 'Review your enquiry in WhatsApp, then press Send to contact Awwal.',
-      button: 'CONTINUE TO WHATSAPP ↗'
+      status: 'Submit your details directly to Awwal. You do not need to open WhatsApp.',
+      button: 'SEND ENQUIRY ↗', consent: 'Please agree to enquiry processing.'
     },
     ar: {
       name: 'استخدم الحروف والمسافات فقط في الاسم.',
@@ -26,8 +26,8 @@
       budget: 'أدخل الميزانية بالريال السعودي باستخدام الأرقام فقط.',
       service: 'يرجى اختيار الخدمة.',
       message: 'استخدم الحروف والأرقام والمسافات والفواصل و & والشرطة فقط.',
-      status: 'راجع طلبك في واتساب ثم اضغط إرسال للتواصل مع أول.',
-      button: 'المتابعة عبر واتساب ↗'
+      status: 'أرسل بياناتك مباشرة إلى أول دون الحاجة إلى فتح واتساب.',
+      button: 'إرسال الطلب ↗', consent: 'يرجى الموافقة على معالجة بيانات الطلب.'
     }
   };
   const digits = value => value.replace(/[٠-٩۰-۹]/g, c => String(c.charCodeAt(0) - (c <= '٩' ? 0x660 : 0x6f0)));
@@ -62,7 +62,10 @@
   if (typeof document === 'undefined') return;
   const form = document.querySelector('.contact-form');
   if (!form) return;
-  const fields = [...form.querySelectorAll('input,select,textarea')];
+  const fields = [...form.querySelectorAll('input:not([name="website"]),select,textarea')];
+  let requestKey = crypto.randomUUID();
+  let lastPayload = '';
+  let submitting = false;
   const button = form.querySelector('[type="submit"]');
   const status = form.querySelector('.form-status');
   const language = () => document.documentElement.lang === 'ar' ? 'ar' : 'en';
@@ -92,9 +95,12 @@
   new MutationObserver(updateLanguage).observe(document.documentElement, {attributes:true, attributeFilter:['lang']});
   updateLanguage();
   button.disabled = false;
-  form.addEventListener('submit', event => {
+  form.addEventListener('submit', async event => {
     event.preventDefault();
+    if (submitting) return;
     const {data, errors} = validate(Object.fromEntries(new FormData(form)));
+    const consent = form.querySelector('[name="consent"]').checked;
+    if (!consent) errors.consent = 'consent';
     fields.forEach(field => {
       const error = errors[field.name] ? text[language()][field.name] : '';
       field.setCustomValidity(error);
@@ -102,7 +108,24 @@
       document.getElementById('enquiry-error-' + field.name).textContent = error;
     });
     if (!form.reportValidity()) return;
-    // The visitor reviews and sends in WhatsApp; this never claims a message was already sent.
-    window.location.assign(whatsappUrl(data));
+    const fingerprint = JSON.stringify({...data,consent});
+    if (fingerprint !== lastPayload) { requestKey = crypto.randomUUID(); lastPayload = fingerprint; }
+    submitting = true; button.disabled = true; form.setAttribute('aria-busy','true');
+    status.textContent = language() === 'ar' ? 'جارٍ إرسال طلبك…' : 'Sending your enquiry…';
+    try {
+      const response = await fetch('/api/enquiries', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({...data,consent,requestKey,website:form.querySelector('[name="website"]').value}),
+        signal:AbortSignal.timeout(20000)
+      });
+      const result = await response.json();
+      if (!response.ok || !result.received || !result.reference) throw new Error('Not received');
+      status.textContent = language() === 'ar' ? 'تم استلام طلبك. سيتواصل معك فريق أول. رقم المرجع: ' + result.reference : 'Your enquiry has been received. The Awwal team will contact you. Reference: ' + result.reference;
+      form.reset(); requestKey = crypto.randomUUID();
+    } catch {
+      status.textContent = language() === 'ar' ? 'لم نتمكن من تأكيد استلام طلبك. يرجى المحاولة مجدداً أو التواصل معنا مباشرة.' : 'We could not confirm receipt. Please try again or contact us directly. Your details are still in the form.';
+    } finally {
+      submitting = false; button.disabled = false; form.removeAttribute('aria-busy');
+    }
   });
 })();
