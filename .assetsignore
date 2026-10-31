@@ -4,3 +4,6 @@
 CLOUDFLARE.md
 README.md
 wrangler.jsonc
+
+enquiry-worker.mjs
+enquiry-server.mjs
