@@ -1365,3 +1365,19 @@ html[data-theme="light"] .service-directory a:focus-visible{outline-color:#2948b
 html[dir="rtl"] .service-directory-column li a>span:first-child{transform:scaleX(-1)}
 @media(max-width:1000px){.service-directory-grid{gap:24px}.service-directory-column h4{font-size:13px}.service-directory-column li a{font-size:15px}}
 @media(max-width:760px){.service-directory-grid{grid-template-columns:1fr;gap:28px}.service-directory-heading{align-items:flex-start;flex-direction:column;gap:12px;margin-bottom:28px}.service-directory-column h4{font-size:15px;margin-bottom:10px;padding-bottom:14px}.service-directory-column li a{font-size:16px;min-height:48px}.service-directory{padding:24px 22px;border-radius:14px}}
+
+/* Customer-focused homepage story. */
+.hero-customer h1{font-size:clamp(40px,6.6vw,106px);line-height:1.08;letter-spacing:-.04em;word-spacing:normal;max-width:100%}
+.hero-customer .hero-bottom p{max-width:66ch;font-size:16px;line-height:1.8}
+.hero-customer .hero-bottom{gap:clamp(24px,4vw,64px)}
+.hero-customer .round-link{flex-shrink:0}
+.customer-needs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:48px;color:#10204d}
+.customer-needs article{padding:28px;border:1px solid #cdd5e5;border-radius:16px;background:linear-gradient(135deg,#fff,#f4f5fb);min-width:0}
+.customer-needs h3{font-size:22px;line-height:1.35;letter-spacing:-.025em;margin:0 0 16px;color:#10204d}
+.customer-needs p{font-size:15px;line-height:1.8;margin:0;color:#344466}
+.customer-needs article>div{border-top:1px solid #d6dce9;margin-top:24px;padding-top:20px}
+.customer-needs h4{font-size:14px;line-height:1.5;margin:0 0 10px;color:#2948b8}
+@media(max-width:900px){.customer-needs{grid-template-columns:1fr}.customer-needs article{padding:24px}}
+@media(max-width:720px){.hero-customer h1{font-size:clamp(28px,7.1vw,50px);line-height:1.15;letter-spacing:-.035em}.hero-customer .hero-bottom p{font-size:15px}.hero-customer{height:auto;min-height:760px}.hero-customer .hero-copy{padding:36px 20px}}
+html[dir=rtl] .hero-customer h1{font-size:clamp(38px,6vw,90px);line-height:1.35;letter-spacing:0}
+@media(max-width:720px){html[dir=rtl] .hero-customer h1{font-size:clamp(30px,7vw,46px)}}
