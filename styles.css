@@ -1381,3 +1381,18 @@ html[dir="rtl"] .service-directory-column li a>span:first-child{transform:scaleX
 @media(max-width:720px){.hero-customer h1{font-size:clamp(28px,7.1vw,50px);line-height:1.15;letter-spacing:-.035em}.hero-customer .hero-bottom p{font-size:15px}.hero-customer{height:auto;min-height:760px}.hero-customer .hero-copy{padding:36px 20px}}
 html[dir=rtl] .hero-customer h1{font-size:clamp(38px,6vw,90px);line-height:1.35;letter-spacing:0}
 @media(max-width:720px){html[dir=rtl] .hero-customer h1{font-size:clamp(30px,7vw,46px)}}
+
+/* Repeat the translucent blue surfaces and oversized Arabic motif. */
+.service-directory,.customer-needs article,.principle-grid article{box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 16px 42px rgba(3,8,53,.1);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.service-directory{position:relative;isolation:isolate;overflow:hidden;background:linear-gradient(135deg,rgba(103,126,255,.2),rgba(29,35,155,.35));border-color:rgba(219,229,255,.28)}
+.service-directory::before{content:"أ";position:absolute;z-index:-1;right:-.06em;bottom:-.32em;font:700 clamp(300px,45vw,680px)/1 var(--arabic);color:rgba(255,255,255,.045);pointer-events:none}
+.principles{position:relative;isolation:isolate;overflow:hidden}
+.principles::before{content:"أ";position:absolute;z-index:-1;right:-.04em;bottom:-.3em;font:700 clamp(450px,56vw,900px)/1 var(--arabic);color:rgba(255,255,255,.045);pointer-events:none}
+.principle-grid article{background:linear-gradient(135deg,rgba(125,145,255,.2),rgba(60,66,195,.1));border:1px solid rgba(221,230,255,.28);border-radius:16px}
+.customer-needs article{background:linear-gradient(135deg,rgba(255,255,255,.94),rgba(219,227,252,.75));border-color:rgba(127,148,203,.35)}
+.customer-needs{position:relative;isolation:isolate}
+.customer-needs::before{content:"أ";position:absolute;z-index:-1;right:-.02em;bottom:-.18em;font:700 clamp(260px,30vw,460px)/1 var(--arabic);color:rgba(41,72,184,.065);pointer-events:none}
+html[data-theme="light"] .service-directory{background:linear-gradient(135deg,rgba(255,255,255,.92),rgba(216,227,255,.74));border-color:rgba(41,72,184,.23)}
+html[data-theme="light"] .service-directory::before,html[data-theme="light"] .principles::before{color:rgba(41,72,184,.06)}
+html[data-theme="light"] .principle-grid article{background:linear-gradient(135deg,rgba(255,255,255,.94),rgba(219,229,255,.78));border-color:rgba(41,72,184,.22)}
+@media(max-width:720px){.principle-grid article{border-radius:13px}.service-directory::before,.principles::before{opacity:.7}}
