@@ -7,3 +7,4 @@ wrangler.jsonc
 
 enquiry-worker.mjs
 enquiry-server.mjs
+agent-api.mjs

@@ -1,4 +1,5 @@
 import {validateLead,notificationParameters} from './enquiry-server.mjs';
+import {problem,readOnlyApi,mcp} from './agent-api.mjs';
 
 // Owner WhatsApp alert for every lead. Configure Worker variables/secrets:
 //  Meta WhatsApp Cloud API (preferred): WHATSAPP_TOKEN (secret), WHATSAPP_PHONE_ID, WHATSAPP_TO (e.g. 966539211696),
@@ -42,7 +43,8 @@ export async function notifyOwner(reference,data,env,transport=fetch){
   return {state:'skipped'};
 }
 
-const reply=(data,status=200)=>Response.json(data,{status,headers:{'Cache-Control':'no-store','X-Content-Type-Options':'nosniff'}});
+const RATE_LIMIT=10;
+const reply=(data,status=200,headers={})=>Response.json(data,{status,headers:{'Cache-Control':'no-store','X-Content-Type-Options':'nosniff',...headers}});
 async function boundedJson(request) {
   const reader=request.body?.getReader();
   if(!reader)throw new Error('empty');
@@ -52,16 +54,16 @@ async function boundedJson(request) {
   return JSON.parse(new TextDecoder().decode(all));
 }
 export async function capture(request,env,ctx) {
-  if(request.method!=='POST')return reply({error:'Method not allowed'},405);
-  if(request.headers.get('Origin')!=='https://awwalbrands.com')return reply({error:'Origin not allowed'},403);
-  if(!request.headers.get('Content-Type')?.startsWith('application/json'))return reply({error:'JSON required'},415);
-  if(!env.ENQUIRIES)return reply({error:'Enquiries temporarily unavailable'},503);
-  let input;try{input=await boundedJson(request);}catch{return reply({error:'Invalid or oversized submission'},400);}
-  if(!input||typeof input!=='object'||Array.isArray(input))return reply({error:'Invalid submission'},400);
-  if(input.website)return reply({error:'Unable to submit'},400);
-  if(!/^[a-f0-9-]{36}$/i.test(input.requestKey||''))return reply({error:'Invalid submission reference'},400);
+  if(request.method!=='POST')return problem('method_not_allowed',405,{},{Allow:'POST'});
+  if(request.headers.get('Origin')!=='https://awwalbrands.com')return problem('origin_not_allowed',403);
+  if(!request.headers.get('Content-Type')?.startsWith('application/json'))return problem('json_required',415);
+  if(!env.ENQUIRIES)return problem('unavailable',503,{detail:'Enquiries temporarily unavailable'},{'Retry-After':'60'});
+  let input;try{input=await boundedJson(request);}catch{return problem('invalid_submission',400,{detail:'Invalid or oversized submission'});}
+  if(!input||typeof input!=='object'||Array.isArray(input))return problem('invalid_submission',400);
+  if(input.website)return problem('submission_rejected',400);
+  if(!/^[a-f0-9-]{36}$/i.test(input.requestKey||''))return problem('invalid_reference',400);
   const {data,errors}=validateLead(input);
-  if(Object.keys(errors).length)return reply({error:'Please check the form',fields:errors},422);
+  if(Object.keys(errors).length)return problem('validation_failed',422,{fields:errors});
   const payload=JSON.stringify({...data,consent:true,source:'awwal_website_enquiry'});
   try{
     // Hash with a time bucket; never retain visitors' raw IP addresses.
@@ -69,23 +71,30 @@ export async function capture(request,env,ctx) {
     const raw=(request.headers.get('CF-Connecting-IP')||'unknown')+':'+hour;
     const hash=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(raw))),b=>b.toString(16).padStart(2,'0')).join('');
     const rate=await env.ENQUIRIES.prepare('INSERT INTO enquiry_rate(bucket,attempts,expires_at) VALUES (?,1,?) ON CONFLICT(bucket) DO UPDATE SET attempts=attempts+1 RETURNING attempts').bind(hash,(hour+2)*3600).first();
-    if(!rate||rate.attempts>10)return reply({error:'Too many attempts. Please try later or contact us directly.'},429);
+    // IETF RateLimit headers (draft-ietf-httpapi-ratelimit-headers): 10 enquiries per hour per visitor.
+    const reset=Math.max(1,(hour+1)*3600-Math.floor(Date.now()/1000));
+    const used=rate?.attempts??RATE_LIMIT+1;
+    const limitHeaders={'RateLimit-Policy':`"enquiries";q=${RATE_LIMIT};w=3600`,'RateLimit':`"enquiries";r=${Math.max(0,RATE_LIMIT-used)};t=${reset}`};
+    if(used>RATE_LIMIT)return problem('rate_limit_exceeded',429,{detail:'Too many attempts. Please try later or contact us directly.'},{...limitHeaders,'Retry-After':String(reset)});
     const old=await env.ENQUIRIES.prepare('SELECT id,payload FROM enquiries WHERE request_key=?').bind(input.requestKey).first();
-    if(old){if(old.payload!==payload)return reply({error:'Please submit a new enquiry'},409);return reply({received:true,reference:old.id},200);}
+    if(old){if(old.payload!==payload)return problem('duplicate_reference',409,{},limitHeaders);return reply({received:true,reference:old.id},200,limitHeaders);}
     const reference='AW-'+crypto.randomUUID();
     await env.ENQUIRIES.prepare('INSERT INTO enquiries(id,request_key,payload) VALUES (?,?,?)').bind(reference,input.requestKey,payload).run();
     // Only durable receipt is acknowledged; the WhatsApp alert runs after the response.
     const alert=notifyOwner(reference,data,env).catch(()=>({state:'failed'}));
     if(ctx?.waitUntil)ctx.waitUntil(alert);
-    return reply({received:true,reference},201);
-  }catch{return reply({error:'We could not save your enquiry. Please retry or contact us directly.'},503);}
+    return reply({received:true,reference},201,limitHeaders);
+  }catch{return problem('unavailable',503,{detail:'We could not save your enquiry. Please retry or contact us directly.'},{'Retry-After':'30'});}
 }
 export default {
   async fetch(request,env,ctx) {
     const url=new URL(request.url);
     if(url.protocol!=='https:'){url.protocol='https:';return Response.redirect(url,308);}
     if(url.pathname==='/api/enquiries')return capture(request,env,ctx);
-    if(url.pathname.startsWith('/api/'))return reply({error:'Not found'},404);
+    const api=readOnlyApi(request,url);
+    if(api)return api;
+    if(url.pathname==='/mcp')return mcp(request);
+    if(url.pathname.startsWith('/api/'))return problem('not_found',404);
     if(url.pathname==='/')return homepage(request,env);
     return env.ASSETS.fetch(request);
   }

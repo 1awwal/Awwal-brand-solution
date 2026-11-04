@@ -27,4 +27,4 @@ Packages and prices: https://awwalbrands.com/service-packages
 - Email: hello@awwalbrands.com
 - Enquiry form: https://awwalbrands.com/#contact
 
-More: [About](https://awwalbrands.com/about) · [Founder](https://awwalbrands.com/founder) · [Contact](https://awwalbrands.com/contact) · [Privacy](https://awwalbrands.com/privacy) · [العربية](https://awwalbrands.com/ar)
+More: [About](https://awwalbrands.com/about) · [Founder](https://awwalbrands.com/founder) · [Contact](https://awwalbrands.com/contact) · [Privacy](https://awwalbrands.com/privacy) · [API & AI agents](https://awwalbrands.com/docs) · [العربية](https://awwalbrands.com/ar)

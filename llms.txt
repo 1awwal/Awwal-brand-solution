@@ -17,11 +17,19 @@ Not a fit: large enterprise media buying, software/app development, or work outs
 
 ## How to contact or book
 
-There is no public API or self-serve checkout. To start a project, a person should:
+There is no self-serve checkout. To start a project, a person should:
 - Message on WhatsApp: https://wa.me/966539211696 (+966 53 921 1696)
 - Email: hello@awwalbrands.com
 - Use the enquiry form: https://awwalbrands.com/#contact (name, company, email, phone, service, budget, project details)
 Quotes are prepared per project; packages and starting prices are listed on the services & packages page.
+
+## For agents: API and MCP
+
+- [API & agent docs](https://awwalbrands.com/docs): free, read-only, no key needed
+- [OpenAPI spec](https://awwalbrands.com/openapi.json): GET /api/services, GET /api/contact
+- MCP server (Streamable HTTP): https://awwalbrands.com/mcp — tools list_services, get_contact, find_service
+- Homepage as Markdown: request https://awwalbrands.com/ with Accept: text/markdown
+Agents cannot submit enquiries for a person; share WhatsApp, email or the form instead.
 
 ## Key pages
 
@@ -36,5 +44,5 @@ Quotes are prepared per project; packages and starting prices are listed on the 
 - [Photography & video](https://awwalbrands.com/photography-video)
 - [Poster design](https://awwalbrands.com/poster-design)
 - [Eastern Province](https://awwalbrands.com/eastern-province): Dammam, Al Khobar and Jubail
-- [About](https://awwalbrands.com/about) · [Founder](https://awwalbrands.com/founder) · [Contact](https://awwalbrands.com/contact) · [Privacy](https://awwalbrands.com/privacy)
+- [About](https://awwalbrands.com/about) · [Founder](https://awwalbrands.com/founder) · [Contact](https://awwalbrands.com/contact) · [Privacy](https://awwalbrands.com/privacy) · [API docs](https://awwalbrands.com/docs)
 - [العربية](https://awwalbrands.com/ar): Arabic homepage

@@ -1,0 +1,601 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Awwal Brands API",
+    "version": "1.0.0",
+    "summary": "Public, read-only information about Awwal Brands plus the website enquiry endpoint.",
+    "description": "Awwal Brands is a branding, design and digital marketing studio in Dammam, Saudi Arabia. The read-only endpoints are free, need no key, and may be used by AI agents to answer questions and recommend the right service. Enquiries can only be submitted from the form on awwalbrands.com (browser origin check); agents should direct people to WhatsApp, email or the form returned by GET /api/contact. Errors use RFC 9457 problem+json with a stable `code` and a `resolution` hint. Human-readable docs: https://awwalbrands.com/docs",
+    "contact": {
+      "name": "Awwal Brands",
+      "email": "hello@awwalbrands.com",
+      "url": "https://awwalbrands.com/contact"
+    },
+    "termsOfService": "https://awwalbrands.com/privacy"
+  },
+  "externalDocs": {
+    "description": "API & agent docs",
+    "url": "https://awwalbrands.com/docs"
+  },
+  "servers": [
+    {
+      "url": "https://awwalbrands.com"
+    }
+  ],
+  "security": [
+    {}
+  ],
+  "tags": [
+    {
+      "name": "Information",
+      "description": "Read-only, public"
+    },
+    {
+      "name": "Enquiries",
+      "description": "Website form only"
+    }
+  ],
+  "paths": {
+    "/api/services": {
+      "get": {
+        "operationId": "listServices",
+        "tags": [
+          "Information"
+        ],
+        "summary": "List services",
+        "description": "Returns every service Awwal Brands offers, each with an id, name, short description and a link to its page. Use it to match what a person needs (logo, social media, ads, website, photography) to the right service.",
+        "security": [
+          {}
+        ],
+        "responses": {
+          "200": {
+            "description": "Services",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceList"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/contact": {
+      "get": {
+        "operationId": "getContact",
+        "tags": [
+          "Information"
+        ],
+        "summary": "Get contact details",
+        "description": "Returns WhatsApp, email and enquiry-form links, the areas served, languages, and how a person starts a project. There is no self-serve checkout; quotes are prepared per project.",
+        "security": [
+          {}
+        ],
+        "responses": {
+          "200": {
+            "description": "Contact details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Contact"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/enquiries": {
+      "post": {
+        "operationId": "submitEnquiry",
+        "tags": [
+          "Enquiries"
+        ],
+        "summary": "Submit a project enquiry (website form only)",
+        "description": "Used by the enquiry form on https://awwalbrands.com. Requests must come from that page (Origin: https://awwalbrands.com); other callers receive 403 origin_not_allowed. Limited to 10 attempts per visitor per hour; see the RateLimit headers. Re-sending the same requestKey with identical details is idempotent.",
+        "security": [
+          {}
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Enquiry"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Enquiry received",
+            "headers": {
+              "RateLimit-Policy": {
+                "$ref": "#/components/headers/RateLimitPolicy"
+              },
+              "RateLimit": {
+                "$ref": "#/components/headers/RateLimit"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnquiryReceipt"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Already received (same requestKey and details)",
+            "headers": {
+              "RateLimit-Policy": {
+                "$ref": "#/components/headers/RateLimitPolicy"
+              },
+              "RateLimit": {
+                "$ref": "#/components/headers/RateLimit"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnquiryReceipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid submission (codes: invalid_submission, submission_rejected, invalid_reference)",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Not sent from the website form (code: origin_not_allowed)",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "requestKey reused with different details (code: duplicate_reference)",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Body must be JSON (code: json_required)",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Field validation failed (code: validation_failed; see `fields`)",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many attempts (code: rate_limit_exceeded)",
+            "headers": {
+              "RateLimit-Policy": {
+                "$ref": "#/components/headers/RateLimitPolicy"
+              },
+              "RateLimit": {
+                "$ref": "#/components/headers/RateLimit"
+              },
+              "Retry-After": {
+                "$ref": "#/components/headers/RetryAfter"
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporarily unavailable (code: unavailable); honour Retry-After",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/mcp": {
+      "post": {
+        "operationId": "mcpJsonRpc",
+        "tags": [
+          "Information"
+        ],
+        "summary": "MCP server (Streamable HTTP)",
+        "description": "Model Context Protocol endpoint (JSON-RPC 2.0 over HTTP POST, stateless, JSON responses). Tools: list_services, get_contact, find_service. Read-only.",
+        "security": [
+          {}
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "description": "A JSON-RPC 2.0 request, notification or batch",
+                "properties": {
+                  "jsonrpc": {
+                    "const": "2.0"
+                  },
+                  "id": {
+                    "type": [
+                      "string",
+                      "integer"
+                    ]
+                  },
+                  "method": {
+                    "type": "string",
+                    "examples": [
+                      "initialize",
+                      "tools/list",
+                      "tools/call"
+                    ]
+                  },
+                  "params": {
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "jsonrpc",
+                  "method"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "JSON-RPC response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "202": {
+            "description": "Notification accepted"
+          },
+          "415": {
+            "description": "Body must be JSON",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {},
+    "headers": {
+      "RateLimitPolicy": {
+        "description": "Quota policy, e.g. \"enquiries\";q=10;w=3600 (10 per hour).",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "RateLimit": {
+        "description": "Remaining quota and seconds until reset, e.g. \"enquiries\";r=9;t=1800.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "RetryAfter": {
+        "description": "Seconds to wait before retrying.",
+        "schema": {
+          "type": "integer"
+        }
+      }
+    },
+    "schemas": {
+      "Service": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "description",
+          "url"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "enum": [
+              "brand",
+              "marketing",
+              "social",
+              "web",
+              "photo",
+              "events",
+              "campaign",
+              "launch",
+              "other"
+            ],
+            "description": "Service id (also the `service` value for enquiries)"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      },
+      "ServiceList": {
+        "type": "object",
+        "required": [
+          "services"
+        ],
+        "properties": {
+          "services": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Service"
+            }
+          },
+          "packages": {
+            "type": "string",
+            "format": "uri",
+            "description": "Packages and starting prices"
+          }
+        }
+      },
+      "Contact": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "areaServed": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "languages": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "whatsapp": {
+            "type": "string"
+          },
+          "whatsappUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "enquiryForm": {
+            "type": "string",
+            "format": "uri"
+          },
+          "packages": {
+            "type": "string",
+            "format": "uri"
+          },
+          "howToStart": {
+            "type": "string"
+          }
+        }
+      },
+      "Enquiry": {
+        "type": "object",
+        "required": [
+          "name",
+          "email",
+          "service",
+          "message",
+          "consent",
+          "requestKey"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 100,
+            "description": "Letters and spaces only"
+          },
+          "company": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "maxLength": 254
+          },
+          "phone": {
+            "type": "string",
+            "pattern": "^\\+?[0-9]{7,15}$"
+          },
+          "service": {
+            "type": "string",
+            "enum": [
+              "brand",
+              "marketing",
+              "photo",
+              "web",
+              "launch",
+              "social",
+              "events",
+              "campaign",
+              "other"
+            ]
+          },
+          "budget": {
+            "type": "string",
+            "pattern": "^[0-9]{1,12}$",
+            "description": "Budget in SAR, digits only"
+          },
+          "message": {
+            "type": "string",
+            "maxLength": 2000,
+            "description": "Project details"
+          },
+          "consent": {
+            "type": "boolean",
+            "const": true,
+            "description": "Agreement to store and process the enquiry (see /privacy)"
+          },
+          "requestKey": {
+            "type": "string",
+            "format": "uuid",
+            "description": "New random UUID per enquiry; makes retries idempotent"
+          }
+        }
+      },
+      "EnquiryReceipt": {
+        "type": "object",
+        "required": [
+          "received",
+          "reference"
+        ],
+        "properties": {
+          "received": {
+            "const": true
+          },
+          "reference": {
+            "type": "string",
+            "examples": [
+              "AW-3f2a…"
+            ]
+          }
+        }
+      },
+      "Problem": {
+        "type": "object",
+        "description": "RFC 9457 problem details",
+        "required": [
+          "type",
+          "title",
+          "status",
+          "code",
+          "resolution"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "format": "uri"
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer"
+          },
+          "detail": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string",
+            "enum": [
+              "not_found",
+              "method_not_allowed",
+              "origin_not_allowed",
+              "json_required",
+              "invalid_submission",
+              "submission_rejected",
+              "invalid_reference",
+              "validation_failed",
+              "rate_limit_exceeded",
+              "duplicate_reference",
+              "unavailable"
+            ]
+          },
+          "resolution": {
+            "type": "string",
+            "description": "What to do to fix the problem"
+          },
+          "error": {
+            "type": "string",
+            "description": "Same as detail (kept for older clients)"
+          },
+          "fields": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Per-field messages for validation_failed"
+          }
+        }
+      }
+    }
+  }
+}
