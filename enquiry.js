@@ -15,7 +15,7 @@
       budget: 'Enter your budget in SAR using digits only.',
       service: 'Please select a service.',
       message: 'Use letters, numbers, spaces, commas, & and hyphens only.',
-      status: 'Submit your details directly to Awwal. You do not need to open WhatsApp.',
+      status: 'After you submit, WhatsApp opens with your details so you can chat with Awwal directly.',
       button: 'SEND ENQUIRY ↗', consent: 'Please agree to enquiry processing.'
     },
     ar: {
@@ -26,7 +26,7 @@
       budget: 'أدخل الميزانية بالريال السعودي باستخدام الأرقام فقط.',
       service: 'يرجى اختيار الخدمة.',
       message: 'استخدم الحروف والأرقام والمسافات والفواصل و & والشرطة فقط.',
-      status: 'أرسل بياناتك مباشرة إلى أول دون الحاجة إلى فتح واتساب.',
+      status: 'بعد الإرسال سيفتح واتساب ببياناتك لتتواصل مع أول مباشرة.',
       button: 'إرسال الطلب ↗', consent: 'يرجى الموافقة على معالجة بيانات الطلب.'
     }
   };
@@ -48,9 +48,9 @@
     if (!validText(data.message) || data.message.length > 2000) errors.message = 'message';
     return {data, errors};
   }
-  function whatsappUrl(data) {
+  function whatsappUrl(data, reference) {
     const message = [
-      'New Awwal Brands enquiry', 'Name: ' + data.name,
+      'New Awwal Brands enquiry' + (reference ? ' (' + reference + ')' : ''), 'Name: ' + data.name,
       'Company: ' + (data.company || 'Not provided'), 'Email: ' + data.email,
       'Phone: ' + (data.phone || 'Not provided'), 'Service: ' + services[data.service],
       'Budget: ' + (data.budget ? data.budget + ' SAR' : 'Not specified'),
@@ -131,10 +131,13 @@
       });
       const result = await response.json();
       if (!response.ok || !result.received || !result.reference) throw new Error('Not received');
-      status.textContent = language() === 'ar' ? 'تم استلام طلبك. سيتواصل معك فريق أول. رقم المرجع: ' + result.reference : 'Your enquiry has been received. The Awwal team will contact you. Reference: ' + result.reference;
+      status.textContent = language() === 'ar' ? 'تم استلام طلبك (' + result.reference + '). جارٍ فتح واتساب…' : 'Enquiry received (' + result.reference + '). Opening WhatsApp…';
       form.reset(); requestKey = crypto.randomUUID();
+      window.location.href = whatsappUrl(data, result.reference);
     } catch {
-      status.textContent = language() === 'ar' ? 'لم نتمكن من تأكيد استلام طلبك. يرجى المحاولة مجدداً أو التواصل معنا مباشرة.' : 'We could not confirm receipt. Please try again or contact us directly. Your details are still in the form.';
+      // Never lose a lead: if saving fails, still hand the details over on WhatsApp.
+      status.textContent = language() === 'ar' ? 'جارٍ فتح واتساب لإرسال طلبك…' : 'Opening WhatsApp to send your enquiry…';
+      window.location.href = whatsappUrl(data);
     } finally {
       submitting = false; button.disabled = false; form.removeAttribute('aria-busy');
     }
