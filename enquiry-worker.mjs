@@ -86,6 +86,33 @@ export default {
     if(url.protocol!=='https:'){url.protocol='https:';return Response.redirect(url,308);}
     if(url.pathname==='/api/enquiries')return capture(request,env,ctx);
     if(url.pathname.startsWith('/api/'))return reply({error:'Not found'},404);
+    if(url.pathname==='/')return homepage(request,env);
     return env.ASSETS.fetch(request);
   }
 };
+
+// Homepage content negotiation: AI agents that send "Accept: text/markdown" get a
+// clean Markdown version (index.md); browsers get the normal HTML. Vary: Accept
+// keeps caches from mixing the two.
+const wantsMarkdown=(accept)=>{
+  let md=-1,html=-1;
+  for(const part of String(accept||'').toLowerCase().split(',')){
+    const [type,...params]=part.trim().split(';');
+    const q=params.map(x=>x.trim()).find(x=>x.startsWith('q='));
+    const weight=q?Number(q.slice(2))||0:1;
+    if(type==='text/markdown')md=Math.max(md,weight);
+    else if(type==='text/html'||type==='application/xhtml+xml')html=Math.max(html,weight);
+  }
+  return md>0&&md>=html;
+};
+async function homepage(request,env){
+  const markdown=(request.method==='GET'||request.method==='HEAD')&&wantsMarkdown(request.headers.get('Accept'));
+  const res=await env.ASSETS.fetch(markdown?new Request(new URL('/index.md',request.url),request):request);
+  const headers=new Headers(res.headers);
+  headers.append('Vary','Accept');
+  if(markdown&&res.ok){
+    headers.set('Content-Type','text/markdown; charset=utf-8');
+    headers.set('Link','<https://awwalbrands.com/>; rel="canonical"');
+  }
+  return new Response(request.method==='HEAD'?null:res.body,{status:res.status,statusText:res.statusText,headers});
+}
