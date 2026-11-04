@@ -90,3 +90,12 @@ html[data-theme="light"] .search-discovery{background:var(--brand-light-gradient
 .search-discovery .service-related{margin-top:24px}
 
 html[lang="ar"] .service-site h1,html[lang="ar"] .service-site h2,html[lang="ar"] .service-site h3,html[lang="ar"] .service-site .button{letter-spacing:0;line-height:1.5}
+
+/* Glass surfaces echo the homepage package cards. */
+.service-catalog article,.service-deliverables article,.social-pricing article.social-plan,.social-plan-custom{background:linear-gradient(135deg,rgba(129,150,255,.18),rgba(65,75,195,.09));border-color:rgba(218,229,255,.28);box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 14px 36px rgba(3,8,53,.1);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.social-pricing{position:relative;isolation:isolate}
+.social-pricing::before{content:"أ";position:absolute;z-index:-1;right:0;top:80px;font:700 clamp(360px,56vw,850px)/1 var(--arabic);color:rgba(255,255,255,.045);pointer-events:none}
+.social-pricing article.social-plan-featured{border-color:#ffb703}
+html[data-theme="light"] .service-catalog article,html[data-theme="light"] .service-deliverables article,html[data-theme="light"] .social-pricing article.social-plan,html[data-theme="light"] .social-plan-custom{background:linear-gradient(135deg,rgba(255,255,255,.95),rgba(219,230,255,.8));border-color:rgba(41,72,184,.24);box-shadow:inset 0 1px 0 #fff,0 14px 36px rgba(24,41,91,.06)}
+html[data-theme="light"] .social-pricing article.social-plan-featured{border-color:#a66a00}
+html[data-theme="light"] .social-pricing::before{color:rgba(41,72,184,.06)}
