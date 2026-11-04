@@ -113,7 +113,7 @@
       ['.form-submit', 'SEND ENQUIRY ↗', 'إرسال الطلب ↗'],
       ['.footer-links:nth-child(2) .eyebrow', 'EXPLORE', 'اكتشف'],['.footer-links:nth-child(2) a:nth-of-type(1)', 'About', 'عن أول'],['.footer-links:nth-child(2) a:nth-of-type(2)', 'Services', 'الخدمات'],['.footer-links:nth-child(2) a:nth-of-type(3)', 'Selected work', 'أعمال مختارة'],['.footer-links:nth-child(2) a:nth-of-type(4)', 'Our approach', 'منهجيتنا'],
       ['.footer-links:nth-child(3) .eyebrow', 'SAY HELLO', 'تواصل معنا'],['.footer-links:nth-child(4) .eyebrow', 'FOLLOW ALONG', 'تابعنا'],['.footer-links:nth-child(4) a', 'Instagram @1.awwal ↗', 'إنستغرام @1.awwal ↗'],
-      ['.footer-bottom span:first-child', '© AWWAL BRAND SOLUTIONS 2025', '© أول للحلول التجارية ٢٠٢٥'],['.footer-bottom span:nth-child(2)', 'أول — FIRST, BY DESIGN.', 'أول — الأول، بتصميمه.'],['.footer-bottom a', 'BACK TO TOP ↑', 'العودة للأعلى ↑'],
+      ['.footer-bottom span:first-child', '© AWWAL BRANDS 2026', '© أول براندز ٢٠٢٦'],['.footer-bottom span:nth-child(2)', 'أول — FIRST, BY DESIGN.', 'أول — الأول، بتصميمه.'],['.footer-bottom a', 'BACK TO TOP ↑', 'العودة للأعلى ↑'],
       ['.scroll-cue span', 'SCROLL TO DISCOVER', 'مرر لاكتشاف المزيد'],['.hero-top .eyebrow', 'SAUDI ARABIA', 'السعودية'],['.hero-side', 'BRAND THINKING / 24°42′ N 46°40′ E', 'فكر العلامة / ٢٤°٤٢′ شمالاً ٤٦°٤٠′ شرقاً'],
     ];
     metadata.forEach(([selector, en, arabic]) => putPair(selector, en, arabic));
