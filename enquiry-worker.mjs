@@ -1,4 +1,15 @@
-import {validateLead} from './enquiry-server.mjs';
+import {validateLead,notificationParameters} from './enquiry-server.mjs';
+
+// Free owner alert via CallMeBot (https://www.callmebot.com). Set Worker secrets
+// CALLMEBOT_PHONE (e.g. +966539211696) and CALLMEBOT_APIKEY to enable; otherwise skipped.
+export async function notifyOwner(reference,data,env,transport=fetch){
+  if(!env.CALLMEBOT_PHONE||!env.CALLMEBOT_APIKEY)return {state:'skipped'};
+  const [ref,name,company,email,phone,service,budget,message]=notificationParameters(reference,data);
+  const text=['*New website lead* '+ref,'Name: '+name,'Company: '+company,'Email: '+email,'Phone: '+phone,'Service: '+service,'Budget: '+budget,'','Details: '+message].join('\n');
+  const url='https://api.callmebot.com/whatsapp.php?phone='+encodeURIComponent(env.CALLMEBOT_PHONE)+'&text='+encodeURIComponent(text)+'&apikey='+encodeURIComponent(env.CALLMEBOT_APIKEY);
+  const r=await transport(url,{signal:AbortSignal.timeout(15000)});
+  return {state:r.ok?'sent':'failed',status:r.status};
+}
 
 const reply=(data,status=200)=>Response.json(data,{status,headers:{'Cache-Control':'no-store','X-Content-Type-Options':'nosniff'}});
 async function boundedJson(request) {
@@ -9,7 +20,7 @@ async function boundedJson(request) {
   const all=new Uint8Array(size);let offset=0;for(const p of parts){all.set(p,offset);offset+=p.length;}
   return JSON.parse(new TextDecoder().decode(all));
 }
-export async function capture(request,env) {
+export async function capture(request,env,ctx) {
   if(request.method!=='POST')return reply({error:'Method not allowed'},405);
   if(request.headers.get('Origin')!=='https://awwalbrands.com')return reply({error:'Origin not allowed'},403);
   if(!request.headers.get('Content-Type')?.startsWith('application/json'))return reply({error:'JSON required'},415);
@@ -32,15 +43,17 @@ export async function capture(request,env) {
     if(old){if(old.payload!==payload)return reply({error:'Please submit a new enquiry'},409);return reply({received:true,reference:old.id},200);}
     const reference='AW-'+crypto.randomUUID();
     await env.ENQUIRIES.prepare('INSERT INTO enquiries(id,request_key,payload) VALUES (?,?,?)').bind(reference,input.requestKey,payload).run();
-    // Only durable receipt is acknowledged. WhatsApp and Harvey remain pending until acknowledged separately.
+    // Only durable receipt is acknowledged; the WhatsApp alert runs after the response.
+    const alert=notifyOwner(reference,data,env).catch(()=>({state:'failed'}));
+    if(ctx?.waitUntil)ctx.waitUntil(alert);
     return reply({received:true,reference},201);
   }catch{return reply({error:'We could not save your enquiry. Please retry or contact us directly.'},503);}
 }
 export default {
-  async fetch(request,env) {
+  async fetch(request,env,ctx) {
     const url=new URL(request.url);
     if(url.protocol!=='https:'){url.protocol='https:';return Response.redirect(url,308);}
-    if(url.pathname==='/api/enquiries')return capture(request,env);
+    if(url.pathname==='/api/enquiries')return capture(request,env,ctx);
     if(url.pathname.startsWith('/api/'))return reply({error:'Not found'},404);
     return env.ASSETS.fetch(request);
   }
