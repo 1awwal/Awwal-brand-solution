@@ -1396,3 +1396,11 @@ html[data-theme="dark"] .customer-needs h3{color:#f5f7ff}
 html[data-theme="dark"] .customer-needs p{color:#c3cde5}
 html[data-theme="dark"] .customer-needs article>div{border-color:rgba(168,186,255,.2)}
 html[data-theme="dark"] .customer-needs h4{color:#a8baff}
+/* Dark appearance for the feature ("Give people a reason to remember you") section and palette promo. */
+html[data-theme="dark"] .feature{background:radial-gradient(ellipse at 8% 90%,rgba(255,183,3,.07),transparent 28%),radial-gradient(ellipse at 92% 10%,rgba(96,117,255,.14),transparent 34%),linear-gradient(140deg,#070b35 0%,#0d123d 55%,#151a48 100%);color:#f5f7ff}
+html[data-theme="dark"] .feature h2,html[data-theme="dark"] .palette-promo h3{color:#f5f7ff}
+html[data-theme="dark"] .feature h2 em{color:#a8baff}
+html[data-theme="dark"] .feature-text p,html[data-theme="dark"] .palette-promo p{color:rgba(226,232,245,.74)}
+html[data-theme="dark"] .feature-coordinate{color:rgba(226,232,245,.7)}
+html[data-theme="dark"] .palette-promo{border-color:rgba(226,232,245,.18)}
+html[data-theme="dark"] .feature .button-dark{border:1px solid rgba(168,186,255,.35)}
