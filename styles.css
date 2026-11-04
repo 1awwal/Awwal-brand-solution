@@ -1381,3 +1381,18 @@ html[dir="rtl"] .service-directory-column li a>span:first-child{transform:scaleX
 @media(max-width:720px){.hero-customer h1{font-size:clamp(28px,7.1vw,50px);line-height:1.15;letter-spacing:-.035em}.hero-customer .hero-bottom p{font-size:15px}.hero-customer{height:auto;min-height:760px}.hero-customer .hero-copy{padding:36px 20px}}
 html[dir=rtl] .hero-customer h1{font-size:clamp(38px,6vw,90px);line-height:1.35;letter-spacing:0}
 @media(max-width:720px){html[dir=rtl] .hero-customer h1{font-size:clamp(30px,7vw,46px)}}
+
+/* Dark appearance for the manifesto ("Great idea") section and its challenge cards. */
+html[data-theme="dark"] .manifesto{background:radial-gradient(ellipse at 4% 88%,rgba(255,183,3,.08),transparent 31%),radial-gradient(ellipse at 96% 8%,rgba(96,117,255,.16),transparent 34%),linear-gradient(135deg,#070b35 0%,#0d123d 55%,#151a48 100%);color:#f5f7ff}
+html[data-theme="dark"] .manifesto::before{filter:grayscale(1) invert(1)}
+html[data-theme="dark"] .manifesto h2{color:#f5f7ff}
+html[data-theme="dark"] .manifesto h2 em{color:#a8baff}
+html[data-theme="dark"] .manifesto-copy p{color:rgba(226,232,245,.74)}
+html[data-theme="dark"] .manifesto-copy p.lead{color:#fff}
+html[data-theme="dark"] .manifesto .text-link{color:#f5f7ff;border-color:rgba(226,232,245,.38)}
+html[data-theme="dark"] .customer-needs{color:#e2e8f5}
+html[data-theme="dark"] .customer-needs article{border-color:rgba(168,186,255,.22);background:linear-gradient(135deg,rgba(255,255,255,.06),rgba(255,255,255,.02))}
+html[data-theme="dark"] .customer-needs h3{color:#f5f7ff}
+html[data-theme="dark"] .customer-needs p{color:#c3cde5}
+html[data-theme="dark"] .customer-needs article>div{border-color:rgba(168,186,255,.2)}
+html[data-theme="dark"] .customer-needs h4{color:#a8baff}
