@@ -1,9 +1,6 @@
 (() => {
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const loader = document.querySelector('.loader');
-  window.addEventListener('load', () => setTimeout(() => { loader?.classList.add('done'); document.body.classList.remove('loading'); }, 380), { once: true });
-  setTimeout(() => loader?.classList.add('done'), 1700);
 
   const fitBrandWordmarks = () => document.querySelectorAll('.brand-wordmark').forEach(group => {
     const lines = [...group.querySelectorAll('.brand-line')];
@@ -37,7 +34,8 @@
 
   const translations = {
     '.hero .kicker': ['BRAND STRATEGY / IDENTITY / DIGITAL', 'استراتيجية العلامة / الهوية / الرقمي'],
-    ".hero h1": ["<span class=\"hero-gradient-word\">YOUR DREAM.</span><br>YOUR BRAND.<br><span class=\"hero-gradient-word\">YOUR FIRST STEP.</span>","<span class=\"hero-gradient-word\">حلمك.</span><br>علامتك.<br><span class=\"hero-gradient-word\">خطوتك الأولى.</span>"],
+    ".hero-seo-title": ["Branding &amp; digital marketing in Dammam", "التصميم والتسويق الرقمي في الدمام"],
+    ".hero-slogan": ["<span class=\"hero-gradient-word\">YOUR DREAM.</span><br>YOUR BRAND.<br><span class=\"hero-gradient-word\">YOUR FIRST STEP.</span>","<span class=\"hero-gradient-word\">حلمك.</span><br>علامتك.<br><span class=\"hero-gradient-word\">خطوتك الأولى.</span>"],
     ".hero-bottom p": ["Establishing your brand early is the first step towards bringing your dream to life. We turn scattered ideas into a clear identity, a credible website and a consistent presence, so customers understand what you offer and why it matters.","تأسيس علامتك مبكراً هو الخطوة الأولى نحو تحقيق حلمك. نحول أفكارك المتفرقة إلى هوية واضحة وموقع يعكس احترافيتك وحضور متناسق، ليفهم عملاؤك ما تقدمه ولماذا يهمهم."],
     '.round-link span': ['EXPLORE<br>OUR WORK', 'اكتشف<br>أعمالنا'],
     ".manifesto h2": ["GREAT IDEA.<br>UNSURE WHERE<br>TO <em>START?</em>","فكرة رائعة.<br>ولا تعرف<br>من أين <em>تبدأ؟</em>"],
@@ -114,7 +112,7 @@
       ['.footer-links:nth-child(2) .eyebrow', 'EXPLORE', 'اكتشف'],['.footer-links:nth-child(2) a:nth-of-type(1)', 'About', 'عن أول'],['.footer-links:nth-child(2) a:nth-of-type(2)', 'Services', 'الخدمات'],['.footer-links:nth-child(2) a:nth-of-type(3)', 'Selected work', 'أعمال مختارة'],['.footer-links:nth-child(2) a:nth-of-type(4)', 'Our approach', 'منهجيتنا'],
       ['.footer-links:nth-child(3) .eyebrow', 'SAY HELLO', 'تواصل معنا'],['.footer-links:nth-child(4) .eyebrow', 'FOLLOW ALONG', 'تابعنا'],['.footer-links:nth-child(4) a', 'Instagram @1.awwal ↗', 'إنستغرام @1.awwal ↗'],
       ['.footer-bottom span:first-child', '© AWWAL BRANDS 2026', '© أول براندز ٢٠٢٦'],['.footer-bottom span:nth-child(2)', 'أول — FIRST, BY DESIGN.', 'أول — الأول، بتصميمه.'],['.footer-bottom a', 'BACK TO TOP ↑', 'العودة للأعلى ↑'],
-      ['.scroll-cue span', 'SCROLL TO DISCOVER', 'مرر لاكتشاف المزيد'],['.hero-top .eyebrow', 'SAUDI ARABIA', 'السعودية'],['.hero-side', 'BRAND THINKING / 24°42′ N 46°40′ E', 'فكر العلامة / ٢٤°٤٢′ شمالاً ٤٦°٤٠′ شرقاً'],
+      ['.scroll-cue span', 'SCROLL TO DISCOVER', 'مرر لاكتشاف المزيد'],['.hero-top .eyebrow', 'SAUDI ARABIA', 'السعودية'],['.hero-side', 'BRAND THINKING / 26°26′ N 50°06′ E', 'فكر العلامة / ٢٦°٢٦′ شمالاً ٥٠°٠٦′ شرقاً'],
     ];
     metadata.forEach(([selector, en, arabic]) => putPair(selector, en, arabic));
     document.querySelector('.footer-brand p').innerHTML = ar ? 'نبني ما<br>يأتي أولاً.' : 'Building what<br>comes first.';
