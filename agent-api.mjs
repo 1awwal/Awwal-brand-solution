@@ -30,7 +30,7 @@ export const CONTACT = {
   email: 'hello@awwalbrands.com',
   enquiryForm: `${SITE}/#contact`,
   packages: `${SITE}/service-packages`,
-  howToStart: 'A person starts a project by messaging on WhatsApp, emailing, or sending the enquiry form. Quotes are prepared per project; packages and starting prices are on the services & packages page. There is no self-serve checkout.',
+  howToStart: 'A person starts a project by messaging on WhatsApp, emailing, or sending the enquiry form. Quotes are prepared per project; packages and what each includes are on the services & packages page. There is no self-serve checkout.',
 };
 
 const PROBLEMS = {

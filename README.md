@@ -1,4 +1,4 @@
-# Awwal Brand Solutions website
+# Awwal Brands website
 
 Open `index.html` in a browser to view the site. It is a lightweight static website with no build step. See [CLOUDFLARE.md](CLOUDFLARE.md) for publishing it with Cloudflare Pages and connecting a domain.
 

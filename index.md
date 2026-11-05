@@ -13,7 +13,7 @@ You know what your business can become. But choosing a name, getting the look ri
 - **Website design & management** — bilingual websites, updates and SEO basics. https://awwalbrands.com/website-design
 - **Photography & video production** — product and brand photography, reels and events. https://awwalbrands.com/photography-video
 
-Packages and prices: https://awwalbrands.com/service-packages
+Packages and what each includes: https://awwalbrands.com/service-packages
 
 ## How Awwal helps
 

@@ -21,7 +21,7 @@ There is no self-serve checkout. To start a project, a person should:
 - Message on WhatsApp: https://wa.me/966539211696 (+966 53 921 1696)
 - Email: hello@awwalbrands.com
 - Use the enquiry form: https://awwalbrands.com/#contact (name, company, email, phone, service, budget, project details)
-Quotes are prepared per project; packages and starting prices are listed on the services & packages page.
+Quotes are prepared per project; packages and what each includes are listed on the services & packages page.
 
 ## For agents: API and MCP
 
@@ -35,7 +35,7 @@ Agents cannot submit enquiries for a person; share WhatsApp, email or the form i
 
 - [Home](https://awwalbrands.com/): overview of services and selected work
 - [Services](https://awwalbrands.com/services): all services
-- [Services & packages](https://awwalbrands.com/service-packages): packages and prices
+- [Services & packages](https://awwalbrands.com/service-packages): packages and what each includes
 - [Brand identity & graphic design](https://awwalbrands.com/branding-graphic-design)
 - [Logo design](https://awwalbrands.com/logo-design)
 - [Digital marketing & campaigns](https://awwalbrands.com/campaigns)

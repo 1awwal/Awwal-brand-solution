@@ -407,7 +407,7 @@
           "packages": {
             "type": "string",
             "format": "uri",
-            "description": "Packages and starting prices"
+            "description": "Packages and what each includes"
           }
         }
       },
