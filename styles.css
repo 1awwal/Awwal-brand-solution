@@ -1424,3 +1424,7 @@ html[data-theme="light"] .principle-grid article{background:linear-gradient(135d
 .hero .hero-slogan{margin:0;font-weight:800}
 html[data-theme="light"] .hero-copy .hero-seo-title{color:var(--blue)}
 html[dir=rtl] .hero-copy .hero-seo-title{font-family:var(--arabic);letter-spacing:0}
+
+/* Visible breadcrumb on pages that do not load services.css */
+.page-breadcrumb{display:flex;flex-wrap:wrap;gap:6px 10px;margin:0 0 22px;font-size:13px;font-weight:400;line-height:1.7;letter-spacing:0;text-transform:none;color:inherit;opacity:.82}
+.page-breadcrumb a{color:inherit;text-decoration:underline;text-underline-offset:4px}

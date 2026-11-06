@@ -95,10 +95,16 @@ export default {
     if(api)return api;
     if(url.pathname==='/mcp')return mcp(request);
     if(url.pathname.startsWith('/api/'))return problem('not_found',404);
+    const clean=cleanPath(url.pathname);
+    if(clean!==url.pathname&&(request.method==='GET'||request.method==='HEAD')){url.pathname=clean;return Response.redirect(url,301);}
     if(url.pathname==='/')return homepage(request,env);
     return env.ASSETS.fetch(request);
   }
 };
+
+// One URL per page: /services.html, /services/ and /index.html redirect permanently
+// to the clean form, so links to a variant pass to the page they mean.
+const cleanPath=(path)=>path.replace(/\/+$/,'').replace(/(?:\/index)?\.html$/,'')||'/';
 
 // Homepage content negotiation: AI agents that send "Accept: text/markdown" get a
 // clean Markdown version (index.md); browsers get the normal HTML. Vary: Accept
@@ -119,6 +125,9 @@ async function homepage(request,env){
   const res=await env.ASSETS.fetch(markdown?new Request(new URL('/index.md',request.url),request):request);
   const headers=new Headers(res.headers);
   headers.append('Vary','Accept');
+  headers.set('Strict-Transport-Security','max-age=31536000');
+  headers.set('X-Content-Type-Options','nosniff');
+  headers.set('Referrer-Policy','strict-origin-when-cross-origin');
   if(markdown&&res.ok){
     headers.set('Content-Type','text/markdown; charset=utf-8');
     headers.set('Link','<https://awwalbrands.com/>; rel="canonical"');
