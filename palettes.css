@@ -196,6 +196,7 @@ html body.palette-site,.palette-page,.palette-studio-shell,.palette-tools{backgr
 .palette-intro::before{background:none}
 
 /* Dark theme: the builder sits on a dark surface, the tools panel stays cream. Keep text readable on each. */
+html[data-theme="dark"] .palette-page{background:#080d3b}
 html[data-theme="dark"] .palette-page .palette-search-label,html[data-theme="dark"] .palette-page .palette-import>label{color:rgba(244,246,255,.72)}
 html[data-theme="dark"] .palette-page .palette-search-label input,html[data-theme="dark"] .palette-page .palette-import input{color:#f5f7ff}
 html[data-theme="dark"] .palette-page .palette-search-label input::placeholder,html[data-theme="dark"] .palette-page .palette-import input::placeholder{color:rgba(244,246,255,.55)}
