@@ -36,7 +36,7 @@
     '.hero .kicker': ['BRAND STRATEGY / IDENTITY / DIGITAL', 'استراتيجية العلامة / الهوية / الرقمي'],
     ".hero-seo-title": ["Branding &amp; digital marketing in Dammam", "التصميم والتسويق الرقمي في الدمام"],
     ".hero-slogan": ["<span class=\"hero-gradient-word\">YOUR DREAM.</span><br>YOUR BRAND.<br><span class=\"hero-gradient-word\">YOUR FIRST STEP.</span>","<span class=\"hero-gradient-word\">حلمك.</span><br>علامتك.<br><span class=\"hero-gradient-word\">خطوتك الأولى.</span>"],
-    ".hero-bottom p": ["Establishing your brand early is the first step towards bringing your dream to life. We turn scattered ideas into a clear identity, a credible website and a consistent presence, so customers understand what you offer and why it matters.","تأسيس علامتك مبكراً هو الخطوة الأولى نحو تحقيق حلمك. نحول أفكارك المتفرقة إلى هوية واضحة وموقع يعكس احترافيتك وحضور متناسق، ليفهم عملاؤك ما تقدمه ولماذا يهمهم."],
+    ".hero-bottom p": ["Awwal Brands is a branding and digital marketing studio based in Dammam, Saudi Arabia. We provide logo and brand identity design, company profiles, social media management, Google and Meta advertising, photography, video and websites for businesses in Dammam, Al Khobar and Jubail, in English and Arabic.","تأسيس علامتك مبكراً هو الخطوة الأولى نحو تحقيق حلمك. نحول أفكارك المتفرقة إلى هوية واضحة وموقع يعكس احترافيتك وحضور متناسق، ليفهم عملاؤك ما تقدمه ولماذا يهمهم."],
     '.round-link span': ['EXPLORE<br>OUR WORK', 'اكتشف<br>أعمالنا'],
     ".manifesto h2": ["GREAT IDEA.<br>UNSURE WHERE<br>TO <em>START?</em>","فكرة رائعة.<br>ولا تعرف<br>من أين <em>تبدأ؟</em>"],
     '.manifesto-copy .eyebrow': ['ABOUT AWWAL', 'عن أول'],
