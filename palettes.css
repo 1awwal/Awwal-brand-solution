@@ -194,3 +194,13 @@ html[data-theme="dark"] .palette-nav{background:rgba(0,0,80,.48);border-bottom-c
 html body.palette-site,.palette-page,.palette-studio-shell,.palette-tools{background:var(--brand-cream-gradient)}
 .palette-intro,.palette-footer{background:var(--brand-navy-gradient)}
 .palette-intro::before{background:none}
+
+/* Dark theme: the builder sits on a dark surface, the tools panel stays cream. Keep text readable on each. */
+html[data-theme="dark"] .palette-page .palette-search-label,html[data-theme="dark"] .palette-page .palette-import>label{color:rgba(244,246,255,.72)}
+html[data-theme="dark"] .palette-page .palette-search-label input,html[data-theme="dark"] .palette-page .palette-import input{color:#f5f7ff}
+html[data-theme="dark"] .palette-page .palette-search-label input::placeholder,html[data-theme="dark"] .palette-page .palette-import input::placeholder{color:rgba(244,246,255,.55)}
+html[data-theme="dark"] .palette-builder .palette-reset,html[data-theme="dark"] .palette-builder .palette-text-button{color:#f5f7ff;border-bottom-color:rgba(244,246,255,.45)}
+html[data-theme="dark"] .palette-builder .lock-color{color:rgba(244,246,255,.82);border-color:rgba(244,246,255,.32)}
+html[data-theme="dark"] .palette-builder .lock-color[aria-pressed="true"]{background:var(--amber);border-color:var(--amber);color:#0a164e}
+html[data-theme="dark"] .palette-page .palette-tools h2,html[data-theme="dark"] .palette-page .palette-tools h3{color:#0a164e}
+html[data-theme="dark"] .palette-page .palette-tools .extract-count,html[data-theme="dark"] .palette-page .palette-tools .gradient-controls label,html[data-theme="dark"] .palette-page .palette-tools .contrast-tool label{color:rgba(10,22,78,.72)}
