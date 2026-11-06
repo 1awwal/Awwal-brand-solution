@@ -30,6 +30,7 @@ html[data-theme="light"] .service-site{background:var(--brand-light-gradient)}
 .service-poster figcaption{padding:20px}
 .service-poster figcaption h3{font-size:18px;line-height:1.4;margin:0 0 8px;color:var(--content-ink)}
 .service-poster figcaption p{font-size:14px;line-height:1.7;color:var(--content-muted);margin:0}
+.service-poster figcaption .service-poster-title{font-size:18px;font-weight:600;line-height:1.4;margin:0 0 8px;color:var(--content-ink)}
 .service-poster figcaption>a{margin-top:12px}
 .service-process{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px;padding-left:24px}
 .service-process li{padding:0 12px 0 6px;color:var(--content-muted)}
