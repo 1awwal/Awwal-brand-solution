@@ -1428,3 +1428,15 @@ html[dir=rtl] .hero-copy .hero-seo-title{font-family:var(--arabic);letter-spacin
 /* Visible breadcrumb on pages that do not load services.css */
 .page-breadcrumb{display:flex;flex-wrap:wrap;gap:6px 10px;margin:0 0 22px;font-size:13px;font-weight:400;line-height:1.7;letter-spacing:0;text-transform:none;color:inherit;opacity:.82}
 .page-breadcrumb a{color:inherit;text-decoration:underline;text-underline-offset:4px}
+
+/* Hero copy outside the glass headline panel. */
+.hero.hero-customer{height:auto;min-height:0;display:flex;flex-direction:column;align-items:stretch;gap:32px;padding-top:140px;padding-bottom:64px}
+.hero>.hero-seo-title{position:relative;z-index:2;width:min(100%,1420px);margin:0 auto;font:500 clamp(11px,1.1vw,14px)/1.5 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--amber);text-align:center}
+.hero.hero-customer>.hero-copy{padding:clamp(40px,5vw,80px)}
+.hero.hero-customer>.hero-bottom{position:relative;z-index:2;width:min(100%,1100px);margin:0 auto;justify-content:space-between}
+.hero.hero-customer>.hero-bottom p{max-width:78ch}
+.hero.hero-customer>.hero-bottom .round-link{flex-shrink:0}
+.services-head p[hidden]{display:none}
+.home-palette-promo{width:auto;max-width:1420px;margin:0 auto;padding-top:40px;padding-bottom:65px}
+html[data-theme="light"] .hero>.hero-seo-title{color:var(--blue)}
+@media(max-width:720px){.hero.hero-customer{padding-top:110px;gap:24px}.hero.hero-customer>.hero-copy{padding:38px 18px}.hero.hero-customer>.hero-bottom{flex-direction:column;gap:25px}.hero.hero-customer>.hero-bottom p{max-width:100%;text-align:left}.home-palette-promo{flex-direction:column;align-items:flex-start}}

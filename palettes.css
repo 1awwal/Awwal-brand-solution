@@ -205,3 +205,9 @@ html[data-theme="dark"] .palette-builder .lock-color{color:rgba(244,246,255,.82)
 html[data-theme="dark"] .palette-builder .lock-color[aria-pressed="true"]{background:var(--amber);border-color:var(--amber);color:#0a164e}
 html[data-theme="dark"] .palette-page .palette-tools h2,html[data-theme="dark"] .palette-page .palette-tools h3{color:#0a164e}
 html[data-theme="dark"] .palette-page .palette-tools .extract-count,html[data-theme="dark"] .palette-page .palette-tools .gradient-controls label,html[data-theme="dark"] .palette-page .palette-tools .contrast-tool label{color:rgba(10,22,78,.72)}
+
+/* Company color reference library */
+.brand-atlas-section{width:min(1280px,calc(100% - 48px));margin:0 auto;padding:clamp(24px,4vw,60px) 0;border-top:1px solid var(--line,rgba(127,127,127,.25));scroll-margin-top:110px}
+.brand-atlas-heading{max-width:850px;margin:0 0 28px}
+.brand-atlas-heading h2{font-size:clamp(30px,4.5vw,60px);line-height:1.08;letter-spacing:-.045em;margin:14px 0}
+.brand-atlas-heading p{line-height:1.65}
