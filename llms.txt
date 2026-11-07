@@ -43,6 +43,9 @@ Agents cannot submit enquiries for a person; share WhatsApp, email or the form i
 - [Website design & management](https://awwalbrands.com/website-design)
 - [Photography & video](https://awwalbrands.com/photography-video)
 - [Poster design](https://awwalbrands.com/poster-design)
-- [Eastern Province](https://awwalbrands.com/eastern-province): Dammam, Al Khobar and Jubail
+- [Dammam & Eastern Province](https://awwalbrands.com/eastern-province): home region; Dammam, Al Khobar, Dhahran, Jubail, Qatif, Al Ahsa
+- [Riyadh](https://awwalbrands.com/riyadh): remote support for Riyadh, Diriyah, Al Kharj
+- [Jeddah & Makkah](https://awwalbrands.com/makkah): remote support for Jeddah, Makkah, Taif, Rabigh
+- [Madinah](https://awwalbrands.com/madinah): remote support for Madinah, Yanbu, AlUla
 - [About](https://awwalbrands.com/about) · [Founder](https://awwalbrands.com/founder) · [Contact](https://awwalbrands.com/contact) · [Privacy](https://awwalbrands.com/privacy) · [API docs](https://awwalbrands.com/docs)
 - [العربية](https://awwalbrands.com/ar): Arabic homepage

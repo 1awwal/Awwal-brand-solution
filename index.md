@@ -1,6 +1,6 @@
-# Awwal Brands — Branding & Digital Marketing in Dammam
+# Awwal Brands — Branding & Digital Marketing in Saudi Arabia
 
-Awwal Brands (أول براندز) is a branding, design and digital marketing studio in Dammam, Saudi Arabia, serving businesses in Dammam, Al Khobar, Jubail and the wider Eastern Province.
+Awwal Brands (أول براندز) is a branding, design and digital marketing studio based in Saudi Arabia, working with new and growing businesses in English and Arabic. Regional pages: [Dammam & Eastern Province](https://awwalbrands.com/eastern-province), [Riyadh](https://awwalbrands.com/riyadh), [Jeddah & Makkah](https://awwalbrands.com/makkah), [Madinah](https://awwalbrands.com/madinah).
 
 ## Great idea. Unsure where to start?
 
