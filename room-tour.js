@@ -71,7 +71,7 @@
     const ratio = loadedImage ? loadedImage.naturalWidth / loadedImage.naturalHeight : 1.5;
     const width = rect.width;
     const height = rect.height;
-    const imageWidth = Math.min(width, height * ratio);
+    const imageWidth = width / height >= 1.2 ? Math.max(width, height * ratio) : Math.min(width, height * ratio);
     const imageHeight = imageWidth / ratio;
     geometry = {
       width, height, imageWidth, imageHeight,
