@@ -156,31 +156,6 @@
     revealTargets.forEach(el => observer.observe(el));
   } else revealTargets.forEach(el => el.classList.add('visible'));
 
-  const cursor = document.querySelector('.cursor');
-  if (matchMedia('(pointer:fine)').matches && !reduced) {
-    document.body.classList.add('cursor-enabled');
-    let lastTape = null;
-    window.addEventListener('mousemove', e => {
-      cursor.style.left = `${e.clientX}px`; cursor.style.top = `${e.clientY}px`;
-      const point = { x: e.clientX, y: e.clientY };
-      if (!lastTape || Math.hypot(point.x - lastTape.x, point.y - lastTape.y) >= 72) {
-        const tape = document.createElement('span');
-        tape.className = 'cursor-tape';
-        tape.setAttribute('aria-hidden', 'true');
-        tape.textContent = 'FIRST';
-        tape.style.left = `${point.x}px`; tape.style.top = `${point.y}px`;
-        tape.style.setProperty('--tape-angle', `${Math.round(Math.random() * 28 - 14)}deg`);
-        document.body.append(tape);
-        window.setTimeout(() => tape.remove(), 720);
-        lastTape = point;
-      }
-    }, { passive: true });
-    document.querySelectorAll('.work-visual,.service-row,.button,.nav-cta').forEach(el => {
-      el.addEventListener('mouseenter', () => cursor.classList.add('active'));
-      el.addEventListener('mouseleave', () => cursor.classList.remove('active'));
-    });
-  }
-
   const glassPanel = document.querySelector('.hero-copy');
   if (glassPanel && matchMedia('(pointer:fine)').matches && !reduced) {
     let glassFrame = 0;
