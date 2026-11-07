@@ -88,6 +88,101 @@ gallery.addEventListener('click',async e=>{
   catch{window.prompt('Copy these hex codes',value);}
   clearTimeout(timer);timer=setTimeout(()=>toast.textContent='',2100);
 });
+const community=document.createElement('section');
+community.className='section community-section';
+community.innerHTML=`<h2>Made by the community.</h2>
+<p>Discover palettes approved by the Awwal team.</p><div id="community-cards" class="grid"></div>
+<p id="community-status" role="status">Loading approved palettes…</p>
+<button id="community-more" type="button" hidden>Load more community palettes</button>
+<div class="submit-panel"><h3>Share your color direction.</h3><p>Name your palette and add 2–6 unique six-digit hex codes. The Awwal team reviews every submission before it appears here.</p>
+<form id="community-form">
+<label for="community-name">Palette name<input id="community-name" name="name" minlength="2" maxlength="70" required placeholder="e.g. Midnight Coast"></label>
+<label for="community-author">Your name<input id="community-author" name="author" minlength="2" maxlength="80" autocomplete="name" required></label>
+<label for="community-email">Email (optional, private)<input id="community-email" name="email" type="email" autocomplete="email" maxlength="254"></label>
+<label for="community-colors">Hex codes<textarea id="community-colors" name="colors" rows="3" required placeholder="#021024, #1428A0, #7DA0CA, #C1E8FF"></textarea></label>
+<div id="community-preview" class="community-preview" aria-label="Your palette preview"></div>
+<div class="community-trap" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
+<label class="community-consent"><input type="checkbox" name="consent" required> I agree that Awwal may review this submission and publish the palette with my name. My email stays private.</label>
+<button type="submit" id="community-submit">Submit for review</button><p id="community-form-status" role="status"></p></form></div>`;
+root.querySelector('main').append(community);
+root.querySelector('style').textContent+=`
+.submit-panel{margin-top:40px;padding:24px;background:#e8ece3;border-radius:14px}
+#community-form{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
+#community-form input,#community-form textarea{width:100%;min-width:0;font:inherit;padding:10px 12px;border:1px solid #aeb9af;border-radius:8px;background:white;color:#17201d}
+#community-form label{font-size:13px}#community-form textarea{resize:vertical}
+#community-form .community-consent{display:flex;align-items:flex-start;gap:9px;grid-column:1/-1;max-width:72ch}
+#community-form input[type=checkbox]{width:18px;flex:0 0 18px}
+#community-submit,#community-more{padding:11px 16px;border:0;border-radius:8px;background:#15392f;color:white;cursor:pointer}
+#community-submit:disabled{opacity:.6;cursor:wait}.community-trap{display:none}.community-preview{grid-column:1/-1;display:flex;min-height:45px;border-radius:8px;overflow:hidden}
+.community-preview span{flex:1;min-width:0}#community-form-status{align-self:center;margin:0}
+.community-card{padding:12px;background:white;border:1px solid #c9ccc2;border-radius:12px}
+.community-card img{display:block;width:100%;height:auto;border-radius:8px}
+@media(max-width:600px){#community-form{grid-template-columns:1fr}.submit-panel{padding:16px}}
+`;
+let nextCommunity=null;
+const communityMore=root.querySelector('#community-more');
+const communityStatus=root.querySelector('#community-status');
+function appendCommunity(items) {
+  const cards=root.querySelector('#community-cards');
+  for(const palette of items) {
+    const item={...palette,company:'By '+palette.author,type:'Community palette',id:palette.id.slice(0,8)};
+    const article=document.createElement('article');
+    article.className='community-card';
+    const image=document.createElement('img');image.src=svgURL(item);image.alt=palette.name;image.loading='lazy';
+    const heading=document.createElement('h3');heading.textContent=palette.name;
+    const author=document.createElement('p');author.textContent='By '+palette.author;
+    const button=document.createElement('button');button.type='button';button.textContent='Download JPG';
+    button.addEventListener('click',async()=>{try{await downloadCard({...item,file:'awwal-community-'+palette.id+'.jpg'});}catch{communityStatus.textContent='Unable to download this card. Please try again.';}});
+    article.append(image,heading,author,button);cards.append(article);
+  }
+}
+async function loadCommunity() {
+  communityMore.disabled=true;
+  try {
+    const response=await fetch('/api/community-palettes'+(nextCommunity?'?before='+encodeURIComponent(nextCommunity):''));
+    if(!response.ok)throw new Error();
+    const result=await response.json();
+    appendCommunity(result.items);nextCommunity=result.nextCursor;communityMore.hidden=!nextCommunity;
+    communityStatus.textContent=root.querySelector('#community-cards').children.length?'':'Be the first to share a palette for review.';
+  } catch {communityStatus.textContent='Community palettes are temporarily unavailable. Please refresh to try again.';}
+  finally {communityMore.disabled=false;}
+}
+communityMore.addEventListener('click',loadCommunity);
+loadCommunity();
+const form=root.querySelector('#community-form');
+const codes=root.querySelector('#community-colors');
+const submit=root.querySelector('#community-submit');
+const formStatus=root.querySelector('#community-form-status');
+const parseCodes=()=>codes.value.trim().split(/[\s,;]+/).filter(Boolean).map(s=>s.replace(/^#/,'').toUpperCase());
+codes.addEventListener('input',()=>{
+  const preview=root.querySelector('#community-preview');preview.replaceChildren();
+  for(const code of parseCodes().slice(0,6)) {
+    if(!/^[A-F0-9]{6}$/.test(code))continue;
+    const swatch=document.createElement('span');swatch.style.backgroundColor='#'+code;swatch.title='#'+code;preview.append(swatch);
+  }
+});
+let requestKey=crypto.randomUUID(),lastSubmission='';
+form.addEventListener('submit',async event=>{
+  event.preventDefault();
+  const data=new FormData(form);
+  const colors=parseCodes();
+  if(colors.length<2||colors.length>6||colors.some(c=>!/^[A-F0-9]{6}$/.test(c))||new Set(colors).size!==colors.length){
+    formStatus.textContent='Enter 2–6 unique six-digit hex codes, separated by commas or spaces.';return;
+  }
+  const payload={name:String(data.get('name')).trim(),author:String(data.get('author')).trim(),email:String(data.get('email')).trim(),colors,consent:data.get('consent')==='on',website:String(data.get('website')||'')};
+  const fingerprint=JSON.stringify(payload);
+  if(lastSubmission&&lastSubmission!==fingerprint)requestKey=crypto.randomUUID();
+  lastSubmission=fingerprint;submit.disabled=true;formStatus.textContent='Submitting your palette…';
+  try {
+    const response=await fetch('/api/community-palettes',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...payload,requestKey})});
+    const result=await response.json();
+    if(!response.ok)throw new Error(result.error||'Unable to submit. Please try again.');
+    formStatus.textContent='Received. Your palette is waiting for the Awwal team’s review. Reference '+result.reference.slice(0,8)+'.';
+    form.reset();root.querySelector('#community-preview').replaceChildren();requestKey=crypto.randomUUID();lastSubmission='';
+  } catch(error){formStatus.textContent=error.message;}
+  finally{submit.disabled=false;}
+});
+
 q.addEventListener('input',()=>{clearTimeout(q.delay);q.delay=setTimeout(()=>{limit=18;render();},140);});
 cat.addEventListener('change',()=>{limit=18;render();});size.addEventListener('change',()=>{limit=18;render();});render();
 

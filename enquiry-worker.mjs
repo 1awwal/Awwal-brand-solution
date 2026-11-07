@@ -1,5 +1,6 @@
 import {validateLead,notificationParameters} from './enquiry-server.mjs';
 import {problem,readOnlyApi,mcp} from './agent-api.mjs';
+import {paletteApi} from './palette-submissions.mjs';
 
 // Owner WhatsApp alert for every lead. Configure Worker variables/secrets:
 //  Meta WhatsApp Cloud API (preferred): WHATSAPP_TOKEN (secret), WHATSAPP_PHONE_ID, WHATSAPP_TO (e.g. 966539211696),
@@ -90,6 +91,8 @@ export default {
   async fetch(request,env,ctx) {
     const url=new URL(request.url);
     if(url.protocol!=='https:'){url.protocol='https:';return Response.redirect(url,308);}
+    const paletteResponse=await paletteApi(request,env);
+    if(paletteResponse)return paletteResponse;
     if(url.pathname==='/api/enquiries')return capture(request,env,ctx);
     const api=readOnlyApi(request,url);
     if(api)return api;
