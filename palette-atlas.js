@@ -105,8 +105,14 @@ community.innerHTML=`<h2>Made by the community.</h2>
 <label class="community-consent"><input type="checkbox" name="consent" required> I agree that Awwal may review this submission and publish the palette with my name. My email stays private.</label>
 <button type="submit" id="community-submit">Submit for review</button><p id="community-form-status" role="status"></p></form></div>`;
 root.querySelector('main').append(community);
+const shareButton=document.createElement('button');
+shareButton.type='button';
+shareButton.textContent='Share a palette';
+shareButton.className='share-community';
+shareButton.addEventListener('click',()=>community.scrollIntoView({behavior:'smooth',block:'start'}));
+root.querySelector('.controls').append(shareButton);
 root.querySelector('style').textContent+=`
-.submit-panel{margin-top:40px;padding:24px;background:#e8ece3;border-radius:14px}
+.community-section{scroll-margin-top:110px}.share-community{padding:10px 15px;border:0;border-radius:8px;background:#15392f;color:white;cursor:pointer}.submit-panel{margin-top:40px;padding:24px;background:#e8ece3;border-radius:14px}
 #community-form{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
 #community-form input,#community-form textarea{width:100%;min-width:0;font:inherit;padding:10px 12px;border:1px solid #aeb9af;border-radius:8px;background:white;color:#17201d}
 #community-form label{font-size:13px}#community-form textarea{resize:vertical}
