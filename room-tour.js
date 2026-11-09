@@ -8,7 +8,7 @@
 
   const stops = [
     { x: .5, y: .5, zoom: 1, title: 'A whole world, built around your brand.', description: 'Explore a connected world of identity, print, packaging and digital experiences.', category: 'THE BRAND ROOM' },
-    { x: .435, y: .19, zoom: 1.85, title: 'The first impression.', description: 'A distinctive mark and visual language give every touchpoint a clear point of view.', category: 'BRAND IDENTITY' },
+    { x: .435, y: .19, zoom: 1.4, title: 'The first impression.', description: 'A distinctive mark and visual language give every touchpoint a clear point of view.', category: 'BRAND IDENTITY' },
     { x: .15, y: .60, zoom: 2.35, title: 'Identity you can carry.', description: 'Thoughtful bags and everyday objects bring your brand into people’s lives.', category: 'BAGS & MERCHANDISE' },
     { x: .50, y: .77, zoom: 2.10, title: 'Stories worth keeping.', description: 'Brochures, profiles and editorial pieces turn your story into something tangible.', category: 'PRINT & EDITORIAL' },
     { x: .595, y: .69, zoom: 2.25, title: 'Considered down to the detail.', description: 'Cards, stationery and the smallest details carry the same considered identity.', category: 'STATIONERY' },
@@ -39,7 +39,7 @@
   let needsMeasure = true;
   let snapNextFrame = true;
   let layoutZoom = 0;
-  let geometry = { width: 0, height: 0, imageWidth: 0, imageHeight: 0, top: 0, range: 0 };
+  let geometry = { width: 0, height: 0, imageWidth: 0, imageHeight: 0, maxZoom: 1, top: 0, range: 0 };
 
   function activate(index) {
     if (active === index) return;
@@ -74,8 +74,16 @@
     const height = rect.height;
     const imageWidth = width / height >= 1.2 ? Math.max(width, height * ratio) : Math.min(width, height * ratio);
     const imageHeight = imageWidth / ratio;
+    // Limit close-ups to the source pixel density while keeping the overview usable.
+    const density = window.devicePixelRatio || 1;
+    const maxZoom = loadedImage && imageWidth > 0 && imageHeight > 0
+      ? Math.max(1, Math.min(
+        loadedImage.naturalWidth / (imageWidth * density),
+        loadedImage.naturalHeight / (imageHeight * density)
+      ))
+      : 1;
     geometry = {
-      width, height, imageWidth, imageHeight,
+      width, height, imageWidth, imageHeight, maxZoom,
       top: Number.isFinite(top) ? top : (Number.isFinite(fallbackTop) ? fallbackTop : 0),
       range: Math.max(0, tour.getBoundingClientRect().height - stage.getBoundingClientRect().height)
     };
@@ -101,7 +109,7 @@
     const target = {
       x: mix(stops[from].x, stops[to].x, eased),
       y: mix(stops[from].y, stops[to].y, eased),
-      zoom: mix(stops[from].zoom, stops[to].zoom, eased)
+      zoom: mix(Math.min(stops[from].zoom, geometry.maxZoom), Math.min(stops[to].zoom, geometry.maxZoom), eased)
     };
     activate(Math.round(position));
     const elapsed = previousTime ? clamp(time - previousTime, 0, 50) : 16.67;
