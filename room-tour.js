@@ -38,6 +38,7 @@
   let captionTimer = 0;
   let needsMeasure = true;
   let snapNextFrame = true;
+  let layoutZoom = 0;
   let geometry = { width: 0, height: 0, imageWidth: 0, imageHeight: 0, top: 0, range: 0 };
 
   function activate(index) {
@@ -78,8 +79,7 @@
       top: Number.isFinite(top) ? top : (Number.isFinite(fallbackTop) ? fallbackTop : 0),
       range: Math.max(0, tour.getBoundingClientRect().height - stage.getBoundingClientRect().height)
     };
-    camera.style.width = `${imageWidth}px`;
-    camera.style.height = `${imageHeight}px`;
+    layoutZoom = 0;
     camera.style.transformOrigin = '0 0';
     needsMeasure = false;
   }
@@ -119,9 +119,22 @@
     const scaledHeight = imageHeight * current.zoom;
     const x = scaledWidth <= width ? (width - scaledWidth) / 2 : clamp(width / 2 - scaledWidth * current.x, width - scaledWidth, 0);
     const y = scaledHeight <= height ? (height - scaledHeight) / 2 : clamp(height / 2 - scaledHeight * current.y, height - scaledHeight, 0);
-    camera.style.transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0) scale(${current.zoom.toFixed(5)})`;
+    const moving = Math.abs(current.x - target.x) > .00003 ||
+      Math.abs(current.y - target.y) > .00003 ||
+      Math.abs(current.zoom - target.zoom) > .0001;
+    // Keep the scroll animation on the compositor. At rest, paint the source
+    // at the zoomed size so the browser does not enlarge a cached base layer.
+    if (!layoutZoom || !moving) {
+      layoutZoom = current.zoom;
+      camera.style.width = `${scaledWidth}px`;
+      camera.style.height = `${scaledHeight}px`;
+    }
+    camera.style.willChange = moving ? 'transform' : 'auto';
+    camera.style.transform = moving
+      ? `translate3d(${x}px, ${y}px, 0) scale(${current.zoom / layoutZoom})`
+      : `translate(${x}px, ${y}px)`;
     if (progressBar) progressBar.style.transform = `scaleX(${((position + 1) / stops.length).toFixed(5)})`;
-    if (Math.abs(current.x - target.x) > .00003 || Math.abs(current.y - target.y) > .00003 || Math.abs(current.zoom - target.zoom) > .0001) schedule();
+    if (moving) schedule();
     else previousTime = 0;
   }
 
