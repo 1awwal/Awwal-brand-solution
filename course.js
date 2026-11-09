@@ -1,41 +1,52 @@
-// Awwal Courses — progress tracking, track filter, video embeds and certificate.
+// Awwal Courses — progress, levels, track filter, video embeds and level certificates.
 (() => {
-  const KEY = "awwal-course-video-editing";
-  const COURSE = "Professional Video Editing";
-  const TRACKS = {
-    all: "Final Cut Pro & DaVinci Resolve",
-    fcp: "Final Cut Pro track",
-    resolve: "DaVinci Resolve track",
-  };
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const main = $(".course-page[data-course-key]");
 
-  let state = { done: {}, track: "all", cert: null };
+  const nav = $(".nav-wrap");
+  const onScroll = () => nav && nav.classList.toggle("scrolled", window.scrollY > 30);
+  onScroll(); window.addEventListener("scroll", onScroll, { passive: true });
+  if (!main) return;
+
+  const KEY = "awwal-course-" + main.dataset.courseKey;
+  const COURSE = main.dataset.courseName;
+  const CODE = main.dataset.courseCode;
+  const LEVEL_LABEL = { 1: "Beginner level", 2: "Intermediate level", 3: "Professional level" };
+  const TRACKS = { all: "", fcp: "Final Cut Pro track", resolve: "DaVinci Resolve track" };
+  const hasTracks = !!$("[data-track-btn]");
+
+  let state = { done: {}, track: "all", certs: {} };
   try {
     const saved = JSON.parse(localStorage.getItem(KEY) || "null");
-    if (saved && typeof saved === "object") state = { ...state, ...saved, done: saved.done || {} };
+    if (saved && typeof saved === "object") state = { ...state, ...saved, done: saved.done || {}, certs: saved.certs || {} };
   } catch (_) {}
-  if (!TRACKS[state.track]) state.track = "all";
+  if (!hasTracks || !(state.track in TRACKS)) state.track = "all";
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (_) {} };
 
+  const levels = $$(".level");
   const lessons = $$(".lesson");
   const boxes = $$("input[data-lesson]");
   const fill = $("#progress-fill"), text = $("#progress-text"), bar = $(".progress-track");
-  const lock = $("#cert-lock"), remaining = $("#cert-remaining"), form = $("#cert-form");
-  const output = $("#cert-output"), canvas = $("#cert-canvas"), nameInput = $("#cert-name");
+  const form = $("#cert-form"), output = $("#cert-output"), canvas = $("#cert-canvas"), nameInput = $("#cert-name");
+  let earned = 0;
 
   const inTrack = (el) => {
     const t = el.dataset.track;
     return state.track === "all" || t === "both" || t === state.track;
   };
-  const required = () => boxes.filter((b) => { const l = b.closest(".lesson"); return !l || inTrack(l); });
+  const counts = (root) => {
+    const req = $$("input[data-lesson]", root).filter((b) => { const l = b.closest(".lesson"); return !l || inTrack(l); });
+    return { total: req.length, done: req.filter((b) => b.checked).length };
+  };
 
   function render() {
     $$("[data-track-btn]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.trackBtn === state.track)));
     lessons.forEach((l) => { l.hidden = !inTrack(l); });
     boxes.forEach((b) => {
       b.checked = !!state.done[b.dataset.lesson];
-      b.closest(".lesson")?.classList.toggle("is-done", b.checked);
+      const l = b.closest(".lesson");
+      if (l) l.classList.toggle("is-done", b.checked);
     });
     $$(".module").forEach((m) => {
       const visible = $$(".lesson", m).filter((l) => !l.hidden);
@@ -43,36 +54,47 @@
       m.hidden = visible.length === 0;
       m.classList.toggle("is-done", visible.length > 0 && done === visible.length);
       const c = $("[data-module-count]", m);
-      if (c) c.textContent = `${done}/${visible.length} lessons`;
+      if (c) c.textContent = `${done}/${visible.length} sessions`;
     });
-    const req = required(), total = req.length, done = req.filter((b) => b.checked).length;
-    const pct = total ? Math.round((done / total) * 100) : 0;
+
+    earned = 0; let chain = true;
+    levels.forEach((lv) => {
+      const n = Number(lv.dataset.level), c = counts(lv);
+      const complete = c.total > 0 && c.done === c.total;
+      const status = $("[data-level-status]", lv);
+      if (status) status.textContent = (c.total ? Math.round((c.done / c.total) * 100) : 0) + "%";
+      lv.classList.toggle("is-done", complete);
+      const count = $("[data-level-count]", lv);
+      if (count) count.textContent = String($$(".lesson", lv).filter((l) => !l.hidden).length);
+      chain = chain && complete;
+      if (chain) earned = n;
+      const row = $(`[data-cert-level="${n}"]`);
+      if (row) {
+        row.classList.toggle("is-unlocked", chain);
+        $(".cert-level-state", row).textContent = chain ? "Unlocked ✓" : complete ? "Finish the earlier levels" : `${c.total - c.done} to go`;
+      }
+    });
+
+    const all = counts(main), pct = all.total ? Math.round((all.done / all.total) * 100) : 0;
     fill.style.width = pct + "%";
     bar.setAttribute("aria-valuenow", String(pct));
-    text.textContent = `${done} of ${total} complete · ${pct}%`;
-    const complete = total > 0 && done === total;
-    lock.hidden = complete;
-    form.hidden = !complete;
-    if (!complete) {
-      output.hidden = true;
-      remaining.textContent = `${total - done} to go`;
-    } else if (state.cert && state.cert.track === state.track) {
-      nameInput.value = state.cert.name;
-      draw(state.cert);
-    } else {
-      output.hidden = true;
-    }
+    text.textContent = `${all.done} of ${all.total} complete · ${pct}%`;
+
+    form.hidden = earned === 0;
+    if (earned === 0) { output.hidden = true; return; }
+    $("#cert-button-text").textContent = `Generate ${LEVEL_LABEL[earned].replace(" level", "")} certificate`;
+    const cert = state.certs[earned];
+    if (cert && cert.track === state.track) { nameInput.value = cert.name; draw(cert); }
+    else { output.hidden = true; if (cert) nameInput.value = cert.name; }
   }
 
   boxes.forEach((b) => b.addEventListener("change", () => {
     if (b.checked) state.done[b.dataset.lesson] = 1; else delete state.done[b.dataset.lesson];
     save(); render();
   }));
-  $$("[data-track-btn]").forEach((b) => b.addEventListener("click", () => {
-    state.track = b.dataset.trackBtn; save(); render();
-  }));
+  $$("[data-track-btn]").forEach((b) => b.addEventListener("click", () => { state.track = b.dataset.trackBtn; save(); render(); }));
 
-  // Click-to-load YouTube embeds (privacy-enhanced mode, nothing loads until asked).
+  // Click-to-load YouTube embeds (privacy-enhanced mode; nothing loads until asked).
   document.addEventListener("click", (e) => {
     const btn = e.target.closest("button.yt");
     if (!btn) return;
@@ -93,7 +115,7 @@
   const logoReady = loadImage("assets/awwal-mark-white.png");
 
   function fitText(ctx, str, maxWidth, size, weight, family) {
-    do { ctx.font = `${weight} ${size}px ${family}`; size -= 4; } while (ctx.measureText(str).width > maxWidth && size > 40);
+    do { ctx.font = `${weight} ${size}px ${family}`; size -= 4; } while (ctx.measureText(str).width > maxWidth && size > 36);
   }
   function spaced(ctx, str, x, y, spacing) {
     const chars = [...str];
@@ -107,7 +129,7 @@
   async function draw(cert) {
     const W = canvas.width, H = canvas.height, ctx = canvas.getContext("2d");
     const SANS = "Poppins, Arial, sans-serif", MONO = "'DM Mono', monospace";
-    try { await Promise.all([document.fonts.load(`800 100px Poppins`), document.fonts.load(`500 30px 'DM Mono'`), document.fonts.load("600 40px Poppins")]); } catch (_) {}
+    try { await Promise.all([document.fonts.load("800 100px Poppins"), document.fonts.load("500 30px 'DM Mono'"), document.fonts.load("600 40px Poppins")]); } catch (_) {}
     const logo = await logoReady;
     const NAVY = "#0A192F", AMBER = "#FFB703", ORANGE = "#FF6D12";
 
@@ -115,10 +137,8 @@
     const glow = ctx.createRadialGradient(W * 0.82, H * 0.16, 0, W * 0.82, H * 0.16, W * 0.6);
     glow.addColorStop(0, "rgba(51,84,225,.34)"); glow.addColorStop(1, "rgba(51,84,225,0)");
     ctx.fillStyle = glow; ctx.fillRect(0, 0, W, H);
-    // rings
     ctx.strokeStyle = "rgba(255,183,3,.16)"; ctx.lineWidth = 2;
     [520, 400, 280].forEach((r) => { ctx.beginPath(); ctx.arc(W - 150, H - 110, r, 0, Math.PI * 2); ctx.stroke(); });
-    // frame
     ctx.strokeStyle = AMBER; ctx.lineWidth = 8; ctx.strokeRect(56, 56, W - 112, H - 112);
     ctx.strokeStyle = "rgba(255,255,255,.28)"; ctx.lineWidth = 2; ctx.strokeRect(84, 84, W - 168, H - 168);
 
@@ -134,10 +154,10 @@
     ctx.fillStyle = grad; ctx.fillRect(W / 2 - 260, 730, 520, 6);
 
     ctx.fillStyle = "rgba(255,255,255,.78)"; ctx.font = `400 36px ${SANS}`; ctx.fillText("has successfully completed the self-paced course", W / 2, 830);
-    ctx.fillStyle = "#fff"; ctx.font = `700 72px ${SANS}`; ctx.fillText(COURSE, W / 2, 930);
-    ctx.fillStyle = AMBER; ctx.font = `600 42px ${SANS}`; ctx.fillText(TRACKS[cert.track], W / 2, 1000);
+    ctx.fillStyle = "#fff"; fitText(ctx, COURSE, W - 360, 76, 700, SANS); ctx.fillText(COURSE, W / 2, 930);
+    const sub = [LEVEL_LABEL[cert.level], TRACKS[cert.track]].filter(Boolean).join("  ·  ");
+    ctx.fillStyle = AMBER; ctx.font = `600 42px ${SANS}`; ctx.fillText(sub, W / 2, 1000);
 
-    // footer row
     const y = 1190, cols = [[W * 0.24, "DATE", cert.date], [W * 0.5, "CERTIFICATE ID", cert.id], [W * 0.76, "ISSUED BY", "Awwal Brands"]];
     cols.forEach(([x, label, value]) => {
       ctx.fillStyle = "rgba(255,255,255,.3)"; ctx.fillRect(x - 190, y - 62, 380, 2);
@@ -145,7 +165,7 @@
       ctx.fillStyle = "rgba(255,255,255,.62)"; ctx.font = `500 22px ${MONO}`; spaced(ctx, label, x, y - 18, 5);
     });
     ctx.fillStyle = "rgba(255,255,255,.5)"; ctx.font = `400 22px ${MONO}`;
-    ctx.fillText("awwalbrands.com/video-editing-course  ·  Certificate of completion for a self-paced course", W / 2, 1272);
+    ctx.fillText(`awwalbrands.com/${main.dataset.courseSlug}  ·  Certificate of completion for a self-paced course`, W / 2, 1272);
 
     output.hidden = false;
     try { $("#cert-download").href = canvas.toDataURL("image/png"); } catch (_) {}
@@ -154,18 +174,18 @@
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     const name = nameInput.value.replace(/\s+/g, " ").trim();
-    if (!name) { nameInput.focus(); return; }
+    if (!name || !earned) { nameInput.focus(); return; }
     const now = new Date();
-    const same = state.cert && state.cert.track === state.track;
+    const old = state.certs[earned];
+    const same = old && old.track === state.track;
     const stamp = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, "0")}${String(now.getDate()).padStart(2, "0")}`;
-    state.cert = {
-      name,
-      track: state.track,
-      date: same ? state.cert.date : now.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }),
-      id: same ? state.cert.id : `AWB-VE-${stamp}-${Math.random().toString(36).slice(2, 6).toUpperCase()}`,
+    const cert = {
+      name, level: earned, track: state.track,
+      date: same ? old.date : now.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }),
+      id: same ? old.id : `AWB-${CODE}${earned}-${stamp}-${Math.random().toString(36).slice(2, 6).toUpperCase()}`,
     };
-    save();
-    draw(state.cert).then(() => output.scrollIntoView({ behavior: "smooth", block: "center" }));
+    state.certs[earned] = cert; save();
+    draw(cert).then(() => output.scrollIntoView({ behavior: "smooth", block: "center" }));
   });
 
   $("#cert-print").addEventListener("click", () => {
@@ -182,14 +202,6 @@
     if (mod) mod.open = true;
   };
   window.addEventListener("hashchange", openHash); openHash();
-  $$(".toc-list a, .course-cta a").forEach((a) => a.addEventListener("click", () => {
-    const t = document.getElementById(a.getAttribute("href").slice(1));
-    if (t && t.tagName === "DETAILS") t.open = true;
-  }));
-
-  const nav = $(".nav-wrap");
-  const onScroll = () => nav && nav.classList.toggle("scrolled", window.scrollY > 30);
-  onScroll(); window.addEventListener("scroll", onScroll, { passive: true });
 
   render();
 })();
