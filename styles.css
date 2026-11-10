@@ -1438,3 +1438,28 @@ html[dir=rtl] .hero-copy .hero-seo-title{font-family:var(--arabic);letter-spacin
 .home-palette-promo{width:auto;max-width:1420px;margin:0 auto;padding-top:40px;padding-bottom:65px}
 html[data-theme="light"] .hero>.hero-seo-title{color:var(--blue)}
 @media(max-width:720px){.hero.hero-customer{padding-top:110px;gap:24px}.hero.hero-customer>.hero-copy{padding:38px 18px}.hero.hero-customer>.hero-bottom{flex-direction:column;gap:25px}.hero.hero-customer>.hero-bottom p{max-width:100%;text-align:left}.home-palette-promo{flex-direction:column;align-items:flex-start}}
+
+/* ===== Design-rule polish (site-wide) ===== */
+/* Widows: balance headings, avoid single-word last lines in body copy */
+h1,h2,h3,h4{text-wrap:balance}
+p,li,dd,figcaption,blockquote{text-wrap:pretty}
+/* Tabular numbers wherever digits change or line up */
+.room-index,.hero-index,.service-num,.big-index,.footer-bottom,.form-status,[class*="count"],[class*="price"],time{font-variant-numeric:tabular-nums}
+/* Touch targets: at least 44px on touch screens */
+@media(pointer:coarse){
+  .footer-links{gap:0}
+  .footer-links>a{min-height:44px;display:inline-flex;align-items:center}
+  .footer-links .footer-areas{line-height:2.4}
+  .footer-links .eyebrow{margin-bottom:6px}
+  .footer-bottom a,.service-email,.room-skip,.text-link,.page-breadcrumb a{display:inline-flex;align-items:center;min-height:44px}
+  .theme-toggle{min-width:44px;min-height:44px}
+  .info-mobile-nav{padding-top:0!important;padding-bottom:0!important}
+  .info-mobile-nav a{display:inline-flex;align-items:center;min-height:44px}
+}
+/* Legibility floor for the mobile section strip */
+@media(max-width:720px){.info-mobile-nav{font-size:10px!important}}
+/* Shared element transitions between pages (browsers without support simply navigate) */
+@view-transition{navigation:auto}
+.nav-wrap{view-transition-name:site-nav}
+::view-transition-old(root),::view-transition-new(root){animation-duration:.28s}
+@media(prefers-reduced-motion:reduce){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}}
