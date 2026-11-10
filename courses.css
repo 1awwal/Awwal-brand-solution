@@ -269,3 +269,9 @@ html[data-theme="light"] .account-chip{border-color:rgba(9,21,79,.35)}
 @media(max-width:720px){.account-link{margin-left:0}.nav-actions .nav-cta+.account-chip{display:none}}
 .dash-notice{max-width:620px;margin:0 0 22px;padding:14px 18px;border:1px solid var(--c-accent);border-radius:12px;font-size:14px}
 .nav-actions .account-chip{color:#fff}html[data-theme="light"] .nav-actions .account-chip{color:#09154f}
+
+.course-registration label{display:block;margin:0 0 8px;font-size:14px;font-weight:600}
+.course-registration input{display:block;width:100%;min-height:48px;margin:0 0 16px;padding:10px 12px;border:1px solid var(--c-line);border-radius:8px;background:var(--c-bg);color:var(--c-fg);font:inherit}
+.course-registration input::placeholder{color:var(--c-muted)}
+#dash-access-message:empty{display:none}
+#dash-access-message{margin:14px 0 0}

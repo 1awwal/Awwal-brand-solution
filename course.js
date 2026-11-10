@@ -58,7 +58,6 @@
       }
     }
     state.syncedUser = account.user.id;
-    if (!nameInput.value && account.profile && account.profile.full_name) nameInput.value = account.profile.full_name;
     store(); render(); queuePush();
   }
 
@@ -67,6 +66,7 @@
   const boxes = $$("input[data-lesson]");
   const fill = $("#progress-fill"), text = $("#progress-text"), bar = $(".progress-track");
   const form = $("#cert-form"), output = $("#cert-output"), canvas = $("#cert-canvas"), nameInput = $("#cert-name");
+  const certificateName = nameInput.defaultValue;
   let earned = 0;
 
   const inTrack = (el) => {
@@ -119,12 +119,12 @@
     bar.setAttribute("aria-valuenow", String(pct));
     text.textContent = `${all.done} of ${all.total} complete · ${pct}%`;
 
-    form.hidden = earned === 0;
-    if (earned === 0) { output.hidden = true; return; }
+    form.hidden = earned === 0 || !certificateName;
+    if (form.hidden) { output.hidden = true; return; }
     $("#cert-button-text").textContent = `Generate ${LEVEL_LABEL[earned].replace(" level", "")} certificate`;
     const cert = state.certs[earned];
-    if (cert && cert.track === state.track) { nameInput.value = cert.name; draw(cert); }
-    else { output.hidden = true; if (cert) nameInput.value = cert.name; }
+    if (cert && cert.track === state.track) draw(cert);
+    else output.hidden = true;
   }
 
   boxes.forEach((b) => b.addEventListener("change", () => {
@@ -221,7 +221,7 @@
     // body, left aligned
     const X = 200;
     ctx.fillStyle = "rgba(255,255,255,.72)"; ctx.font = `500 26px ${MONO}`; spacedLeft(ctx, "THIS CERTIFIES THAT", X, 372, 8);
-    ctx.fillStyle = "#fff"; fitText(ctx, cert.name, 1320, 136, 800, SANS); ctx.textAlign = "left"; ctx.fillText(cert.name, X - 4, 530);
+    ctx.fillStyle = "#fff"; fitText(ctx, certificateName, 1320, 136, 800, SANS); ctx.textAlign = "left"; ctx.fillText(certificateName, X - 4, 530);
     ctx.fillStyle = AMBER; ctx.fillRect(X, 582, 220, 7);
     ctx.fillStyle = "rgba(255,255,255,.8)"; ctx.font = `400 36px ${SANS}`; ctx.fillText("has successfully completed the self-paced course", X, 690);
     ctx.fillStyle = "#fff"; fitText(ctx, COURSE, 1320, 78, 700, SANS); ctx.textAlign = "left"; ctx.fillText(COURSE, X - 2, 792);
@@ -262,14 +262,13 @@
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-    const name = nameInput.value.replace(/\s+/g, " ").trim();
-    if (!name || !earned) { nameInput.focus(); return; }
+    if (!certificateName || !earned) return;
     const now = new Date();
     const old = state.certs[earned];
     const same = old && old.track === state.track;
     const stamp = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, "0")}${String(now.getDate()).padStart(2, "0")}`;
     const cert = {
-      name, level: earned, track: state.track,
+      name: certificateName, level: earned, track: state.track,
       date: same ? old.date : now.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }),
       id: same ? old.id : `AWB-${CODE}${earned}-${stamp}-${Math.random().toString(36).slice(2, 6).toUpperCase()}`,
     };

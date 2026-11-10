@@ -1,3 +1,5 @@
+import {listCourseLearners} from './course-access.mjs';
+
 const PUBLIC_ORIGIN = 'https://awwalbrands.com';
 const PORTAL_ORIGIN = 'https://portal.awwalbrands.com';
 const STATUS = new Set(['pending', 'approved', 'rejected']);
@@ -102,9 +104,10 @@ export async function paletteApi(request, env, transport = fetch) {
   const isPublic = url.pathname === '/api/community-palettes';
   const isAdmin = url.pathname.startsWith('/api/admin/');
   const isList = url.pathname === '/api/admin/palette-submissions';
+  const isCourseLearners = url.pathname === '/api/admin/course-learners';
   const isEnquiries = url.pathname === '/api/admin/website-enquiries';
   const reviewId = url.pathname.match(/^\/api\/admin\/palette-submissions\/([0-9a-f-]{36})$/i)?.[1];
-  if (!isPublic && !isList && !isEnquiries && !reviewId) return null;
+  if (!isPublic && !isList && !isEnquiries && !isCourseLearners && !reviewId) return null;
   const origin = request.headers.get('Origin') || '';
   const cors = isAdmin && origin === PORTAL_ORIGIN ? PORTAL_ORIGIN : '';
   if (isAdmin && origin && origin !== PORTAL_ORIGIN) return json({ error: 'Origin not allowed.' }, 403);
@@ -120,6 +123,12 @@ export async function paletteApi(request, env, transport = fetch) {
     if (isAdmin) {
       admin = await authenticateAdmin(request, transport);
       if (!admin) return json({ error: 'An active portal admin session is required.' }, 403, cors);
+    }
+    if (isCourseLearners) {
+      if (request.method !== 'GET') return json({ error: 'Method not allowed.' }, 405, cors);
+      let before;
+      try { before = pageCursor(url); } catch (error) { return json({ error: error.message }, 400, cors); }
+      return json(await listCourseLearners(env.ENQUIRIES, before), 200, cors);
     }
     if (isEnquiries) {
       if (request.method !== 'GET') return json({ error: 'Method not allowed.' }, 405, cors);

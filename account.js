@@ -97,10 +97,13 @@
     },
     async deleteAccount() {
       if (!client || !user) return false;
-      await clearCourseSession();
-      const { error } = await client.functions.invoke("delete-account", { method: "POST" });
-      if (error) return false;
-      await client.auth.signOut();
+      const { data } = await client.auth.getSession();
+      if (!data.session) return false;
+      const response = await fetch("/api/course-account/delete", {
+        method: "POST", headers: { Authorization: "Bearer " + data.session.access_token },
+      });
+      if (!response.ok) return false;
+      await client.auth.signOut({ scope: "local" });
       return true;
     },
     async adminData() {
@@ -152,6 +155,7 @@
 
   // ---------- My courses ----------
   const dash = $("#my-courses");
+  let registration = null, registrationRequired = false;
   const LEVELS = ["Not started", "Beginner certificate", "Intermediate certificate", "Professional certificate"];
   async function renderDash() {
     if (!dash) return;
@@ -161,20 +165,19 @@
     }
     const nameForm = $("#dash-name-form");
     const signIn = $("#dash-signin");
-    const needsName = Boolean(user && !profile?.full_name?.trim());
-    nameForm.hidden = !needsName;
-    signIn.hidden = needsName;
-    if (needsName) {
-      $("#dash-gate h2").textContent = "Add your full name";
-      const input = $("#dash-full-name");
-      if (!input.value) input.value = user.user_metadata?.full_name || user.user_metadata?.name || "";
-    } else {
-      $("#dash-gate h2").textContent = courseDestination ? "Sign in to access this course" : "Sign in to see your courses";
-      signIn.firstChild.textContent = user ? "Open course " : "Sign in with Google ";
+    if (!user) {
+      registration = null;
+      registrationRequired = false;
     }
-    if (!user || needsName || courseDestination) { gate.hidden = false; body.hidden = true; return; }
+    nameForm.hidden = !registrationRequired;
+    signIn.hidden = registrationRequired;
+    $("#dash-gate h2").textContent = registrationRequired ? "Register for courses"
+      : user ? "Open your courses"
+      : courseDestination ? "Sign in to access this course" : "Sign in to see your courses";
+    signIn.firstChild.textContent = user ? "Continue " : "Sign in with Google ";
+    if (!user || !registration || courseDestination) { gate.hidden = false; body.hidden = true; return; }
     gate.hidden = true; body.hidden = false;
-    $("#dash-name").textContent = firstName();
+    $("#dash-name").textContent = registration.name.trim().split(/\s+/)[0];
     $("#dash-email").textContent = (profile && profile.email) || user.email || "";
     const reminders = $("#dash-reminders");
     reminders.checked = !!(profile && profile.reminders_opt_in);
@@ -201,63 +204,63 @@
   if (dash) {
     const signIn = $("#dash-signin");
     const next = new URLSearchParams(location.search).get("next");
-    const returnPath = next || sessionStorage.getItem(destinationKey);
-    if (/^\/[a-z-]+-course(?:\?[^#]*)?$/.test(returnPath || "")) courseDestination = returnPath;
+    const returnPath = next ? next + location.hash : sessionStorage.getItem(destinationKey);
+    if (/^\/[a-z-]+-course(?:\?[^#]*)?(?:#[^\r\n]*)?$/.test(returnPath || "")) courseDestination = returnPath;
     const accessMessage = $("#dash-access-message");
-    if (courseDestination) $("#dash-gate h2").textContent = "Sign in to access this course";
+    const submit = $("#dash-save-name");
+    let registrationBusy = false;
 
-    async function continueToCourse() {
-      if (!courseDestination || !client || !profile?.full_name?.trim() || signIn.disabled) return;
-      signIn.disabled = true;
-      accessMessage.textContent = "Opening your course…";
+    async function openCourses(details) {
+      if (!client || !user || registrationBusy) return;
+      registrationBusy = true;
+      signIn.disabled = submit.disabled = true;
+      accessMessage.textContent = details ? "Saving your registration…" : "Checking your registration…";
       try {
         const { data } = await client.auth.getSession();
-        if (!data.session) throw new Error("No learner session");
+        if (!data.session) throw new Error("Please sign in again to continue.");
+        const headers = { Authorization: "Bearer " + data.session.access_token };
+        if (details) headers["Content-Type"] = "application/json";
         const response = await fetch("/api/course-session", {
-          method: "POST",
-          headers: { Authorization: "Bearer " + data.session.access_token },
+          method: "POST", headers, body: details ? JSON.stringify(details) : undefined,
         });
-        if (!response.ok) throw new Error("Could not verify learner session");
-        sessionStorage.removeItem(destinationKey);
-        location.replace(courseDestination);
-      } catch {
-        accessMessage.textContent = "We couldn’t verify your sign-in. Please try again.";
-        signIn.disabled = false;
+        const result = await response.json().catch(() => ({}));
+        if (result.registrationRequired) {
+          registrationRequired = true;
+          accessMessage.textContent = "";
+          renderDash();
+          $("#dash-full-name").focus();
+          return;
+        }
+        if (!response.ok || !result.name) {
+          throw new Error(result.error || "We couldn’t verify your registration. Please try again.");
+        }
+        registration = result;
+        registrationRequired = false;
+        accessMessage.textContent = "";
+        if (courseDestination) {
+          sessionStorage.removeItem(destinationKey);
+          location.replace(courseDestination);
+        } else {
+          renderDash();
+        }
+      } catch (error) {
+        accessMessage.textContent = error.message;
+      } finally {
+        registrationBusy = false;
+        signIn.disabled = submit.disabled = false;
       }
     }
 
     signIn.addEventListener("click", async () => {
       await ready;
-      if (courseDestination && user) return continueToCourse();
+      if (user) return openCourses();
       return api.signIn();
     });
-    $("#dash-name-form").addEventListener("submit", async (event) => {
+    $("#dash-name-form").addEventListener("submit", (event) => {
       event.preventDefault();
-      if (!client || !user) return;
-      const input = $("#dash-full-name");
-      const name = input.value.trim();
-      if (!name || name.length > 120) {
-        accessMessage.textContent = "Enter your full name to continue.";
-        input.focus();
-        return;
-      }
-      const submit = $("#dash-save-name");
-      submit.disabled = true;
-      try {
-        const { data, error } = await client.from("profiles").update({ full_name: name })
-          .eq("id", user.id).select("full_name,email,reminders_opt_in,is_admin").single();
-        if (error || !data) throw new Error("Name could not be saved");
-        profile = data;
-        accessMessage.textContent = "";
-        renderAll();
-        await continueToCourse();
-      } catch {
-        accessMessage.textContent = "We couldn’t save your name. Please try again.";
-      } finally {
-        submit.disabled = false;
-      }
+      return openCourses({ name: $("#dash-full-name").value, phone: $("#dash-phone").value });
     });
-    ready.then(() => { if (user) continueToCourse(); });
+    ready.then(() => { if (user) openCourses(); });
     $("#dash-signout").addEventListener("click", async () => {
       try { await api.signOut(); }
       catch { alert("We could not sign you out. Please try again."); }
