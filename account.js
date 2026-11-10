@@ -184,6 +184,7 @@
     if (!user || !registration || courseDestination) { gate.hidden = false; body.hidden = true; return; }
     gate.hidden = true; body.hidden = false;
     $("#dash-name").textContent = registration.name.trim().split(/\s+/)[0];
+    $("#dash-certificate-name").textContent = registration.name;
     $("#dash-email").textContent = (profile && profile.email) || user.email || "";
     const reminders = $("#dash-reminders");
     reminders.checked = !!(profile && profile.reminders_opt_in);

@@ -7,6 +7,16 @@ import page6 from './graphic-design-course.html';
 import page7 from './digital-marketing-course.html';
 import page8 from './web-design-course.html';
 
+import finalCutGuide from './course-guides/fcp.pdf';
+import resolveGuide from './course-guides/resolve.pdf';
+import editorsGuide from './course-guides/editors.pdf';
+
+const editingGuides = new Map([
+  ['fcp', { data: finalCutGuide, filename: 'Awwal-Final-Cut-Pro-Workbook.pdf' }],
+  ['resolve', { data: resolveGuide, filename: 'Awwal-DaVinci-Resolve-Workbook.pdf' }],
+  ['editors', { data: editorsGuide, filename: 'Awwal-More-Editing-Tools-Workbook.pdf' }],
+]);
+
 const pages = new Map([
   ['/video-editing-course', page1],
   ['/videography-course', page2],
@@ -143,7 +153,7 @@ function personalizeCourse(page, name) {
     .replace('Enter your name to generate a certificate you can download and share.',
       'Your registered name is used on every certificate and cannot be changed.')
     .replace('account.js?v=20261113', 'account.js?v=course-registration-3')
-    .replace('course.js?v=20261113', 'course.js?v=locked-certificate-name-1');
+    .replace('course.js?v=20261113', 'course.js?v=editing-study-1');
 }
 
 export async function coursePage(request, url, db) {
@@ -157,6 +167,15 @@ export async function coursePage(request, url, db) {
       if (!db) throw new Error('Learner database unavailable');
       const learner = await findLearner(db, user.id);
       if (learner) {
+        const guideKey = url.pathname === '/video-editing-course' ? url.searchParams.get('guide') : null;
+        if (guideKey !== null) {
+          const guide = editingGuides.get(guideKey);
+          if (!guide) return empty(404);
+          return new Response(request.method === 'HEAD' ? null : guide.data, {
+            headers: { ...privateHeaders, 'Content-Type': 'application/pdf',
+              'Content-Disposition': 'attachment; filename="' + guide.filename + '"' },
+          });
+        }
         return new Response(request.method === 'HEAD' ? null : personalizeCourse(page, learner.full_name), {
           headers: { ...privateHeaders, 'Content-Type': 'text/html; charset=utf-8' },
         });
