@@ -101,7 +101,7 @@ export async function courseSession(request, url, db, readJson) {
     await ensureLearners(db);
     let learner = await findLearner(db, user.id);
     if (!learner) {
-      if (!request.body) return json({ registrationRequired: true }, 422);
+      if (!request.headers.get('Content-Type')?.startsWith('application/json')) return json({ registrationRequired: true }, 422);
       let input;
       try { input = await readJson(request); } catch { return json({ error: 'Check your name and phone number.' }, 422); }
       const name = typeof input?.name === 'string' ? input.name.trim() : '';
@@ -152,7 +152,7 @@ function personalizeCourse(page, name) {
     .replace(/<input id="cert-name"[^>]*>/, () => '<input id="cert-name" type="text" readonly value="' + escapedName + '">')
     .replace('Enter your name to generate a certificate you can download and share.',
       'Your registered name is used on every certificate and cannot be changed.')
-    .replace('account.js?v=20261113', 'account.js?v=course-registration-3')
+    .replace('account.js?v=20261113', 'account.js?v=signup-flow-1')
     .replace('course.js?v=20261113', 'course.js?v=editing-study-1');
 }
 

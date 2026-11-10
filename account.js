@@ -17,6 +17,10 @@
   const listeners = [];
   const destinationKey = "awwal-course-return";
   let courseDestination = null;
+  const signupKey = "awwal-course-signup";
+  let pendingRegistration = null;
+  try { pendingRegistration = JSON.parse(sessionStorage.getItem(signupKey) || "null"); } catch {}
+  let signupMode = location.pathname === "/signup" || new URLSearchParams(location.search).get("mode") === "signup" || !!pendingRegistration;
   const notify = () => listeners.forEach((fn) => { try { fn(user, profile); } catch (_) {} });
 
   async function loadProfile() {
@@ -65,12 +69,14 @@
       await ready;
       if (!client) { alert("Sign-in is unavailable right now. Please try again in a moment."); return; }
       if (courseDestination) sessionStorage.setItem(destinationKey, courseDestination);
-      const { error } = await client.auth.signInWithOAuth({ provider: "google", options: { redirectTo: location.origin + location.pathname } });
+      const { error } = await client.auth.signInWithOAuth({ provider: "google", options: { redirectTo: location.origin + (location.pathname === "/signup" ? "/my-courses" : location.pathname) } });
       if (error) alert("Google sign-in is not available yet. Your progress is still saved on this device.");
     },
     async signOut() {
       if (!client) return;
       await clearCourseSession();
+      sessionStorage.removeItem(signupKey);
+      pendingRegistration = null;
       const { error } = await client.auth.signOut();
       if (error) throw error;
     },
@@ -175,12 +181,16 @@
       registrationRequired = false;
     }
     $("#dash-gate-signout").hidden = !user;
-    nameForm.hidden = !registrationRequired;
-    signIn.hidden = registrationRequired;
-    $("#dash-gate h2").textContent = registrationRequired ? "Register for courses"
+    const showRegistration = registrationRequired || (!user && signupMode);
+    $("#dash-create-account").hidden = !!user || signupMode;
+    $("#dash-back-signin").hidden = !!user || !signupMode;
+    nameForm.hidden = !showRegistration;
+    signIn.hidden = showRegistration;
+    $("#dash-gate h2").textContent = showRegistration ? "Create your learner account"
       : user ? "Open your courses"
       : courseDestination ? "Sign in to access this course" : "Sign in to see your courses";
     signIn.firstChild.textContent = user ? "Continue " : "Sign in with Google ";
+    $("#dash-save-name").firstChild.textContent = user ? "Register and continue " : "Continue with Google ";
     if (!user || !registration || courseDestination) { gate.hidden = false; body.hidden = true; return; }
     gate.hidden = true; body.hidden = false;
     $("#dash-name").textContent = registration.name.trim().split(/\s+/)[0];
@@ -243,6 +253,8 @@
         }
         registration = result;
         registrationRequired = false;
+        pendingRegistration = null;
+        sessionStorage.removeItem(signupKey);
         accessMessage.textContent = "";
         if (courseDestination) {
           sessionStorage.removeItem(destinationKey);
@@ -263,11 +275,26 @@
       if (user) return openCourses();
       return api.signIn();
     });
-    $("#dash-name-form").addEventListener("submit", (event) => {
+    $("#dash-name-form").addEventListener("submit", async (event) => {
       event.preventDefault();
-      return openCourses({ name: $("#dash-full-name").value, phone: $("#dash-phone").value });
+      const name = $("#dash-full-name").value.trim();
+      const phone = $("#dash-phone").value.trim().replace(/[\s().-]/g, "");
+      if (!name || name.length > 100 || /[\u0000-\u001f\u007f]/.test(name)) {
+        accessMessage.textContent = "Enter your full name exactly as it should appear on certificates.";
+        return;
+      }
+      if (!/^\+[1-9]\d{7,14}$/.test(phone)) {
+        accessMessage.textContent = "Enter your phone number with its country code, such as +966.";
+        return;
+      }
+      await ready;
+      const details = { name, phone };
+      if (user) return openCourses(details);
+      pendingRegistration = details;
+      sessionStorage.setItem(signupKey, JSON.stringify(details));
+      return api.signIn();
     });
-    ready.then(() => { if (user) openCourses(); });
+    ready.then(() => { if (user) openCourses(pendingRegistration); });
     const signOut = async () => {
       try { await api.signOut(); location.replace("/courses"); }
       catch { alert("We could not sign you out. Please try again."); }
