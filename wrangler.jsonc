@@ -12,9 +12,33 @@
       "/mcp",
       "/",
       "/*.html",
-      "/*/"
+      "/*/",
+      "/video-editing-course",
+      "/videography-course",
+      "/photography-course",
+      "/photo-editing-course",
+      "/motion-graphics-course",
+      "/graphic-design-course",
+      "/digital-marketing-course",
+      "/web-design-course"
     ]
   },
+  "rules": [
+    {
+      "type": "Text",
+      "globs": [
+        "**/video-editing-course.html",
+        "**/videography-course.html",
+        "**/photography-course.html",
+        "**/photo-editing-course.html",
+        "**/motion-graphics-course.html",
+        "**/graphic-design-course.html",
+        "**/digital-marketing-course.html",
+        "**/web-design-course.html"
+      ],
+      "fallthrough": true
+    }
+  ],
   "previews": {},
   "main": "enquiry-worker.mjs",
   "d1_databases": [

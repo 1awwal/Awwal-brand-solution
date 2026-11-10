@@ -15,6 +15,8 @@
 
   let client = null, user = null, profile = null;
   const listeners = [];
+  const destinationKey = "awwal-course-return";
+  let courseDestination = null;
   const notify = () => listeners.forEach((fn) => { try { fn(user, profile); } catch (_) {} });
 
   async function loadProfile() {
@@ -49,6 +51,11 @@
     document.head.appendChild(script);
   });
 
+  async function clearCourseSession() {
+    const response = await fetch("/api/course-session", { method: "DELETE" });
+    if (!response.ok) throw new Error("Could not clear the course session");
+  }
+
   const api = {
     ready,
     get user() { return user; },
@@ -57,10 +64,16 @@
     async signIn() {
       await ready;
       if (!client) { alert("Sign-in is unavailable right now. Please try again in a moment."); return; }
+      if (courseDestination) sessionStorage.setItem(destinationKey, courseDestination);
       const { error } = await client.auth.signInWithOAuth({ provider: "google", options: { redirectTo: location.origin + location.pathname } });
       if (error) alert("Google sign-in is not available yet. Your progress is still saved on this device.");
     },
-    async signOut() { if (client) await client.auth.signOut(); },
+    async signOut() {
+      if (!client) return;
+      await clearCourseSession();
+      const { error } = await client.auth.signOut();
+      if (error) throw error;
+    },
     async loadProgress(courseKey) {
       if (!client || !user) return null;
       const { data } = await client.from("course_progress").select("track,done,certs,updated_at").eq("user_id", user.id).eq("course_key", courseKey).maybeSingle();
@@ -84,9 +97,13 @@
     },
     async deleteAccount() {
       if (!client || !user) return false;
-      const { error } = await client.functions.invoke("delete-account", { method: "POST" });
-      if (error) return false;
-      await client.auth.signOut();
+      const { data } = await client.auth.getSession();
+      if (!data.session) return false;
+      const response = await fetch("/api/course-account/delete", {
+        method: "POST", headers: { Authorization: "Bearer " + data.session.access_token },
+      });
+      if (!response.ok) return false;
+      await client.auth.signOut({ scope: "local" });
       return true;
     },
     async adminData() {
@@ -138,6 +155,7 @@
 
   // ---------- My courses ----------
   const dash = $("#my-courses");
+  let registration = null, registrationRequired = false;
   const LEVELS = ["Not started", "Beginner certificate", "Intermediate certificate", "Professional certificate"];
   async function renderDash() {
     if (!dash) return;
@@ -145,9 +163,21 @@
     if (new URLSearchParams(location.search).get("unsubscribed") && !document.getElementById("dash-notice")) {
       dash.prepend(el("p", { class: "dash-notice", id: "dash-notice", role: "status" }, "Course reminder emails are now off."));
     }
-    if (!user) { gate.hidden = false; body.hidden = true; return; }
+    const nameForm = $("#dash-name-form");
+    const signIn = $("#dash-signin");
+    if (!user) {
+      registration = null;
+      registrationRequired = false;
+    }
+    nameForm.hidden = !registrationRequired;
+    signIn.hidden = registrationRequired;
+    $("#dash-gate h2").textContent = registrationRequired ? "Register for courses"
+      : user ? "Open your courses"
+      : courseDestination ? "Sign in to access this course" : "Sign in to see your courses";
+    signIn.firstChild.textContent = user ? "Continue " : "Sign in with Google ";
+    if (!user || !registration || courseDestination) { gate.hidden = false; body.hidden = true; return; }
     gate.hidden = true; body.hidden = false;
-    $("#dash-name").textContent = firstName();
+    $("#dash-name").textContent = registration.name.trim().split(/\s+/)[0];
     $("#dash-email").textContent = (profile && profile.email) || user.email || "";
     const reminders = $("#dash-reminders");
     reminders.checked = !!(profile && profile.reminders_opt_in);
@@ -172,15 +202,76 @@
     $("#dash-admin").hidden = !(profile && profile.is_admin);
   }
   if (dash) {
-    $("#dash-signin").addEventListener("click", () => api.signIn());
-    $("#dash-signout").addEventListener("click", async () => { await api.signOut(); });
+    const signIn = $("#dash-signin");
+    const next = new URLSearchParams(location.search).get("next");
+    const returnPath = next ? next + location.hash : sessionStorage.getItem(destinationKey);
+    if (/^\/[a-z-]+-course(?:\?[^#]*)?(?:#[^\r\n]*)?$/.test(returnPath || "")) courseDestination = returnPath;
+    const accessMessage = $("#dash-access-message");
+    const submit = $("#dash-save-name");
+    let registrationBusy = false;
+
+    async function openCourses(details) {
+      if (!client || !user || registrationBusy) return;
+      registrationBusy = true;
+      signIn.disabled = submit.disabled = true;
+      accessMessage.textContent = details ? "Saving your registration…" : "Checking your registration…";
+      try {
+        const { data } = await client.auth.getSession();
+        if (!data.session) throw new Error("Please sign in again to continue.");
+        const headers = { Authorization: "Bearer " + data.session.access_token };
+        if (details) headers["Content-Type"] = "application/json";
+        const response = await fetch("/api/course-session", {
+          method: "POST", headers, body: details ? JSON.stringify(details) : undefined,
+        });
+        const result = await response.json().catch(() => ({}));
+        if (result.registrationRequired) {
+          registrationRequired = true;
+          accessMessage.textContent = "";
+          renderDash();
+          $("#dash-full-name").focus();
+          return;
+        }
+        if (!response.ok || !result.name) {
+          throw new Error(result.error || "We couldn’t verify your registration. Please try again.");
+        }
+        registration = result;
+        registrationRequired = false;
+        accessMessage.textContent = "";
+        if (courseDestination) {
+          sessionStorage.removeItem(destinationKey);
+          location.replace(courseDestination);
+        } else {
+          renderDash();
+        }
+      } catch (error) {
+        accessMessage.textContent = error.message;
+      } finally {
+        registrationBusy = false;
+        signIn.disabled = submit.disabled = false;
+      }
+    }
+
+    signIn.addEventListener("click", async () => {
+      await ready;
+      if (user) return openCourses();
+      return api.signIn();
+    });
+    $("#dash-name-form").addEventListener("submit", (event) => {
+      event.preventDefault();
+      return openCourses({ name: $("#dash-full-name").value, phone: $("#dash-phone").value });
+    });
+    ready.then(() => { if (user) openCourses(); });
+    $("#dash-signout").addEventListener("click", async () => {
+      try { await api.signOut(); }
+      catch { alert("We could not sign you out. Please try again."); }
+    });
     $("#dash-reminders").addEventListener("change", async (e) => {
       const box = e.target; box.disabled = true;
       const ok = await api.setReminders(box.checked); if (!ok) box.checked = !box.checked; box.disabled = false;
     });
     $("#dash-delete").addEventListener("click", async () => {
       if (!confirm("Delete your account and all saved course progress? This cannot be undone.")) return;
-      const ok = await api.deleteAccount();
+      const ok = await api.deleteAccount().catch(() => false);
       alert(ok ? "Your account and progress have been deleted." : "We could not delete the account just now. Please email hello@awwalbrands.com and we will remove it.");
     });
   }

@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Playfair+Display:ital,wght@1,500&family=Noto+Sans+Arabic:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=20261110-polish">
-  <link rel="stylesheet" href="courses.css?v=20261113">
+  <link rel="stylesheet" href="courses.css?v=course-registration-1">
 <title>My Courses | Awwal Brands</title>
 <meta name="description" content="Your Awwal Brands courses, progress and certificates in one place.">
 <link rel="canonical" href="https://awwalbrands.com/my-courses">
@@ -22,7 +22,14 @@
 <main class="info-page course-page" id="top">
   <section class="info-hero course-hero"><nav class="page-breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/courses">Courses</a><span aria-hidden="true">/</span><span>My courses</span></nav><span class="eyebrow">AWWAL COURSES / MY COURSES</span><h1>YOUR <br><span>PROGRESS.</span></h1><p>Pick up where you left off. Your completed sessions and certificates are saved to your account and follow you to any device.</p></section>
   <section class="dash" id="my-courses">
-    <div class="dash-gate" id="dash-gate"><h2>Sign in to see your courses</h2><p>Use your Google account. We store your name, email address and course progress, nothing else. <a href="/privacy">Privacy</a>.</p><button class="button button-amber" type="button" id="dash-signin">Sign in with Google <i>↗</i></button></div>
+    <div class="dash-gate" id="dash-gate"><h2>Sign in to see your courses</h2><p>Use your Google account to sign in. Your registration details and progress are saved to your account. <a href="/privacy">Privacy</a>.</p><button class="button button-amber" type="button" id="dash-signin">Sign in with Google <i>↗</i></button><form class="course-registration" id="dash-name-form" hidden>
+      <label for="dash-full-name">Full name as it should appear on your certificates</label>
+      <input id="dash-full-name" name="full_name" type="text" autocomplete="name" aria-describedby="dash-name-warning" required maxlength="100">
+      <p id="dash-name-warning"><strong>You can’t change your name after registration.</strong> Check the spelling before you continue. This is the name that will appear on all your certificates.</p>
+      <label for="dash-phone">Phone number with country code</label>
+      <input id="dash-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+966 5X XXX XXXX" required maxlength="32">
+      <button class="button button-amber" type="submit" id="dash-save-name">Register and continue <i>↗</i></button>
+    </form><p id="dash-access-message" role="status"></p></div>
     <div id="dash-body" hidden>
       <div class="dash-top"><div><h2>Welcome back, <span id="dash-name"></span>.</h2><p class="dash-email" id="dash-email"></p></div>
         <dl class="level-meta"><div><dt id="dash-started">0</dt><dd>Courses started</dd></div><div><dt id="dash-certs">0</dt><dd>Certificates earned</dd></div></dl></div>
@@ -36,5 +43,5 @@
 </main>
 <footer class="footer"><div class="footer-main"><div class="footer-brand"><a class="brand inverse" href="/#home" aria-label="Awwal Brands home"><img class="brand-logo" src="assets/awwal-mark-navy.png" alt=""><span class="brand-name">Awwal Brands</span></a><p>Building what<br>comes first.</p></div><div class="footer-links"><span class="eyebrow">EXPLORE</span><a href="/#about">About</a><a href="/founder">Founder</a><a href="/#services">Services</a><a href="/#work">Selected work</a><a href="/campaigns">Campaigns</a><a href="/courses">Courses</a><a href="/about">About Awwal</a><a href="/contact">Contact</a><a href="/privacy">Privacy</a></div><div class="footer-links"><span class="eyebrow">SAY HELLO</span><a href="https://wa.me/966539211696" target="_blank" rel="noopener noreferrer">WhatsApp +966 53 921 1696 ↗</a><a href="mailto:hello@awwalbrands.com">hello@awwalbrands.com ↗</a><span class="footer-areas">Serving Saudi Arabia: <a href="/eastern-province">Dammam &amp; Eastern Province</a>, <a href="/riyadh">Riyadh</a>, <a href="/makkah">Jeddah &amp; Makkah</a>, <a href="/madinah">Madinah</a></span><a href="https://share.google/gsrPbGwQU9HJHz2SR" target="_blank" rel="noopener noreferrer">Find Awwal on Google ↗</a><span>Available across the region</span></div><div class="footer-links"><span class="eyebrow">FOLLOW ALONG</span><a href="https://www.facebook.com/profile.php?id=61596223972892" target="_blank" rel="noopener noreferrer">Facebook — Awwal Brands ↗</a><a href="https://www.linkedin.com/company/awwalbrands/" target="_blank" rel="me noopener noreferrer">LinkedIn — Awwal Brands ↗</a><a href="https://www.instagram.com/1.awwal/" target="_blank" rel="me noopener noreferrer">Instagram @1.awwal ↗</a></div></div><div class="footer-bottom"><span>© AWWAL BRANDS 2026</span><span>أول — FIRST, BY DESIGN.</span><a href="#top">BACK TO TOP ↑</a></div><a class="service-email" href="/service-packages">Services &amp; packages · الخدمات والباقات</a></footer>
 <script src="theme.js"></script>
-<script src="account.js?v=20261113"></script>
+<script src="account.js?v=course-registration-1"></script>
 </body></html>
