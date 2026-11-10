@@ -282,3 +282,20 @@ html[data-theme="light"] .account-chip{border-color:rgba(9,21,79,.35)}
 .dash-settings strong{margin-left:8px;color:var(--c-fg)}
 
 .dash-gate [hidden]{display:none!important}
+/* Module assessments and separate editing paths. */
+.course-page [hidden] { display: none !important; }
+.track-section-heading { margin: 2rem 0; padding: 1.5rem; border: 1px solid var(--line, #80808055); border-radius: 16px; }
+.track-section-heading h2 { font-size: clamp(1.25rem, 3vw, 2rem); margin: 0 0 .75rem; }
+.track-picker { flex-wrap: wrap; }
+.module-quiz { margin: 1.5rem; padding: clamp(1rem, 3vw, 2rem); border: 1px solid var(--line, #80808055); border-radius: 16px; }
+.module-quiz h4 { margin: 0 0 .75rem; font-size: 1.25rem; }
+.module-quiz fieldset { border: 0; padding: 0; margin: 1.5rem 0; min-width: 0; }
+.module-quiz legend { font-weight: 600; margin-bottom: .75rem; }
+.module-quiz label { display: flex; align-items: flex-start; gap: .75rem; margin: .5rem 0; padding: .75rem; border: 1px solid var(--line, #80808055); border-radius: 8px; cursor: pointer; }
+.module-quiz input { flex: 0 0 auto; margin-top: .3em; accent-color: #ffb703; }
+.module-quiz label:has(input:checked) { border-color: #ffb703; }
+.module-quiz.is-passed { border-color: #42ad7b; }
+.module-quiz .quiz-result { margin-top: 1rem; }
+.module-quiz button:disabled { opacity: .65; cursor: default; }
+.cert-form output { display: block; font-size: 1.2rem; font-weight: 600; padding: .75rem 0; overflow-wrap: anywhere; }
+.cert-form select { max-width: 100%; padding: .85rem; background: var(--bg, #fff); color: var(--ink, #161632); border-radius: 8px; margin: .5rem 0 1rem; }

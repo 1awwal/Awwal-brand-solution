@@ -13,8 +13,9 @@
   const COURSE = main.dataset.courseName;
   const CODE = main.dataset.courseCode;
   const LEVEL_LABEL = { 1: "Beginner level", 2: "Intermediate level", 3: "Professional level" };
-  const TRACKS = { all: "", fcp: "Final Cut Pro track", resolve: "DaVinci Resolve track" };
+  const TRACKS = { all: "", general: "General editing", fcp: "FCP", premiere: "Premiere Pro", resolve: "DaVinci Resolve" };
   const hasTracks = !!$("[data-track-btn]");
+  const isVideo = main.dataset.courseKey === "video-editing";
 
   let state = { done: {}, track: "all", certs: {} };
   try {
@@ -22,6 +23,7 @@
     if (saved && typeof saved === "object") state = { ...state, ...saved, done: saved.done || {}, certs: saved.certs || {} };
   } catch (_) {}
   if (!hasTracks || !(state.track in TRACKS)) state.track = "all";
+  if (isVideo && state.track === "all") state.track = "general";
   const store = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (_) {} };
   // Every change is stamped, saved on this device, and (when signed in) pushed to the learner's account.
   const save = () => { state.updatedAt = Date.now(); store(); queuePush(); };
@@ -30,6 +32,7 @@
   let pushTimer = 0;
   let snapshot = { done: 0, total: 0, level: 0 };
   function queuePush() {
+    if (isVideo) return; // Module quiz passes are persisted in D1 by the assessment endpoint.
     if (!account || !account.user) return;
     clearTimeout(pushTimer);
     pushTimer = setTimeout(() => {
@@ -43,6 +46,11 @@
     if (!account) return;
     await account.ready;
     if (!account.user) return;
+    if (isVideo) {
+      // Video assessment passes belong to the signed-in learner and come only from the server.
+      await loadAssessments();
+      return;
+    }
     const row = await account.loadProgress(main.dataset.courseKey);
     const firstTime = state.syncedUser !== account.user.id;
     if (row) {
@@ -66,11 +74,109 @@
   const boxes = $$("input[data-lesson]");
   const fill = $("#progress-fill"), text = $("#progress-text"), bar = $(".progress-track");
   const form = $("#cert-form"), output = $("#cert-output"), canvas = $("#cert-canvas"), nameInput = $("#cert-name");
-  const certificateName = nameInput.defaultValue;
+  let certificateName = (nameInput?.value || nameInput?.textContent || "").trim();
   let earned = 0;
+  let assessmentData = null;
+  let certificateLevel = 0;
+  let assessmentRequest = null;
+  const certMessage = document.createElement("p");
+  certMessage.setAttribute("role", "status");
+  form.after(certMessage);
+
+  async function assessmentApi(input) {
+    const response = await fetch("/api/course-assessments", input ? {
+      method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(input),
+    } : { cache: "no-store" });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || "Could not load course assessments. Please try again.");
+    return data;
+  }
+  async function loadAssessments() {
+    if (assessmentRequest) return assessmentRequest;
+    assessmentRequest = (async () => {
+      try {
+        assessmentData = await assessmentApi();
+        certificateName = assessmentData.name;
+        nameInput.textContent = certificateName;
+        state.done = assessmentData.done;
+        certMessage.textContent = "";
+        render(); queuePush();
+      } catch (error) {
+        certMessage.textContent = error.message;
+        $("#quiz-load-status").textContent = error.message;
+      } finally { assessmentRequest = null; }
+    })();
+    return assessmentRequest;
+  }
+
+  function renderQuizzes() {
+    if (!isVideo) return;
+    const status = $("#quiz-load-status");
+    if (!assessmentData) { status.textContent = "Loading your module quizzes…"; return; }
+    status.textContent = "Pass each module quiz with at least 80%. You can review the lessons and retry. Earlier manual completion ticks need a quiz pass.";
+    $("#track-section-title").textContent = state.track === "general" ? "General editing · shared by every software track" : TRACKS[state.track] + " · software modules";
+    $("#track-section-description").textContent = state.track === "general" ? "Complete these shared lessons, then continue with FCP, Premiere Pro or DaVinci Resolve. General passes count towards every track." : "These lessons and quizzes belong to " + TRACKS[state.track] + ". Complete the general modules as well to earn your certificate.";
+    for (const a of assessmentData.assessments) {
+      let quiz = document.getElementById("quiz-" + a.id);
+      if (!quiz) {
+        quiz = document.createElement("form"); quiz.id = "quiz-" + a.id; quiz.className = "module-quiz";
+        const heading = document.createElement("h4"); heading.textContent = a.label + " · Module quiz";
+        const intro = document.createElement("p"); intro.textContent = "Answer all three questions. Pass mark: 80% (all 3 correct). Your module passes automatically when you pass this quiz.";
+        quiz.append(heading, intro);
+        a.questions.forEach((q, i) => {
+          const field = document.createElement("fieldset"), legend = document.createElement("legend");
+          legend.textContent = `${i + 1}. ${q.prompt}`; field.append(legend);
+          q.options.forEach((option, j) => {
+            const label = document.createElement("label"), radio = document.createElement("input"), span = document.createElement("span");
+            radio.type = "radio"; radio.name = "q" + i; radio.value = option; radio.required = true;
+            radio.id = `answer-${a.id}-${i}-${j}`; span.textContent = option;
+            label.append(radio, span); field.append(label);
+          });
+          quiz.append(field);
+        });
+        const button = document.createElement("button"); button.type = "submit"; button.className = "button button-amber"; button.textContent = "Submit module quiz";
+        const message = document.createElement("p"); message.className = "quiz-result"; message.setAttribute("role", "status");
+        quiz.append(button, message);
+        quiz.addEventListener("submit", async event => {
+          event.preventDefault(); button.disabled = true; message.textContent = "Checking your answers…";
+          try {
+            const answers = a.questions.map((_, i) => $("input[name='q" + i + "']:checked", quiz)?.value);
+            const data = await assessmentApi({ id: a.id, answers });
+            assessmentData = data; state.done = data.done;
+            output.hidden = true;
+            render(); save();
+            message.textContent = data.result.passed ? `Passed · ${data.result.score}%. Module completed.`
+              : `${data.result.score}% · You need 80%. Review the lessons and retry. Review: ${data.result.review.join(" ")}`;
+          } catch (error) { message.textContent = error.message; }
+          finally { button.disabled = !!assessmentData?.scores[a.id]?.passed; }
+        });
+        document.getElementById(a.module).append(quiz);
+      }
+      quiz.hidden = a.track !== state.track;
+      const passed = !!assessmentData.scores[a.id]?.passed;
+      quiz.classList.toggle("is-passed", passed);
+      $("button[type='submit']", quiz).disabled = passed;
+      if (passed) $(".quiz-result", quiz).textContent = `Passed · ${assessmentData.scores[a.id].score}%. Module completed.`;
+    }
+    $$("[data-track-progress]").forEach(node => {
+      const required = assessmentData.assessments.filter(a => a.track === node.dataset.trackProgress);
+      const passed = required.filter(a => assessmentData.scores[a.id]?.passed).length;
+      node.textContent = `${passed}/${required.length} modules passed`;
+    });
+    const select = $("#cert-level-select");
+    const levels = assessmentData.eligible;
+    const previous = Number(select.value) || certificateLevel;
+    select.replaceChildren(...levels.map(e => {
+      const option = document.createElement("option"); option.value = e.level;
+      option.textContent = LEVEL_LABEL[e.level] + " · " + e.tracks.map(t => TRACKS[t]).join(" + "); return option;
+    }));
+    certificateLevel = levels.some(e => e.level === previous) ? previous : levels.at(-1)?.level || 0;
+    select.value = String(certificateLevel);
+  }
 
   const inTrack = (el) => {
     const t = el.dataset.track;
+    if (isVideo) return state.track === "general" ? t === "both" : t === state.track;
     return state.track === "all" || t === "both" || t === state.track;
   };
   const counts = (root) => {
@@ -79,6 +185,10 @@
   };
 
   function render() {
+    if (isVideo) {
+      state.done = assessmentData?.done || {};
+      renderQuizzes();
+    }
     $$("[data-track-btn]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.trackBtn === state.track)));
     lessons.forEach((l) => { l.hidden = !inTrack(l); });
     boxes.forEach((b) => {
@@ -108,10 +218,17 @@
       if (chain) earned = n;
       const row = $(`[data-cert-level="${n}"]`);
       if (row) {
+        if (isVideo) {
+          const e = assessmentData?.eligible.find(e => e.level === n);
+          row.classList.toggle("is-unlocked", !!e);
+          $(".cert-level-state", row).textContent = e ? e.tracks.map(t => TRACKS[t]).join(" + ") + " · Unlocked ✓" : "Pass general modules + a software track";
+          return;
+        }
         row.classList.toggle("is-unlocked", chain);
         $(".cert-level-state", row).textContent = chain ? "Unlocked ✓" : complete ? "Finish the earlier levels" : `${c.total - c.done} to go`;
       }
     });
+    if (isVideo) earned = assessmentData?.eligible.at(-1)?.level || 0;
 
     const all = counts(main), pct = all.total ? Math.round((all.done / all.total) * 100) : 0;
     snapshot = { done: all.done, total: all.total, level: earned };
@@ -122,22 +239,33 @@
     form.hidden = earned === 0 || !certificateName;
     if (form.hidden) { output.hidden = true; return; }
     $("#cert-button-text").textContent = `Generate ${LEVEL_LABEL[earned].replace(" level", "")} certificate`;
+    if (isVideo) { $("#cert-button-text").textContent = "Generate certificate"; return; }
     const cert = state.certs[earned];
     if (cert && cert.track === state.track) draw(cert);
     else output.hidden = true;
   }
 
-  boxes.forEach((b) => b.addEventListener("change", () => {
+  boxes.forEach((b) => {
+    if (isVideo) {
+      b.disabled = true;
+      const label = b.closest("label");
+      if (label) label.hidden = true;
+      return;
+    }
+    b.addEventListener("change", () => {
     if (b.checked) state.done[b.dataset.lesson] = 1; else delete state.done[b.dataset.lesson];
     save(); render();
-  }));
+    });
+  });
   function selectTrack(track) {
     state.track = track;
     save();
     render();
   }
-  $("[data-track-btn]").forEach((button) => button.addEventListener("click", () => selectTrack(button.dataset.trackBtn)));
-  $("[data-study-track]").forEach((link) => link.addEventListener("click", () => selectTrack(link.dataset.studyTrack)));
+  $$("[data-track-btn]").forEach((button) => button.addEventListener("click", () => selectTrack(button.dataset.trackBtn)));
+  $$("[data-study-track]").forEach((link) => link.addEventListener("click", () => selectTrack(link.dataset.studyTrack)));
+  if (isVideo) $("#cert-level-select").addEventListener("change", event => { certificateLevel = Number(event.target.value); output.hidden = true; });
+  if (isVideo) $("#quiz-retry-load").addEventListener("click", () => loadAssessments());
 
   // Click-to-load YouTube embeds (privacy-enhanced mode; nothing loads until asked).
   document.addEventListener("click", (e) => {
@@ -156,7 +284,11 @@
   });
 
   // ---------- certificate ----------
-  const loadImage = (src) => new Promise((res) => { const i = new Image(); i.onload = () => res(i); i.onerror = () => res(null); i.src = src; });
+  const loadImage = (src) => new Promise((res) => {
+    const i = new Image(), timer = setTimeout(() => res(null), 8000);
+    i.onload = () => { clearTimeout(timer); res(i); };
+    i.onerror = () => { clearTimeout(timer); res(null); }; i.src = src;
+  });
   const logoReady = loadImage("assets/awwal-mark-white.png");
   const markReady = loadImage("assets/awwal-mark-navy.png");
 
@@ -188,8 +320,8 @@
     const W = canvas.width, H = canvas.height, ctx = canvas.getContext("2d");
     const SANS = "Poppins, Arial, sans-serif", MONO = "'DM Mono', monospace", SERIF = "'Playfair Display', Georgia, serif";
     try {
-      await Promise.all([document.fonts.load("800 100px Poppins"), document.fonts.load("700 40px Poppins"), document.fonts.load("600 40px Poppins"), document.fonts.load("500 40px Poppins"), document.fonts.load("400 40px Poppins"), document.fonts.load("500 30px 'DM Mono'"),
-        document.fonts.load("italic 500 44px 'Playfair Display'")]);
+      await Promise.race([Promise.all([document.fonts.load("800 100px Poppins"), document.fonts.load("700 40px Poppins"), document.fonts.load("600 40px Poppins"), document.fonts.load("500 40px Poppins"), document.fonts.load("400 40px Poppins"), document.fonts.load("500 30px 'DM Mono'"),
+        document.fonts.load("italic 500 44px 'Playfair Display'")]), new Promise(resolve => setTimeout(resolve, 5000))]);
     } catch (_) {}
     const [logo, mark] = await Promise.all([logoReady, markReady]);
     const BLUE = "#000080", AMBER = "#FFB703", CREAM = "#ECE6DF";
@@ -231,8 +363,8 @@
     ctx.fillStyle = AMBER; ctx.fillRect(X, 582, 220, 7);
     ctx.fillStyle = "rgba(255,255,255,.8)"; ctx.font = `400 36px ${SANS}`; ctx.fillText("has successfully completed the self-paced course", X, 690);
     ctx.fillStyle = "#fff"; fitText(ctx, COURSE, 1320, 78, 700, SANS); ctx.textAlign = "left"; ctx.fillText(COURSE, X - 2, 792);
-    const sub = [LEVEL_LABEL[cert.level], TRACKS[cert.track]].filter(Boolean).join("  ·  ");
-    ctx.fillStyle = AMBER; ctx.font = `italic 500 50px ${SERIF}`; ctx.fillText(sub, X, 872);
+    const sub = [LEVEL_LABEL[cert.level], cert.tracks ? cert.tracks.map(t => TRACKS[t]).join(" + ") : TRACKS[cert.track]].filter(Boolean).join("  ·  ");
+    ctx.fillStyle = AMBER; fitText(ctx, sub, 1320, 50, 500, SERIF); ctx.fillText(sub, X, 872);
 
     [[X, "DATE", cert.date], [X + 440, "CERTIFICATE ID", cert.id], [X + 940, "ISSUED BY", "Awwal Brands"]].forEach(([x, name, value]) => {
       ctx.fillStyle = "rgba(255,255,255,.35)"; ctx.fillRect(x, 1040, 360, 2);
@@ -263,12 +395,25 @@
     ctx.textAlign = "right"; ctx.fillText("awwalbrands.com", W - 150, 1362);
 
     output.hidden = false;
-    try { $("#cert-download").href = canvas.toDataURL("image/png"); } catch (_) {}
+    $("#cert-download").href = canvas.toDataURL("image/png");
   }
 
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
     if (!certificateName || !earned) return;
+    if (isVideo) {
+      const button = $("button[type='submit']", form); button.disabled = true;
+      certMessage.textContent = "Generating your certificate…";
+      try {
+        const { certificate } = await assessmentApi({ action: "certificate", level: certificateLevel || earned });
+        certificateName = certificate.name;
+        await draw(certificate);
+        certMessage.textContent = "Your certificate is ready to download or save as PDF.";
+        output.scrollIntoView({ behavior: "smooth", block: "center" });
+      } catch (error) { certMessage.textContent = error.message; }
+      finally { button.disabled = false; }
+      return;
+    }
     const now = new Date();
     const old = state.certs[earned];
     const same = old && old.track === state.track;
@@ -279,7 +424,8 @@
       id: same ? old.id : `AWB-${CODE}${earned}-${stamp}-${Math.random().toString(36).slice(2, 6).toUpperCase()}`,
     };
     state.certs[earned] = cert; save();
-    draw(cert).then(() => output.scrollIntoView({ behavior: "smooth", block: "center" }));
+    try { await draw(cert); output.scrollIntoView({ behavior: "smooth", block: "center" }); }
+    catch { certMessage.textContent = "Could not render your certificate. Please retry."; }
   });
 
   $("#cert-print").addEventListener("click", () => {
@@ -298,5 +444,6 @@
   window.addEventListener("hashchange", openHash); openHash();
 
   render();
+  if (isVideo) loadAssessments();
   if (account) { account.onChange(() => pullFromAccount()); pullFromAccount(); }
 })();

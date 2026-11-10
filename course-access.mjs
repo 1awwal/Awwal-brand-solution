@@ -10,6 +10,7 @@ import page8 from './web-design-course.html';
 import finalCutGuide from './course-guides/fcp.pdf';
 import resolveGuide from './course-guides/resolve.pdf';
 import editorsGuide from './course-guides/editors.pdf';
+import { assessmentResponse, ensureAssessments } from './course-assessments.mjs';
 
 const editingGuides = new Map([
   ['fcp', { data: finalCutGuide, filename: 'Awwal-Final-Cut-Pro-Workbook.pdf' }],
@@ -138,6 +139,9 @@ export async function deleteCourseAccount(request, url, db) {
     });
     if (!response.ok) return empty(503);
     await db.prepare('DELETE FROM course_learners WHERE user_id = ?').bind(user.id).run();
+    await ensureAssessments(db);
+    await db.prepare('DELETE FROM course_assessments WHERE user_id = ?').bind(user.id).run();
+    await db.prepare('DELETE FROM course_certificates WHERE user_id = ?').bind(user.id).run();
     return empty(204, { 'Set-Cookie': cookie('', 0) });
   } catch {
     return empty(503);
@@ -146,14 +150,30 @@ export async function deleteCourseAccount(request, url, db) {
 
 const attributeEntities = { '&': '&amp;', '"': '&quot;', '<': '&lt;', '>': '&gt;' };
 
+export async function courseAssessments(request, url, db, readJson) {
+  if (request.method !== 'GET' && request.headers.get('Origin') !== url.origin) return empty(403);
+  if (!db) return json({ error: 'Quiz storage is temporarily unavailable. Please try again.' }, 503);
+  try {
+    const token = request.headers.get('Cookie')?.match(/(?:^|;\s*)__Host-awwal-course-session=([^;]+)/)?.[1];
+    const user = await authenticatedLearner(token);
+    if (!user) return json({ error: 'Your course session expired. Sign in again to continue.' }, 401);
+    const learner = await findLearner(db, user.id);
+    if (!learner) return json({ error: 'Complete your course registration first.' }, 403);
+    return await assessmentResponse(request, db, user, learner, readJson, json);
+  } catch (error) {
+    console.error('Course assessment failed', error.message);
+    return json({ error: 'We could not save your quiz or certificate. Please try again.' }, 503);
+  }
+}
+
 function personalizeCourse(page, name) {
   const escapedName = name.replace(/[&"<>]/g, character => attributeEntities[character]);
   return page
-    .replace(/<input id="cert-name"[^>]*>/, () => '<input id="cert-name" type="text" readonly value="' + escapedName + '">')
+    .replace(/<input id="cert-name"[^>]*>/, () => '<output id="cert-name">' + escapedName + '</output>')
     .replace('Enter your name to generate a certificate you can download and share.',
       'Your registered name is used on every certificate and cannot be changed.')
     .replace('account.js?v=20261113', 'account.js?v=learner-profile-2')
-    .replace('course.js?v=20261113', 'course.js?v=editing-study-1');
+    .replace('course.js?v=20261113', 'course.js?v=module-quizzes-1');
 }
 
 export async function coursePage(request, url, db) {
