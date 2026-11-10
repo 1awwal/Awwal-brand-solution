@@ -136,8 +136,8 @@
     save();
     render();
   }
-  $("[data-track-btn]").forEach((button) => button.addEventListener("click", () => selectTrack(button.dataset.trackBtn)));
-  $("[data-study-track]").forEach((link) => link.addEventListener("click", () => selectTrack(link.dataset.studyTrack)));
+  $$("[data-track-btn]").forEach((button) => button.addEventListener("click", () => selectTrack(button.dataset.trackBtn)));
+  $$("[data-study-track]").forEach((link) => link.addEventListener("click", () => selectTrack(link.dataset.studyTrack)));
 
   // Click-to-load YouTube embeds (privacy-enhanced mode; nothing loads until asked).
   document.addEventListener("click", (e) => {
