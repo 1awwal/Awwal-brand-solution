@@ -153,7 +153,7 @@ function personalizeCourse(page, name) {
     .replace('Enter your name to generate a certificate you can download and share.',
       'Your registered name is used on every certificate and cannot be changed.')
     .replace('account.js?v=20261113', 'account.js?v=learner-profile-2')
-    .replace('course.js?v=20261113', 'course.js?v=editing-study-1');
+    .replace('course.js?v=20261113', 'course.js?v=certificate-initialization-2');
 }
 
 export async function coursePage(request, url, db) {
