@@ -41,10 +41,10 @@ async function authenticatedLearner(token) {
   const response = await fetch(supabaseUrl + '/auth/v1/user', {
     headers: authHeaders(token),
     redirect: 'error',
-    signal: AbortSignal.timeout(5000),
+    signal: AbortSignal.timeout(10000),
   });
   if ([400, 401, 403, 404].includes(response.status)) return null;
-  if (!response.ok) throw new Error('Learner authentication unavailable');
+  if (!response.ok) throw new Error('Learner authentication upstream HTTP ' + response.status);
   const user = await response.json();
   return user.id && user.role === 'authenticated' && !user.is_anonymous ? user : null;
 }
@@ -75,10 +75,19 @@ export async function courseSession(request, url, db, readJson) {
   if (request.headers.get('Origin') !== url.origin) return empty(403);
   if (request.method === 'DELETE') return empty(204, { 'Set-Cookie': cookie('', 0) });
   if (request.method !== 'POST') return empty(405, { Allow: 'POST, DELETE' });
-  if (!db) return empty(503);
+  if (!db) return json({ error: 'Course registration storage is unavailable. Please try again shortly.' }, 503);
+  const token = tokenFrom(request);
+  let user;
   try {
-    const user = await authenticatedLearner(tokenFrom(request));
-    if (!user) return empty(401);
+    user = await authenticatedLearner(token);
+  } catch (error) {
+    console.error('Course session authentication failed', error.message);
+    const status = error.message.match(/^Learner authentication upstream HTTP (\d{3})$/)?.[1];
+    return json({ error: 'The course sign-in service is unavailable. Please try again shortly.',
+      code: status ? 'auth_upstream_' + status : 'auth_connection' }, 503);
+  }
+  if (!user) return json({ error: 'Your Google sign-in session has expired. Please sign in again.' }, 401);
+  try {
     await ensureLearners(db);
     let learner = await findLearner(db, user.id);
     if (!learner) {
@@ -97,9 +106,11 @@ export async function courseSession(request, url, db, readJson) {
         .bind(user.id, name, phone).run();
       learner = await findLearner(db, user.id);
     }
-    return json({ name: learner.full_name }, 200, { 'Set-Cookie': cookie(tokenFrom(request), 3600) });
-  } catch {
-    return empty(503);
+    return json({ name: learner.full_name }, 200, { 'Set-Cookie': cookie(token, 3600) });
+  } catch (error) {
+    console.error('Course registration storage failed', error.message);
+    return json({ error: 'Course registration storage is unavailable. Please try again shortly.',
+      code: 'registration_storage' }, 503);
   }
 }
 
