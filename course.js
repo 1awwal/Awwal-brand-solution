@@ -188,7 +188,70 @@
     return { total: req.length, done: req.filter((b) => b.checked).length };
   };
 
+  // Module quizzes on the newer courses: the server sends the questions and marks them; a pass counts like a session.
+  const quizForms = isVideo ? [] : $$("form.module-quiz[data-quiz]");
+  let quizPassed = null;
+  async function quizApi(input) {
+    const url = "/api/course-quizzes?course=" + encodeURIComponent(main.dataset.courseKey);
+    const options = input ? {
+      method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(input),
+    } : { cache: "no-store" };
+    let response = await fetch(url, options);
+    if (response.status === 401 && account?.refreshCourseSession && await account.refreshCourseSession()) response = await fetch(url, options);
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || "Could not load the module quizzes. Please try again.");
+    return data;
+  }
+  async function loadQuizzes() {
+    let data;
+    try { data = await quizApi(); }
+    catch (error) {
+      quizForms.forEach((f) => {
+        const note = $(".quiz-loading", f); if (!note) return;
+        note.textContent = error.message + " ";
+        const retry = document.createElement("button"); retry.type = "button"; retry.className = "course-link"; retry.textContent = "Retry";
+        retry.addEventListener("click", () => { note.textContent = "Loading the quiz…"; loadQuizzes(); });
+        note.append(retry);
+      });
+      return;
+    }
+    quizPassed = data.passed;
+    for (const q of data.quizzes) {
+      const form = document.getElementById("quiz-" + q.id), fields = form && $(".quiz-fields", form);
+      if (!fields) continue;
+      fields.replaceChildren(...q.questions.map((question, i) => {
+        const field = document.createElement("fieldset"), legend = document.createElement("legend");
+        legend.textContent = `${i + 1}. ${question.prompt}`; field.append(legend);
+        question.options.forEach((option, j) => {
+          const label = document.createElement("label"), radio = document.createElement("input"), span = document.createElement("span");
+          radio.type = "radio"; radio.name = "q" + i; radio.value = option; radio.required = true;
+          radio.id = `answer-${q.id}-${i}-${j}`; span.textContent = option;
+          label.append(radio, span); field.append(label);
+        });
+        return field;
+      }));
+      const button = $("button[type='submit']", form), message = $(".quiz-result", form);
+      fields.addEventListener("change", (e) => e.target.closest("fieldset")?.classList.remove("is-wrong"));
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault(); button.disabled = true; message.textContent = "Checking your answers…";
+        try {
+          const sets = $$("fieldset", form);
+          const sent = await quizApi({ id: q.id, answers: sets.map((f) => $("input:checked", f)?.value) });
+          quizPassed = sent.passed;
+          const r = sent.result;
+          sets.forEach((f, i) => f.classList.toggle("is-wrong", r.wrong.includes(i)));
+          message.textContent = r.passed ? `Passed · ${r.correct} of ${r.total} correct. Module quiz completed.`
+            : `${r.correct} of ${r.total} correct · you need ${r.need}. Review the sessions for the marked questions and try again.`;
+          render(); save();
+        } catch (error) { message.textContent = error.message; }
+        finally { button.disabled = !!quizPassed?.[q.id]; }
+      });
+    }
+    render(); save();
+  }
+
   function render() {
+    if (quizPassed) quizForms.forEach((f) => { if (f.dataset.quiz in quizPassed) state.done[f.dataset.quiz] = 1; else delete state.done[f.dataset.quiz]; });
     if (isVideo) {
       state.done = assessmentData?.done || {};
       renderQuizzes();
@@ -204,9 +267,18 @@
       const visible = $$(".lesson", m).filter((l) => !l.hidden);
       const done = visible.filter((l) => l.classList.contains("is-done")).length;
       m.hidden = visible.length === 0;
-      m.classList.toggle("is-done", visible.length > 0 && done === visible.length);
+      const quiz = $("form.module-quiz[data-quiz]", m);
+      const quizOk = !quiz || !!state.done[quiz.dataset.quiz];
+      m.classList.toggle("is-done", visible.length > 0 && done === visible.length && quizOk);
       const c = $("[data-module-count]", m);
-      if (c) c.textContent = `${done}/${visible.length} sessions`;
+      if (c) c.textContent = `${done}/${visible.length} sessions` + (quiz ? (quizOk ? " · quiz passed" : " · quiz to do") : "");
+    });
+    quizForms.forEach((f) => {
+      const passed = !!state.done[f.dataset.quiz];
+      f.classList.toggle("is-passed", passed);
+      const button = $("button[type='submit']", f), out = $(".quiz-result", f);
+      if (quizPassed) button.disabled = passed || !$("fieldset", f);
+      if (passed && !out.textContent) out.textContent = `Passed · ${quizPassed?.[f.dataset.quiz] ?? 100}%. Module quiz completed.`;
     });
 
     earned = 0; let chain = true;
@@ -270,6 +342,13 @@
   $$("[data-study-track]").forEach((link) => link.addEventListener("click", () => selectTrack(link.dataset.studyTrack)));
   if (isVideo) $("#cert-level-select").addEventListener("change", event => { certificateLevel = Number(event.target.value); output.hidden = true; });
   if (isVideo) $("#quiz-retry-load").addEventListener("click", () => loadAssessments());
+
+  // Video frames: YouTube answers with a small grey placeholder when a frame does not exist — hide those.
+  document.addEventListener("load", (e) => {
+    const img = e.target;
+    if (img.tagName === "IMG" && img.closest(".deep-frames") && img.naturalWidth <= 120) img.closest("a").hidden = true;
+  }, true);
+  if (quizForms.length) loadQuizzes();
 
   // Click-to-load YouTube embeds (privacy-enhanced mode; nothing loads until asked).
   document.addEventListener("click", (e) => {

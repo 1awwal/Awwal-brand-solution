@@ -6,11 +6,15 @@ import page5 from './motion-graphics-course.html';
 import page6 from './graphic-design-course.html';
 import page7 from './digital-marketing-course.html';
 import page8 from './web-design-course.html';
+import page9 from './capcut-course.html';
+import page10 from './ai-design-course.html';
+import page11 from './claude-video-editing-course.html';
 
 import finalCutGuide from './course-guides/fcp.pdf';
 import resolveGuide from './course-guides/resolve.pdf';
 import editorsGuide from './course-guides/editors.pdf';
 import { assessmentResponse, ensureAssessments } from './course-assessments.mjs';
+import { quizResponse } from './course-quizzes.mjs';
 
 const editingGuides = new Map([
   ['fcp', { data: finalCutGuide, filename: 'Awwal-Final-Cut-Pro-Workbook.pdf' }],
@@ -27,6 +31,9 @@ const pages = new Map([
   ['/graphic-design-course', page6],
   ['/digital-marketing-course', page7],
   ['/web-design-course', page8],
+  ['/capcut-course', page9],
+  ['/ai-design-course', page10],
+  ['/claude-video-editing-course', page11],
 ]);
 
 const supabaseUrl = 'https://sfaejrunzvsgmovqkrnm.supabase.co';
@@ -166,14 +173,30 @@ export async function courseAssessments(request, url, db, readJson) {
   }
 }
 
+export async function courseQuizzes(request, url, db, readJson) {
+  if (request.method !== 'GET' && request.headers.get('Origin') !== url.origin) return empty(403);
+  if (!db) return json({ error: 'Quiz storage is temporarily unavailable. Please try again.' }, 503);
+  try {
+    const token = request.headers.get('Cookie')?.match(/(?:^|;\s*)__Host-awwal-course-session=([^;]+)/)?.[1];
+    const user = await authenticatedLearner(token);
+    if (!user) return json({ error: 'Your course session expired. Sign in again to continue.' }, 401);
+    if (!await findLearner(db, user.id)) return json({ error: 'Complete your course registration first.' }, 403);
+    return await quizResponse(request, url, db, user, readJson, json);
+  } catch (error) {
+    console.error('Course quiz failed', error.message);
+    return json({ error: 'We could not load or save your quiz. Please try again.' }, 503);
+  }
+}
+
 function personalizeCourse(page, name) {
   const escapedName = name.replace(/[&"<>]/g, character => attributeEntities[character]);
   return page
     .replace(/<input id="cert-name"[^>]*>/, () => '<output id="cert-name">' + escapedName + '</output>')
     .replace('Enter your name to generate a certificate you can download and share.',
       'Your registered name is used on every certificate and cannot be changed.')
+    .replace('courses.css?v=20261113', 'courses.css?v=course-notes-1')
     .replace('account.js?v=20261113', 'account.js?v=module-quizzes-1')
-    .replace('course.js?v=20261113', 'course.js?v=module-quizzes-1');
+    .replace('course.js?v=20261113', 'course.js?v=course-notes-1');
 }
 
 export async function coursePage(request, url, db) {

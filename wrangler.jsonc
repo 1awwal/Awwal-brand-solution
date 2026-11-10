@@ -20,7 +20,10 @@
       "/motion-graphics-course",
       "/graphic-design-course",
       "/digital-marketing-course",
-      "/web-design-course"
+      "/web-design-course",
+      "/capcut-course",
+      "/ai-design-course",
+      "/claude-video-editing-course"
     ]
   },
   "rules": [
@@ -34,7 +37,10 @@
         "**/motion-graphics-course.html",
         "**/graphic-design-course.html",
         "**/digital-marketing-course.html",
-        "**/web-design-course.html"
+        "**/web-design-course.html",
+        "**/capcut-course.html",
+        "**/ai-design-course.html",
+        "**/claude-video-editing-course.html"
       ],
       "fallthrough": true
     },
