@@ -1,6 +1,6 @@
 import {validateLead,notificationParameters} from './enquiry-server.mjs';
 import {problem,readOnlyApi,mcp} from './agent-api.mjs';
-import {coursePage,courseSession,deleteCourseAccount,courseAssessments} from './course-access.mjs';
+import {coursePage,courseSession,deleteCourseAccount,courseAssessments,courseQuizzes} from './course-access.mjs';
 import {paletteApi} from './palette-submissions.mjs';
 
 // Owner WhatsApp alert for every lead. Configure Worker variables/secrets:
@@ -94,6 +94,7 @@ export default {
     if(url.protocol!=='https:'){url.protocol='https:';return Response.redirect(url,308);}
     if(url.pathname==='/api/course-session')return courseSession(request,url,env.ENQUIRIES,boundedJson);
     if(url.pathname==='/api/course-assessments')return courseAssessments(request,url,env.ENQUIRIES,boundedJson);
+    if(url.pathname==='/api/course-quizzes')return courseQuizzes(request,url,env.ENQUIRIES,boundedJson);
     if(url.pathname==='/api/course-account/delete')return deleteCourseAccount(request,url,env.ENQUIRIES);
     const paletteResponse=await paletteApi(request,env);
     if(paletteResponse)return paletteResponse;

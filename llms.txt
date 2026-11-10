@@ -52,6 +52,9 @@ Agents cannot submit enquiries for a person; share WhatsApp, email or the form i
 - [Branding & Graphic Design course](https://awwalbrands.com/graphic-design-course): Design principles, logos and brand identity; 16 video sessions
 - [Digital Marketing & Advertising course](https://awwalbrands.com/digital-marketing-course): Strategy, social media, SEO and paid ads; 15 video sessions
 - [Website Design & Management course](https://awwalbrands.com/web-design-course): Design, build, launch and maintain; 15 video sessions
+- [CapCut Video Editing course](https://awwalbrands.com/capcut-course): From first cut to client-ready short-form video; 18 video sessions with module quizzes
+- [Design with AI & Prompt Engineering course](https://awwalbrands.com/ai-design-course): Prompting, AI image tools and client-ready workflows; 18 video sessions with module quizzes
+- [Video Editing with Claude course](https://awwalbrands.com/claude-video-editing-course): Plan, cut and animate videos with an AI assistant; 18 video sessions with module quizzes
 - [Dammam & Eastern Province](https://awwalbrands.com/eastern-province): home region; Dammam, Al Khobar, Dhahran, Jubail, Qatif, Al Ahsa
 - [Riyadh](https://awwalbrands.com/riyadh): remote support for Riyadh, Diriyah, Al Kharj
 - [Jeddah & Makkah](https://awwalbrands.com/makkah): remote support for Jeddah, Makkah, Taif, Rabigh

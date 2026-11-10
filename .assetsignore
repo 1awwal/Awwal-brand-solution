@@ -12,6 +12,9 @@ palette-submissions.mjs
 /course-assessments.mjs
 /course-assessment-data.mjs
 /course-assessments.test.mjs
+/course-quizzes.mjs
+/course-quiz-data.mjs
+/course-quizzes.test.mjs
 /video-editing-course.html
 /videography-course.html
 /photography-course.html
@@ -20,4 +23,7 @@ palette-submissions.mjs
 /graphic-design-course.html
 /digital-marketing-course.html
 /web-design-course.html
+/capcut-course.html
+/ai-design-course.html
+/claude-video-editing-course.html
 /course-guides/
