@@ -280,3 +280,5 @@ html[data-theme="light"] .account-chip{border-color:rgba(9,21,79,.35)}
 .dash-settings{scroll-margin-top:125px}
 .dash-settings p{color:var(--c-muted);font-size:14px;line-height:1.6}
 .dash-settings strong{margin-left:8px;color:var(--c-fg)}
+
+.dash-gate [hidden]{display:none!important}
