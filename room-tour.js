@@ -8,7 +8,7 @@
 
   const stops = [
     { x: .5, y: .5, zoom: 1, title: 'A whole world, built around your brand.', description: 'Explore a connected world of identity, print, packaging and digital experiences.', category: 'THE BRAND ROOM' },
-    { x: .435, y: .19, zoom: 1.7, title: 'The first impression.', description: 'A distinctive mark and visual language give every touchpoint a clear point of view.', category: 'BRAND IDENTITY' },
+    { x: .435, y: .19, zoom: 1.85, title: 'The first impression.', description: 'A distinctive mark and visual language give every touchpoint a clear point of view.', category: 'BRAND IDENTITY' },
     { x: .15, y: .60, zoom: 2.35, title: 'Identity you can carry.', description: 'Thoughtful bags and everyday objects bring your brand into people’s lives.', category: 'BAGS & MERCHANDISE' },
     { x: .50, y: .77, zoom: 2.10, title: 'Stories worth keeping.', description: 'Brochures, profiles and editorial pieces turn your story into something tangible.', category: 'PRINT & EDITORIAL' },
     { x: .595, y: .69, zoom: 2.25, title: 'Considered down to the detail.', description: 'Cards, stationery and the smallest details carry the same considered identity.', category: 'STATIONERY' },
@@ -17,7 +17,6 @@
     { x: .86, y: .27, zoom: 1.85, title: 'A presence beyond the screen.', description: 'Signage, photography and event materials make your brand part of the real world.', category: 'EVENTS, PHOTO & FILM' },
     { x: .5, y: .5, zoom: 1, title: 'One identity. Every dimension.', description: 'Each detail belongs to one recognisable world, from the first idea to the final experience.', category: 'THE COMPLETE PICTURE' }
   ];
-  const MAX_STOP_ZOOM = 2.35;
   // Camera feel. HOLD is the share of each scroll segment spent resting on a stop, at either end.
   const HOLD = .15;
   const FOLLOW_MS = 150;      // how quickly the camera catches up with the scroll position
@@ -53,7 +52,7 @@
   let needsMeasure = true;
   let snapNextFrame = true;
   let visible = true;
-  let geometry = { width: 0, height: 0, imageWidth: 0, imageHeight: 0, zoomScale: 1, top: 0, range: 0 };
+  let geometry = { width: 0, height: 0, imageWidth: 0, imageHeight: 0, top: 0, range: 0 };
 
   function activate(index) {
     if (active === index) return;
@@ -88,15 +87,8 @@
     const height = rect.height;
     const imageWidth = width / height >= 1.2 ? Math.max(width, height * ratio) : Math.min(width, height * ratio);
     const imageHeight = imageWidth / ratio;
-    // Close-ups are scaled to what the photo can carry on this screen. A large retina display
-    // still gets a clear push-in (never less than 1.6x) instead of no zoom at all; smaller or
-    // standard displays get the full close-ups.
-    const density = window.devicePixelRatio || 1;
-    const sharpZoom = loadedImage && imageWidth > 0 ? loadedImage.naturalWidth / (imageWidth * density) : 1;
-    const zoomCap = clamp(sharpZoom * 1.9, 1.6, MAX_STOP_ZOOM);
     geometry = {
       width, height, imageWidth, imageHeight,
-      zoomScale: (zoomCap - 1) / (MAX_STOP_ZOOM - 1),
       top: Number.isFinite(top) ? top : (Number.isFinite(fallbackTop) ? fallbackTop : 0),
       range: Math.max(0, tour.getBoundingClientRect().height - stage.getBoundingClientRect().height)
     };
@@ -111,7 +103,7 @@
     return clamp((geometry.top - tour.getBoundingClientRect().top) / geometry.range, 0, 1) * last;
   }
 
-  const view = index => ({ x: stops[index].x, y: stops[index].y, zoom: 1 + (stops[index].zoom - 1) * geometry.zoomScale });
+  const view = index => stops[index];
 
   // Where the camera should be for a scroll position: rest on each stop, then fly to the next
   // one on an eased path, pulling back slightly mid-flight so long moves read as one gesture.
