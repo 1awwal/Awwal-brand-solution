@@ -232,7 +232,7 @@
           return;
         }
         if (!response.ok || !result.name) {
-          throw new Error(result.error || "We couldn’t verify your registration. Please try again.");
+          throw new Error((result.error || "We couldn’t verify your registration. Please try again.") + (result.code ? " (" + result.code + ")" : ""));
         }
         registration = result;
         registrationRequired = false;
