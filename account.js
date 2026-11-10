@@ -62,6 +62,16 @@
 
   const api = {
     ready,
+    async refreshCourseSession() {
+      await ready;
+      if (!client || !user) return false;
+      const { data } = await client.auth.getSession();
+      if (!data.session) return false;
+      const response = await fetch('/api/course-session', {
+        method: 'POST', headers: { Authorization: 'Bearer ' + data.session.access_token },
+      });
+      return response.ok;
+    },
     get user() { return user; },
     get profile() { return profile; },
     onChange(fn) { listeners.push(fn); },
@@ -100,7 +110,24 @@
     async allProgress() {
       if (!client || !user) return [];
       const { data } = await client.from("course_progress").select("course_key,track,done_count,total_count,level_earned,updated_at").eq("user_id", user.id);
-      return data || [];
+      const rows = data || [];
+      // Video completion is graded on the server; old manual ticks are not assessment passes.
+      try {
+        const response = await fetch('/api/course-assessments?summary=1', { cache: 'no-store' });
+        if (response.ok) {
+          const assessed = await response.json();
+          const choices = ['fcp', 'premiere', 'resolve'].map(track => {
+            const required = assessed.assessments.filter(a => a.track === 'general' || a.track === track).flatMap(a => a.lessons);
+            return { total: required.length, done: required.filter(id => assessed.done[id]).length };
+          }).sort((a, b) => b.done / b.total - a.done / a.total);
+          const best = choices[0];
+          const row = { course_key: 'video-editing', done_count: best.done, total_count: best.total,
+            level_earned: assessed.eligible.at(-1)?.level || 0 };
+          return [...rows.filter(r => r.course_key !== 'video-editing'), row];
+        }
+        // Failed assessment reads must not display old manually-earned video certificates.
+        return rows.filter(r => r.course_key !== 'video-editing');
+      } catch { return rows.filter(r => r.course_key !== 'video-editing'); }
     },
     async setReminders(on) {
       if (!client || !user) return false;

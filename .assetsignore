@@ -4,15 +4,14 @@
 CLOUDFLARE.md
 README.md
 wrangler.jsonc
-
 enquiry-worker.mjs
 enquiry-server.mjs
 agent-api.mjs
-
 palette-submissions.mjs
-
-# Course pages are served by the Worker after authentication.
 /course-access.mjs
+/course-assessments.mjs
+/course-assessment-data.mjs
+/course-assessments.test.mjs
 /video-editing-course.html
 /videography-course.html
 /photography-course.html
@@ -21,5 +20,4 @@ palette-submissions.mjs
 /graphic-design-course.html
 /digital-marketing-course.html
 /web-design-course.html
-
 /course-guides/
