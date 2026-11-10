@@ -22,7 +22,45 @@
     if (saved && typeof saved === "object") state = { ...state, ...saved, done: saved.done || {}, certs: saved.certs || {} };
   } catch (_) {}
   if (!hasTracks || !(state.track in TRACKS)) state.track = "all";
-  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (_) {} };
+  const store = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (_) {} };
+  // Every change is stamped, saved on this device, and (when signed in) pushed to the learner's account.
+  const save = () => { state.updatedAt = Date.now(); store(); queuePush(); };
+
+  const account = window.AwwalAccount || null;
+  let pushTimer = 0;
+  let snapshot = { done: 0, total: 0, level: 0 };
+  function queuePush() {
+    if (!account || !account.user) return;
+    clearTimeout(pushTimer);
+    pushTimer = setTimeout(() => {
+      account.saveProgress(main.dataset.courseKey, {
+        track: state.track, done: state.done, certs: state.certs,
+        done_count: snapshot.done, total_count: snapshot.total, level_earned: snapshot.level,
+      });
+    }, 700);
+  }
+  async function pullFromAccount() {
+    if (!account) return;
+    await account.ready;
+    if (!account.user) return;
+    const row = await account.loadProgress(main.dataset.courseKey);
+    const firstTime = state.syncedUser !== account.user.id;
+    if (row) {
+      const remoteTime = Date.parse(row.updated_at) || 0;
+      if (firstTime) {
+        // First sign-in on this device: keep everything from both sides.
+        state.done = { ...row.done, ...state.done };
+        state.certs = { ...row.certs, ...state.certs };
+        if (hasTracks && state.track === "all" && row.track in TRACKS) state.track = row.track;
+      } else if (remoteTime > (state.updatedAt || 0)) {
+        state.done = row.done || {}; state.certs = row.certs || {};
+        if (hasTracks && row.track in TRACKS) state.track = row.track;
+      }
+    }
+    state.syncedUser = account.user.id;
+    if (!nameInput.value && account.profile && account.profile.full_name) nameInput.value = account.profile.full_name;
+    store(); render(); queuePush();
+  }
 
   const levels = $$(".level");
   const lessons = $$(".lesson");
@@ -76,6 +114,7 @@
     });
 
     const all = counts(main), pct = all.total ? Math.round((all.done / all.total) * 100) : 0;
+    snapshot = { done: all.done, total: all.total, level: earned };
     fill.style.width = pct + "%";
     bar.setAttribute("aria-valuenow", String(pct));
     text.textContent = `${all.done} of ${all.total} complete · ${pct}%`;
@@ -254,4 +293,5 @@
   window.addEventListener("hashchange", openHash); openHash();
 
   render();
+  if (account) { account.onChange(() => pullFromAccount()); pullFromAccount(); }
 })();

@@ -1,0 +1,228 @@
+// Awwal Courses — learner accounts: Google sign-in, progress on any device, My courses and the owner's admin view.
+// Data lives in a Supabase project used only for courses. The key below is a publishable key: it is meant to be
+// public, and every table is protected by row-level security (learners can read and write only their own rows).
+(() => {
+  const SUPABASE_URL = "https://sfaejrunzvsgmovqkrnm.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_Jpo-7sKpJ2OUtYmJk3GhGQ_AXVzvB00";
+  const SDK = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js";
+  const $ = (s, r = document) => r.querySelector(s);
+  const el = (tag, attrs = {}, text) => {
+    const node = document.createElement(tag);
+    Object.entries(attrs).forEach(([k, v]) => { if (v !== null && v !== undefined) node.setAttribute(k, v); });
+    if (text !== undefined) node.textContent = text;
+    return node;
+  };
+
+  let client = null, user = null, profile = null;
+  const listeners = [];
+  const notify = () => listeners.forEach((fn) => { try { fn(user, profile); } catch (_) {} });
+
+  async function loadProfile() {
+    profile = null;
+    if (!client || !user) return;
+    const { data } = await client.from("profiles").select("full_name,email,reminders_opt_in,is_admin").eq("id", user.id).maybeSingle();
+    profile = data || null;
+    client.from("profiles").update({ last_seen_at: new Date().toISOString() }).eq("id", user.id).then(() => {});
+  }
+
+  const ready = new Promise((resolve) => {
+    const script = document.createElement("script");
+    script.src = SDK; script.async = true;
+    script.onerror = () => resolve();
+    script.onload = async () => {
+      try {
+        client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } });
+        const { data } = await client.auth.getSession();
+        user = data.session ? data.session.user : null;
+        await loadProfile();
+        client.auth.onAuthStateChange((_event, session) => {
+          const next = session ? session.user : null;
+          if ((next && next.id) === (user && user.id)) return;
+          user = next;
+          // Defer: Supabase asks that no other client calls run inside this callback.
+          setTimeout(async () => { await loadProfile(); notify(); }, 0);
+        });
+      } catch (_) { client = null; }
+      resolve();
+      notify();
+    };
+    document.head.appendChild(script);
+  });
+
+  const api = {
+    ready,
+    get user() { return user; },
+    get profile() { return profile; },
+    onChange(fn) { listeners.push(fn); },
+    async signIn() {
+      await ready;
+      if (!client) { alert("Sign-in is unavailable right now. Please try again in a moment."); return; }
+      const { error } = await client.auth.signInWithOAuth({ provider: "google", options: { redirectTo: location.origin + location.pathname } });
+      if (error) alert("Google sign-in is not available yet. Your progress is still saved on this device.");
+    },
+    async signOut() { if (client) await client.auth.signOut(); },
+    async loadProgress(courseKey) {
+      if (!client || !user) return null;
+      const { data } = await client.from("course_progress").select("track,done,certs,updated_at").eq("user_id", user.id).eq("course_key", courseKey).maybeSingle();
+      return data || null;
+    },
+    async saveProgress(courseKey, row) {
+      if (!client || !user) return false;
+      const { error } = await client.from("course_progress").upsert({ user_id: user.id, course_key: courseKey, ...row }, { onConflict: "user_id,course_key" });
+      return !error;
+    },
+    async allProgress() {
+      if (!client || !user) return [];
+      const { data } = await client.from("course_progress").select("course_key,track,done_count,total_count,level_earned,updated_at").eq("user_id", user.id);
+      return data || [];
+    },
+    async setReminders(on) {
+      if (!client || !user) return false;
+      const { error } = await client.from("profiles").update({ reminders_opt_in: !!on }).eq("id", user.id);
+      if (!error && profile) profile.reminders_opt_in = !!on;
+      return !error;
+    },
+    async deleteAccount() {
+      if (!client || !user) return false;
+      const { error } = await client.functions.invoke("delete-account", { method: "POST" });
+      if (error) return false;
+      await client.auth.signOut();
+      return true;
+    },
+    async adminData() {
+      if (!client || !user || !profile || !profile.is_admin) return null;
+      const [people, progress] = await Promise.all([
+        client.from("profiles").select("id,full_name,email,reminders_opt_in,created_at,last_seen_at").order("created_at", { ascending: false }).limit(2000),
+        client.from("course_progress").select("user_id,course_key,done_count,total_count,level_earned,updated_at").limit(10000),
+      ]);
+      return { people: people.data || [], progress: progress.data || [] };
+    },
+  };
+  window.AwwalAccount = api;
+
+  const firstName = () => {
+    const name = (profile && profile.full_name) || (user && user.user_metadata && (user.user_metadata.full_name || user.user_metadata.name)) || "";
+    return name.trim().split(/\s+/)[0] || "Account";
+  };
+
+  // ---------- nav chip (every page that loads this script) ----------
+  const actions = $(".nav-actions");
+  let chip = null;
+  if (actions) {
+    chip = el("a", { class: "account-chip", href: "/my-courses" }, "Sign in");
+    actions.insertBefore(chip, actions.firstChild);
+    chip.addEventListener("click", (e) => { if (!user) { e.preventDefault(); api.signIn(); } });
+  }
+
+  // ---------- strip on course pages ----------
+  const strip = $("#account-strip");
+  function renderStrip() {
+    if (!strip) return;
+    strip.replaceChildren();
+    strip.hidden = false;
+    if (!user) {
+      strip.append(el("span", {}, "Sign in to keep your progress and certificates on every device."));
+      const btn = el("button", { type: "button", class: "account-btn" }, "Sign in with Google");
+      btn.addEventListener("click", () => api.signIn());
+      strip.append(btn);
+      return;
+    }
+    strip.append(el("span", {}, `Signed in as ${firstName()}. Progress is saved to your account.`));
+    const label = el("label", { class: "account-check" });
+    const box = el("input", { type: "checkbox" });
+    box.checked = !!(profile && profile.reminders_opt_in);
+    box.addEventListener("change", async () => { box.disabled = true; const ok = await api.setReminders(box.checked); if (!ok) box.checked = !box.checked; box.disabled = false; });
+    label.append(box, el("span", {}, "Email me a reminder if I stop for a week"));
+    strip.append(label, el("a", { href: "/my-courses", class: "account-link" }, "My courses"));
+  }
+
+  // ---------- My courses ----------
+  const dash = $("#my-courses");
+  const LEVELS = ["Not started", "Beginner certificate", "Intermediate certificate", "Professional certificate"];
+  async function renderDash() {
+    if (!dash) return;
+    const gate = $("#dash-gate"), body = $("#dash-body");
+    if (new URLSearchParams(location.search).get("unsubscribed") && !document.getElementById("dash-notice")) {
+      dash.prepend(el("p", { class: "dash-notice", id: "dash-notice", role: "status" }, "Course reminder emails are now off."));
+    }
+    if (!user) { gate.hidden = false; body.hidden = true; return; }
+    gate.hidden = true; body.hidden = false;
+    $("#dash-name").textContent = firstName();
+    $("#dash-email").textContent = (profile && profile.email) || user.email || "";
+    const reminders = $("#dash-reminders");
+    reminders.checked = !!(profile && profile.reminders_opt_in);
+    const rows = await api.allProgress();
+    const byKey = Object.fromEntries(rows.map((r) => [r.course_key, r]));
+    let started = 0, certificates = 0;
+    dash.querySelectorAll("[data-course]").forEach((card) => {
+      const r = byKey[card.dataset.course];
+      const pct = r && r.total_count ? Math.round((r.done_count / r.total_count) * 100) : 0;
+      if (r && r.done_count) started += 1;
+      if (r) certificates += r.level_earned;
+      $(".dash-fill", card).style.width = pct + "%";
+      $(".dash-pct", card).textContent = pct + "%";
+      $(".dash-state", card).textContent = r && r.done_count
+        ? `${r.done_count} of ${r.total_count} sessions · ${r.level_earned ? LEVELS[r.level_earned] + " earned" : "No certificate yet"}`
+        : "Not started";
+      $(".dash-go", card).textContent = !r || !r.done_count ? "Start" : pct === 100 ? "Review" : "Continue";
+      card.classList.toggle("is-started", !!(r && r.done_count));
+    });
+    $("#dash-started").textContent = String(started);
+    $("#dash-certs").textContent = String(certificates);
+    $("#dash-admin").hidden = !(profile && profile.is_admin);
+  }
+  if (dash) {
+    $("#dash-signin").addEventListener("click", () => api.signIn());
+    $("#dash-signout").addEventListener("click", async () => { await api.signOut(); });
+    $("#dash-reminders").addEventListener("change", async (e) => {
+      const box = e.target; box.disabled = true;
+      const ok = await api.setReminders(box.checked); if (!ok) box.checked = !box.checked; box.disabled = false;
+    });
+    $("#dash-delete").addEventListener("click", async () => {
+      if (!confirm("Delete your account and all saved course progress? This cannot be undone.")) return;
+      const ok = await api.deleteAccount();
+      alert(ok ? "Your account and progress have been deleted." : "We could not delete the account just now. Please email hello@awwalbrands.com and we will remove it.");
+    });
+  }
+
+  // ---------- owner's admin view ----------
+  const admin = $("#courses-admin");
+  async function renderAdmin() {
+    if (!admin) return;
+    const gate = $("#admin-gate"), body = $("#admin-body"), msg = $("#admin-message");
+    if (!user) { gate.hidden = false; body.hidden = true; msg.textContent = "Sign in with the owner account to see learners."; $("#admin-signin").hidden = false; return; }
+    $("#admin-signin").hidden = true;
+    if (!profile || !profile.is_admin) { gate.hidden = false; body.hidden = true; msg.textContent = "This page is only available to the site owner."; return; }
+    const data = await api.adminData();
+    if (!data) return;
+    gate.hidden = true; body.hidden = false;
+    const courses = JSON.parse(admin.dataset.courses);
+    const byUser = {};
+    data.progress.forEach((p) => { (byUser[p.user_id] = byUser[p.user_id] || {})[p.course_key] = p; });
+    const day = (iso) => new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+    $("#admin-total").textContent = String(data.people.length);
+    $("#admin-active").textContent = String(data.people.filter((p) => Date.now() - Date.parse(p.last_seen_at) < 7 * 864e5).length);
+    $("#admin-certs").textContent = String(data.progress.reduce((n, p) => n + p.level_earned, 0));
+    $("#admin-optin").textContent = String(data.people.filter((p) => p.reminders_opt_in).length);
+    const head = $("#admin-table thead tr"), tbody = $("#admin-table tbody");
+    head.replaceChildren(...["Learner", "Email", "Joined", "Last seen", "Reminders"].map((t) => el("th", { scope: "col" }, t)), ...courses.map((c) => el("th", { scope: "col", title: c.title }, c.short)));
+    tbody.replaceChildren(...data.people.map((p) => {
+      const tr = el("tr");
+      tr.append(el("td", {}, p.full_name || "—"), el("td", {}, p.email), el("td", {}, day(p.created_at)), el("td", {}, day(p.last_seen_at)), el("td", {}, p.reminders_opt_in ? "Yes" : "No"));
+      courses.forEach((c) => {
+        const r = (byUser[p.id] || {})[c.key];
+        const pct = r && r.total_count ? Math.round((r.done_count / r.total_count) * 100) : null;
+        tr.append(el("td", { class: pct === null ? "is-empty" : "" }, pct === null ? "—" : `${pct}%${r.level_earned ? " · L" + r.level_earned : ""}`));
+      });
+      return tr;
+    }));
+    $("#admin-empty").hidden = data.people.length > 0;
+  }
+  if (admin) $("#admin-signin").addEventListener("click", () => api.signIn());
+
+  function renderAll() {
+    if (chip) { chip.textContent = user ? firstName() : "Sign in"; chip.classList.toggle("is-in", !!user); chip.setAttribute("title", user ? "My courses" : "Sign in with Google"); }
+    renderStrip(); renderDash(); renderAdmin();
+  }
+  api.onChange(renderAll);
+})();
