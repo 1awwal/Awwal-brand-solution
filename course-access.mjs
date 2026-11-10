@@ -172,7 +172,7 @@ function personalizeCourse(page, name) {
     .replace(/<input id="cert-name"[^>]*>/, () => '<output id="cert-name">' + escapedName + '</output>')
     .replace('Enter your name to generate a certificate you can download and share.',
       'Your registered name is used on every certificate and cannot be changed.')
-    .replace('account.js?v=20261113', 'account.js?v=learner-profile-2')
+    .replace('account.js?v=20261113', 'account.js?v=module-quizzes-1')
     .replace('course.js?v=20261113', 'course.js?v=module-quizzes-1');
 }
 
