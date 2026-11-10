@@ -150,7 +150,12 @@
     box.checked = !!(profile && profile.reminders_opt_in);
     box.addEventListener("change", async () => { box.disabled = true; const ok = await api.setReminders(box.checked); if (!ok) box.checked = !box.checked; box.disabled = false; });
     label.append(box, el("span", {}, "Email me a reminder if I stop for a week"));
-    strip.append(label, el("a", { href: "/my-courses", class: "account-link" }, "My courses"));
+    const signOut = el("button", { type: "button", class: "account-btn" }, "Sign out");
+    signOut.addEventListener("click", async () => {
+      try { await api.signOut(); location.replace("/courses"); }
+      catch { alert("We could not sign you out. Please try again."); }
+    });
+    strip.append(label, el("a", { href: "/my-courses", class: "account-link" }, "My courses"), signOut);
   }
 
   // ---------- My courses ----------
@@ -169,6 +174,7 @@
       registration = null;
       registrationRequired = false;
     }
+    $("#dash-gate-signout").hidden = !user;
     nameForm.hidden = !registrationRequired;
     signIn.hidden = registrationRequired;
     $("#dash-gate h2").textContent = registrationRequired ? "Register for courses"
@@ -261,10 +267,12 @@
       return openCourses({ name: $("#dash-full-name").value, phone: $("#dash-phone").value });
     });
     ready.then(() => { if (user) openCourses(); });
-    $("#dash-signout").addEventListener("click", async () => {
-      try { await api.signOut(); }
+    const signOut = async () => {
+      try { await api.signOut(); location.replace("/courses"); }
       catch { alert("We could not sign you out. Please try again."); }
-    });
+    };
+    $("#dash-signout").addEventListener("click", signOut);
+    $("#dash-gate-signout").addEventListener("click", signOut);
     $("#dash-reminders").addEventListener("change", async (e) => {
       const box = e.target; box.disabled = true;
       const ok = await api.setReminders(box.checked); if (!ok) box.checked = !box.checked; box.disabled = false;

@@ -40,7 +40,7 @@ async function authenticatedLearner(token) {
   if (!token || token.length > 3800 || !/^[\w-]+\.[\w-]+\.[\w-]+$/.test(token)) return null;
   const response = await fetch(supabaseUrl + '/auth/v1/user', {
     headers: authHeaders(token),
-    redirect: 'error',
+    redirect: 'manual',
     signal: AbortSignal.timeout(10000),
   });
   if ([400, 401, 403, 404].includes(response.status)) return null;
@@ -124,7 +124,7 @@ export async function deleteCourseAccount(request, url, db) {
     if (!user) return empty(401);
     await ensureLearners(db);
     const response = await fetch(supabaseUrl + '/functions/v1/delete-account', {
-      method: 'POST', headers: authHeaders(token), redirect: 'error', signal: AbortSignal.timeout(10000),
+      method: 'POST', headers: authHeaders(token), redirect: 'manual', signal: AbortSignal.timeout(10000),
     });
     if (!response.ok) return empty(503);
     await db.prepare('DELETE FROM course_learners WHERE user_id = ?').bind(user.id).run();
@@ -142,6 +142,7 @@ function personalizeCourse(page, name) {
     .replace(/<input id="cert-name"[^>]*>/, () => '<input id="cert-name" type="text" readonly value="' + escapedName + '">')
     .replace('Enter your name to generate a certificate you can download and share.',
       'Your registered name is used on every certificate and cannot be changed.')
+    .replace('account.js?v=20261113', 'account.js?v=course-registration-3')
     .replace('course.js?v=20261113', 'course.js?v=locked-certificate-name-1');
 }
 
