@@ -15,6 +15,9 @@
       "/*/"
     ]
   },
+  "rules": [
+    { "type": "Text", "globs": ["**/video-editing-course.html","**/videography-course.html","**/photography-course.html","**/photo-editing-course.html","**/motion-graphics-course.html","**/graphic-design-course.html","**/digital-marketing-course.html","**/web-design-course.html"], "fallthrough": true }
+  ],
   "previews": {},
   "main": "enquiry-worker.mjs",
   "d1_databases": [

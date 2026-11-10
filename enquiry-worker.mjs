@@ -1,5 +1,6 @@
 import {validateLead,notificationParameters} from './enquiry-server.mjs';
 import {problem,readOnlyApi,mcp} from './agent-api.mjs';
+import {coursePage,courseSession} from './course-access.mjs';
 import {paletteApi} from './palette-submissions.mjs';
 
 // Owner WhatsApp alert for every lead. Configure Worker variables/secrets:
@@ -91,6 +92,7 @@ export default {
   async fetch(request,env,ctx) {
     const url=new URL(request.url);
     if(url.protocol!=='https:'){url.protocol='https:';return Response.redirect(url,308);}
+    if(url.pathname==='/api/course-session')return courseSession(request,url);
     const paletteResponse=await paletteApi(request,env);
     if(paletteResponse)return paletteResponse;
     if(url.pathname==='/api/enquiries')return capture(request,env,ctx);
@@ -100,6 +102,8 @@ export default {
     if(url.pathname.startsWith('/api/'))return problem('not_found',404);
     const clean=cleanPath(url.pathname);
     if(clean!==url.pathname&&(request.method==='GET'||request.method==='HEAD')){url.pathname=clean;return Response.redirect(url,301);}
+    const course=await coursePage(request,url);
+    if(course)return course;
     if(url.pathname==='/')return homepage(request,env);
     return env.ASSETS.fetch(request);
   }

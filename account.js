@@ -15,6 +15,8 @@
 
   let client = null, user = null, profile = null;
   const listeners = [];
+  const destinationKey = "awwal-course-return";
+  let courseDestination = null;
   const notify = () => listeners.forEach((fn) => { try { fn(user, profile); } catch (_) {} });
 
   async function loadProfile() {
@@ -49,6 +51,11 @@
     document.head.appendChild(script);
   });
 
+  async function clearCourseSession() {
+    const response = await fetch("/api/course-session", { method: "DELETE" });
+    if (!response.ok) throw new Error("Could not clear the course session");
+  }
+
   const api = {
     ready,
     get user() { return user; },
@@ -57,10 +64,16 @@
     async signIn() {
       await ready;
       if (!client) { alert("Sign-in is unavailable right now. Please try again in a moment."); return; }
+      if (courseDestination) sessionStorage.setItem(destinationKey, courseDestination);
       const { error } = await client.auth.signInWithOAuth({ provider: "google", options: { redirectTo: location.origin + location.pathname } });
       if (error) alert("Google sign-in is not available yet. Your progress is still saved on this device.");
     },
-    async signOut() { if (client) await client.auth.signOut(); },
+    async signOut() {
+      if (!client) return;
+      await clearCourseSession();
+      const { error } = await client.auth.signOut();
+      if (error) throw error;
+    },
     async loadProgress(courseKey) {
       if (!client || !user) return null;
       const { data } = await client.from("course_progress").select("track,done,certs,updated_at").eq("user_id", user.id).eq("course_key", courseKey).maybeSingle();
@@ -84,6 +97,7 @@
     },
     async deleteAccount() {
       if (!client || !user) return false;
+      await clearCourseSession();
       const { error } = await client.functions.invoke("delete-account", { method: "POST" });
       if (error) return false;
       await client.auth.signOut();
@@ -145,7 +159,20 @@
     if (new URLSearchParams(location.search).get("unsubscribed") && !document.getElementById("dash-notice")) {
       dash.prepend(el("p", { class: "dash-notice", id: "dash-notice", role: "status" }, "Course reminder emails are now off."));
     }
-    if (!user) { gate.hidden = false; body.hidden = true; return; }
+    const nameForm = $("#dash-name-form");
+    const signIn = $("#dash-signin");
+    const needsName = Boolean(user && !profile?.full_name?.trim());
+    nameForm.hidden = !needsName;
+    signIn.hidden = needsName;
+    if (needsName) {
+      $("#dash-gate h2").textContent = "Add your full name";
+      const input = $("#dash-full-name");
+      if (!input.value) input.value = user.user_metadata?.full_name || user.user_metadata?.name || "";
+    } else {
+      $("#dash-gate h2").textContent = courseDestination ? "Sign in to access this course" : "Sign in to see your courses";
+      signIn.firstChild.textContent = user ? "Open course " : "Sign in with Google ";
+    }
+    if (!user || needsName || courseDestination) { gate.hidden = false; body.hidden = true; return; }
     gate.hidden = true; body.hidden = false;
     $("#dash-name").textContent = firstName();
     $("#dash-email").textContent = (profile && profile.email) || user.email || "";
@@ -172,15 +199,76 @@
     $("#dash-admin").hidden = !(profile && profile.is_admin);
   }
   if (dash) {
-    $("#dash-signin").addEventListener("click", () => api.signIn());
-    $("#dash-signout").addEventListener("click", async () => { await api.signOut(); });
+    const signIn = $("#dash-signin");
+    const next = new URLSearchParams(location.search).get("next");
+    const returnPath = next || sessionStorage.getItem(destinationKey);
+    if (/^\/[a-z-]+-course(?:\?[^#]*)?$/.test(returnPath || "")) courseDestination = returnPath;
+    const accessMessage = $("#dash-access-message");
+    if (courseDestination) $("#dash-gate h2").textContent = "Sign in to access this course";
+
+    async function continueToCourse() {
+      if (!courseDestination || !client || !profile?.full_name?.trim() || signIn.disabled) return;
+      signIn.disabled = true;
+      accessMessage.textContent = "Opening your course…";
+      try {
+        const { data } = await client.auth.getSession();
+        if (!data.session) throw new Error("No learner session");
+        const response = await fetch("/api/course-session", {
+          method: "POST",
+          headers: { Authorization: "Bearer " + data.session.access_token },
+        });
+        if (!response.ok) throw new Error("Could not verify learner session");
+        sessionStorage.removeItem(destinationKey);
+        location.replace(courseDestination);
+      } catch {
+        accessMessage.textContent = "We couldn’t verify your sign-in. Please try again.";
+        signIn.disabled = false;
+      }
+    }
+
+    signIn.addEventListener("click", async () => {
+      await ready;
+      if (courseDestination && user) return continueToCourse();
+      return api.signIn();
+    });
+    $("#dash-name-form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (!client || !user) return;
+      const input = $("#dash-full-name");
+      const name = input.value.trim();
+      if (!name || name.length > 120) {
+        accessMessage.textContent = "Enter your full name to continue.";
+        input.focus();
+        return;
+      }
+      const submit = $("#dash-save-name");
+      submit.disabled = true;
+      try {
+        const { data, error } = await client.from("profiles").update({ full_name: name })
+          .eq("id", user.id).select("full_name,email,reminders_opt_in,is_admin").single();
+        if (error || !data) throw new Error("Name could not be saved");
+        profile = data;
+        accessMessage.textContent = "";
+        renderAll();
+        await continueToCourse();
+      } catch {
+        accessMessage.textContent = "We couldn’t save your name. Please try again.";
+      } finally {
+        submit.disabled = false;
+      }
+    });
+    ready.then(() => { if (user) continueToCourse(); });
+    $("#dash-signout").addEventListener("click", async () => {
+      try { await api.signOut(); }
+      catch { alert("We could not sign you out. Please try again."); }
+    });
     $("#dash-reminders").addEventListener("change", async (e) => {
       const box = e.target; box.disabled = true;
       const ok = await api.setReminders(box.checked); if (!ok) box.checked = !box.checked; box.disabled = false;
     });
     $("#dash-delete").addEventListener("click", async () => {
       if (!confirm("Delete your account and all saved course progress? This cannot be undone.")) return;
-      const ok = await api.deleteAccount();
+      const ok = await api.deleteAccount().catch(() => false);
       alert(ok ? "Your account and progress have been deleted." : "We could not delete the account just now. Please email hello@awwalbrands.com and we will remove it.");
     });
   }
