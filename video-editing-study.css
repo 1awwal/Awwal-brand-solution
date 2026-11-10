@@ -1,0 +1,29 @@
+
+.editing-study{padding:clamp(45px,7vw,94px) var(--gutter);max-width:1500px;scroll-margin-top:125px}
+.study-heading{display:flex;align-items:end;justify-content:space-between;flex-wrap:wrap;gap:16px 36px;margin:0 0 24px}
+.study-heading p,.study-card p,.study-card li,.study-faq p{font-size:15px;line-height:1.65;color:var(--c-muted)}
+.study-heading p{max-width:490px;margin:0}
+.study-heading .eyebrow,.study-card .eyebrow{color:var(--c-accent)}
+.study-heading h2,.study-heading h3,.study-faq h3{font-size:clamp(25px,4vw,50px);letter-spacing:-.055em;line-height:1.1;margin:10px 0 0}
+.study-subhead{margin-top:clamp(38px,6vw,70px)}
+.study-tracks,.study-editors{display:grid;gap:18px;grid-template-columns:repeat(2,minmax(0,1fr))}
+.study-editors{grid-template-columns:repeat(3,minmax(0,1fr))}
+.study-card{border:1px solid var(--c-line);border-radius:18px;background:var(--c-card);padding:clamp(18px,3vw,30px);min-width:0}
+.study-card h3,.study-card h4{font-size:clamp(20px,2.6vw,34px);letter-spacing:-.04em;margin:10px 0 12px;line-height:1.1}
+.study-card h4{font-size:clamp(18px,2vw,25px)}
+.study-card ol{padding-inline-start:22px;margin:16px 0 22px}
+.study-card li+li{margin-top:7px}
+.study-card strong{color:var(--c-fg)}
+.study-actions{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:16px}
+.study-card figure{margin:16px 0}
+.study-card figure a{display:block;background:var(--c-bg);border-radius:10px;overflow:hidden}
+.study-card img{display:block;width:100%;aspect-ratio:16/9;object-fit:contain}
+.study-card figcaption{font-size:12px;line-height:1.45;color:var(--c-muted);margin-top:8px}
+.study-faq{margin-top:clamp(38px,6vw,70px);max-width:900px}
+.study-faq h3{margin-bottom:20px}
+.study-faq details{border-top:1px solid var(--c-line);padding:14px 0}
+.study-faq details:last-child{border-bottom:1px solid var(--c-line)}
+.study-faq summary{cursor:pointer;font-weight:600;padding:4px 0}
+.study-faq p{margin:10px 0 0}
+@media(max-width:850px){.study-editors{grid-template-columns:1fr}}
+@media(max-width:690px){.study-tracks{grid-template-columns:1fr}.editing-study{scroll-margin-top:160px}}

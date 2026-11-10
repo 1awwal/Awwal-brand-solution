@@ -37,6 +37,13 @@
         "**/web-design-course.html"
       ],
       "fallthrough": true
+    },
+    {
+      "type": "Data",
+      "globs": [
+        "**/course-guides/*.pdf"
+      ],
+      "fallthrough": true
     }
   ],
   "previews": {},

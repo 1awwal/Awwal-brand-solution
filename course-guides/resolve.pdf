@@ -1,0 +1,300 @@
+%PDF-1.7
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [7 0 R 10 0 R 13 0 R 16 0 R 19 0 R 22 0 R] /Count 6 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+5 0 obj
+<< /Length 2282 >>
+stream
+.043 .063 .21 rg 0 660 595 182 re f
+1 .72 .13 rg 0 658 595 3 re f
+BT /F2 10 Tf 1 .72 .13 rg 44 797 Td (AWWAL BRANDS  /  PROFESSIONAL VIDEO EDITING) Tj ET
+BT /F2 10 Tf 1 1 1 rg 44 763 Td (TRACK 02 / EDIT TO DELIVER) Tj ET
+BT /F2 37 Tf 1 1 1 rg 44 720 Td (DaVinci Resolve) Tj ET
+BT /F2 18 Tf 1 1 1 rg 44 689 Td (01  /  Media Pool and project settings) Tj ET
+BT /F1 12 Tf .29 .34 .48 rg 44 624 Td (Establish frame rate, media locations and timeline structure.) Tj ET
+.08 .12 .37 rg 44 578 28 22 re f
+BT /F2 10 Tf 1 1 1 rg 51 585 Td (01) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 84 585 Td (Create a project and set the intended timeline frame rate before editing. Decide) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 84 569 Td (the delivery size and whether the brief is SDR or HDR.) Tj ET
+.08 .12 .37 rg 44 526 28 22 re f
+BT /F2 10 Tf 1 1 1 rg 51 533 Td (02) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 84 533 Td (Import camera files to the Media Pool and group them into bins for interview,) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 84 517 Td (B-roll, audio and graphics. Name the main timeline with a version number.) Tj ET
+.08 .12 .37 rg 44 474 28 22 re f
+BT /F2 10 Tf 1 1 1 rg 51 481 Td (03) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 84 481 Td (If needed, generate proxy media and compare playback with and without proxies.) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 84 465 Td (Keep original source folders available for the final render.) Tj ET
+.94 .95 .985 rg 44 364 507 67 re f
+1 .72 .13 rg 44 364 3 67 re f
+BT /F2 10 Tf .08 .12 .37 rg 58 414 Td (PRACTICE DEMO) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 58 395 Td (Create a 1080p practice timeline at the intended frame rate and import four clips,) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 58 379 Td (then move one clip to a different bin without changing the file on disk.) Tj ET
+BT /F2 10 Tf .08 .12 .37 rg 44 335 Td (QUICK CHECK / FAQ) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 44 315 Td (If footage is offline, check the Media Pool paths and relink before you spend time) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 44 299 Td (grading or exporting.) Tj ET
+BT /F2 10 Tf .08 .12 .37 rg 44 263 Td (Open the official illustrated reference >) Tj ET
+.83 .86 .93 rg 44 58 507 1 re f
+BT /F2 9 Tf .29 .34 .48 rg 44 35 Td (AWWAL BRANDS  /  COURSE FIELD NOTES) Tj ET
+BT /F2 9 Tf .29 .34 .48 rg 505 35 Td (01 / 06) Tj ET
+endstream
+endobj
+6 0 obj
+<< /Type /Annot /Subtype /Link /Rect [44 260 344 274] /Border [0 0 0] /A << /S /URI /URI (https://www.blackmagicdesign.com/products/davinciresolve/training) >> >>
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 5 0 R /Annots [6 0 R] >>
+endobj
+8 0 obj
+<< /Length 2308 >>
+stream
+.043 .063 .21 rg 0 660 595 182 re f
+1 .72 .13 rg 0 658 595 3 re f
+BT /F2 10 Tf 1 .72 .13 rg 44 797 Td (AWWAL BRANDS  /  PROFESSIONAL VIDEO EDITING) Tj ET
+BT /F2 10 Tf 1 1 1 rg 44 763 Td (TRACK 02 / EDIT TO DELIVER) Tj ET
+BT /F2 37 Tf 1 1 1 rg 44 720 Td (DaVinci Resolve) Tj ET
+BT /F2 18 Tf 1 1 1 rg 44 689 Td (02  /  Edit page and trimming) Tj ET
+BT /F1 12 Tf .29 .34 .48 rg 44 624 Td (Learn where edits land and which changes alter duration.) Tj ET
+.08 .12 .37 rg 44 578 28 22 re f
+BT /F2 10 Tf 1 1 1 rg 51 585 Td (01) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 84 585 Td (Load a source clip in the viewer and mark In and Out. Check video and audio) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 84 569 Td (destination tracks before inserting or overwriting.) Tj ET
+.08 .12 .37 rg 44 526 28 22 re f
+BT /F2 10 Tf 1 1 1 rg 51 533 Td (02) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 84 533 Td (On V1, build a dialogue spine. Place B-roll on V2 and watch the active audio) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 84 517 Td (routing when you patch a new shot.) Tj ET
+.08 .12 .37 rg 44 474 28 22 re f
+BT /F2 10 Tf 1 1 1 rg 51 481 Td (03) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 84 481 Td (Make one ripple trim and one roll trim. The first changes sequence duration, while) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 84 465 Td (the second shifts the cut between adjacent clips without changing the combined) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 84 449 Td (duration.) Tj ET
+.94 .95 .985 rg 44 348 507 67 re f
+1 .72 .13 rg 44 348 3 67 re f
+BT /F2 10 Tf .08 .12 .37 rg 58 398 Td (PRACTICE DEMO) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 58 379 Td (Remove three seconds of hesitation, then move a cut by five frames with a roll trim.) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 58 363 Td (Check nearby audio and total duration after each change.) Tj ET
+BT /F2 10 Tf .08 .12 .37 rg 44 319 Td (QUICK CHECK / FAQ) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 44 299 Td (If a cut lands on the wrong track, inspect track targeting and locks. Undo first, then) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 44 283 Td (repeat the edit with the correct targets.) Tj ET
+BT /F2 10 Tf .08 .12 .37 rg 44 247 Td (Open the official illustrated reference >) Tj ET
+.83 .86 .93 rg 44 58 507 1 re f
+BT /F2 9 Tf .29 .34 .48 rg 44 35 Td (AWWAL BRANDS  /  COURSE FIELD NOTES) Tj ET
+BT /F2 9 Tf .29 .34 .48 rg 505 35 Td (02 / 06) Tj ET
+endstream
+endobj
+9 0 obj
+<< /Type /Annot /Subtype /Link /Rect [44 244 344 258] /Border [0 0 0] /A << /S /URI /URI (https://www.blackmagicdesign.com/products/davinciresolve/edit) >> >>
+endobj
+10 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 8 0 R /Annots [9 0 R] >>
+endobj
+11 0 obj
+<< /Length 2197 >>
+stream
+.043 .063 .21 rg 0 660 595 182 re f
+1 .72 .13 rg 0 658 595 3 re f
+BT /F2 10 Tf 1 .72 .13 rg 44 797 Td (AWWAL BRANDS  /  PROFESSIONAL VIDEO EDITING) Tj ET
+BT /F2 10 Tf 1 1 1 rg 44 763 Td (TRACK 02 / EDIT TO DELIVER) Tj ET
+BT /F2 37 Tf 1 1 1 rg 44 720 Td (DaVinci Resolve) Tj ET
+BT /F2 18 Tf 1 1 1 rg 44 689 Td (03  /  Fairlight and captions) Tj ET
+BT /F1 12 Tf .29 .34 .48 rg 44 624 Td (Separate dialogue, ambient sound and effects.) Tj ET
+.08 .12 .37 rg 44 578 28 22 re f
+BT /F2 10 Tf 1 1 1 rg 51 585 Td (01) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 84 585 Td (Label audio tracks by purpose. Set clip gain for inconsistent recording levels,) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 84 569 Td (then use track faders to balance the mix.) Tj ET
+.08 .12 .37 rg 44 526 28 22 re f
+BT /F2 10 Tf 1 1 1 rg 51 533 Td (02) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 84 533 Td (Try subtractive EQ or gentle cleanup on one problem clip and compare with bypass.) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 84 517 Td (Use room tone and short crossfades to smooth edits.) Tj ET
+.08 .12 .37 rg 44 474 28 22 re f
+BT /F2 10 Tf 1 1 1 rg 51 481 Td (03) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 84 481 Td (Add or import subtitles. Play through the dialogue and check words, timings and) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 84 465 Td (line breaks, then choose a sidecar file or a burn-in to suit the brief.) Tj ET
+.94 .95 .985 rg 44 364 507 67 re f
+1 .72 .13 rg 44 364 3 67 re f
+BT /F2 10 Tf .08 .12 .37 rg 58 414 Td (PRACTICE DEMO) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 58 395 Td (Create a 20-second section with consistent dialogue and two clean audio cuts. Listen) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 58 379 Td (on headphones and laptop speakers.) Tj ET
+BT /F2 10 Tf .08 .12 .37 rg 44 335 Td (QUICK CHECK / FAQ) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 44 315 Td (If a track sounds silent, check mute/solo, output bus routing and the final render's) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 44 299 Td (audio settings.) Tj ET
+BT /F2 10 Tf .08 .12 .37 rg 44 263 Td (Open the official illustrated reference >) Tj ET
+.83 .86 .93 rg 44 58 507 1 re f
+BT /F2 9 Tf .29 .34 .48 rg 44 35 Td (AWWAL BRANDS  /  COURSE FIELD NOTES) Tj ET
+BT /F2 9 Tf .29 .34 .48 rg 505 35 Td (03 / 06) Tj ET
+endstream
+endobj
+12 0 obj
+<< /Type /Annot /Subtype /Link /Rect [44 260 344 274] /Border [0 0 0] /A << /S /URI /URI (https://www.blackmagicdesign.com/products/davinciresolve/training) >> >>
+endobj
+13 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 11 0 R /Annots [12 0 R] >>
+endobj
+14 0 obj
+<< /Length 2243 >>
+stream
+.043 .063 .21 rg 0 660 595 182 re f
+1 .72 .13 rg 0 658 595 3 re f
+BT /F2 10 Tf 1 .72 .13 rg 44 797 Td (AWWAL BRANDS  /  PROFESSIONAL VIDEO EDITING) Tj ET
+BT /F2 10 Tf 1 1 1 rg 44 763 Td (TRACK 02 / EDIT TO DELIVER) Tj ET
+BT /F2 37 Tf 1 1 1 rg 44 720 Td (DaVinci Resolve) Tj ET
+BT /F2 18 Tf 1 1 1 rg 44 689 Td (04  /  Color page and scopes) Tj ET
+BT /F1 12 Tf .29 .34 .48 rg 44 624 Td (Balance images in a repeatable node order.) Tj ET
+.08 .12 .37 rg 44 578 28 22 re f
+BT /F2 10 Tf 1 1 1 rg 51 585 Td (01) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 84 585 Td (Identify the camera color space and set a suitable input/output workflow. For an) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 84 569 Td (SDR web job, check that your final output is intended for SDR playback.) Tj ET
+.08 .12 .37 rg 44 526 28 22 re f
+BT /F2 10 Tf 1 1 1 rg 51 533 Td (02) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 84 533 Td (Use a first node for balancing exposure and white balance, then a separate node) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 84 517 Td (for the creative look. Compare shots with the waveform and visual references.) Tj ET
+.08 .12 .37 rg 44 474 28 22 re f
+BT /F2 10 Tf 1 1 1 rg 51 481 Td (03) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 84 481 Td (Toggle the grade to compare before and after. Check highlights and skin tones,) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 84 465 Td (then review the entire sequence for continuity.) Tj ET
+.94 .95 .985 rg 44 364 507 67 re f
+1 .72 .13 rg 44 364 3 67 re f
+BT /F2 10 Tf .08 .12 .37 rg 58 414 Td (PRACTICE DEMO) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 58 395 Td (Match two angles recorded under different lighting. Save a still of the reference) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 58 379 Td (shot and note the changes you made.) Tj ET
+BT /F2 10 Tf .08 .12 .37 rg 44 335 Td (QUICK CHECK / FAQ) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 44 315 Td (If an image looks oversaturated after a conversion, check for a doubled transform or a) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 44 299 Td (LUT applied at more than one stage.) Tj ET
+BT /F2 10 Tf .08 .12 .37 rg 44 263 Td (Open the official illustrated reference >) Tj ET
+.83 .86 .93 rg 44 58 507 1 re f
+BT /F2 9 Tf .29 .34 .48 rg 44 35 Td (AWWAL BRANDS  /  COURSE FIELD NOTES) Tj ET
+BT /F2 9 Tf .29 .34 .48 rg 505 35 Td (04 / 06) Tj ET
+endstream
+endobj
+15 0 obj
+<< /Type /Annot /Subtype /Link /Rect [44 260 344 274] /Border [0 0 0] /A << /S /URI /URI (https://www.blackmagicdesign.com/products/davinciresolve/training) >> >>
+endobj
+16 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 14 0 R /Annots [15 0 R] >>
+endobj
+17 0 obj
+<< /Length 2341 >>
+stream
+.043 .063 .21 rg 0 660 595 182 re f
+1 .72 .13 rg 0 658 595 3 re f
+BT /F2 10 Tf 1 .72 .13 rg 44 797 Td (AWWAL BRANDS  /  PROFESSIONAL VIDEO EDITING) Tj ET
+BT /F2 10 Tf 1 1 1 rg 44 763 Td (TRACK 02 / EDIT TO DELIVER) Tj ET
+BT /F2 37 Tf 1 1 1 rg 44 720 Td (DaVinci Resolve) Tj ET
+BT /F2 18 Tf 1 1 1 rg 44 689 Td (05  /  Multicam, Fusion and Deliver) Tj ET
+BT /F1 12 Tf .29 .34 .48 rg 44 624 Td (Use each page for a focused finishing task.) Tj ET
+.08 .12 .37 rg 44 578 28 22 re f
+BT /F2 10 Tf 1 1 1 rg 51 585 Td (01) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 84 585 Td (Make a two-camera multicam clip and check sync at the start and end. Switch) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 84 569 Td (pictures without changing the chosen dialogue track.) Tj ET
+.08 .12 .37 rg 44 526 28 22 re f
+BT /F2 10 Tf 1 1 1 rg 51 533 Td (02) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 84 533 Td (Use a simple Text+ title or an existing title. If you explore Fusion, learn the) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 84 517 Td (flow from an input through a tool to MediaOut before adding more nodes.) Tj ET
+.08 .12 .37 rg 44 474 28 22 re f
+BT /F2 10 Tf 1 1 1 rg 51 481 Td (03) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 84 481 Td (In Deliver, set the destination and output settings, add the job to the render) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 84 465 Td (queue, then render. Watch the exported file from disk and verify audio and) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 84 449 Td (captions.) Tj ET
+.94 .95 .985 rg 44 348 507 67 re f
+1 .72 .13 rg 44 348 3 67 re f
+BT /F2 10 Tf .08 .12 .37 rg 58 398 Td (PRACTICE DEMO) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 58 379 Td (Render a master and a review MP4, then compare both with the timeline. Deliver a) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 58 363 Td (still frame and one screenshot of your project organisation for review.) Tj ET
+BT /F2 10 Tf .08 .12 .37 rg 44 319 Td (QUICK CHECK / FAQ) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 44 299 Td (If the render is missing shots, verify the selected timeline and render range, and) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 44 283 Td (confirm that all source media are online.) Tj ET
+BT /F2 10 Tf .08 .12 .37 rg 44 247 Td (Open the official illustrated reference >) Tj ET
+.83 .86 .93 rg 44 58 507 1 re f
+BT /F2 9 Tf .29 .34 .48 rg 44 35 Td (AWWAL BRANDS  /  COURSE FIELD NOTES) Tj ET
+BT /F2 9 Tf .29 .34 .48 rg 505 35 Td (05 / 06) Tj ET
+endstream
+endobj
+18 0 obj
+<< /Type /Annot /Subtype /Link /Rect [44 244 344 258] /Border [0 0 0] /A << /S /URI /URI (https://www.blackmagicdesign.com/products/davinciresolve/edit) >> >>
+endobj
+19 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 17 0 R /Annots [18 0 R] >>
+endobj
+20 0 obj
+<< /Length 2358 >>
+stream
+.043 .063 .21 rg 0 660 595 182 re f
+1 .72 .13 rg 0 658 595 3 re f
+BT /F2 10 Tf 1 .72 .13 rg 44 797 Td (AWWAL BRANDS  /  PROFESSIONAL VIDEO EDITING) Tj ET
+BT /F2 10 Tf 1 1 1 rg 44 763 Td (TRACK 02 / EDIT TO DELIVER) Tj ET
+BT /F2 37 Tf 1 1 1 rg 44 720 Td (DaVinci Resolve) Tj ET
+BT /F2 18 Tf 1 1 1 rg 44 689 Td (06  /  Capstone and FAQ) Tj ET
+BT /F1 12 Tf .29 .34 .48 rg 44 624 Td (Finish a 45 to 60-second editorial piece.) Tj ET
+.08 .12 .37 rg 44 578 28 22 re f
+BT /F2 10 Tf 1 1 1 rg 51 585 Td (01) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 84 585 Td (Build an interview-led promo with a hook, two supporting cutaways, a lower third) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 84 569 Td (and one caption sequence.) Tj ET
+.08 .12 .37 rg 44 526 28 22 re f
+BT /F2 10 Tf 1 1 1 rg 51 533 Td (02) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 84 533 Td (Deliver a landscape master, a vertical derivative, a review MP4 and the requested) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 84 517 Td (caption format. Export a project file for handoff and provide the source media) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 84 501 Td (separately.) Tj ET
+.08 .12 .37 rg 44 458 28 22 re f
+BT /F2 10 Tf 1 1 1 rg 51 465 Td (03) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 84 465 Td (Reopen the project on a new location or test account where possible. Check media) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 84 449 Td (links, duration, audio channels and the first and last frames.) Tj ET
+.94 .95 .985 rg 44 348 507 67 re f
+1 .72 .13 rg 44 348 3 67 re f
+BT /F2 10 Tf .08 .12 .37 rg 58 398 Td (PRACTICE DEMO) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 58 379 Td (Score yourself out of 10: story 3, picture consistency 2, sound 2, delivery QC 2,) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 58 363 Td (clean archive 1.) Tj ET
+BT /F2 10 Tf .08 .12 .37 rg 44 319 Td (QUICK CHECK / FAQ) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 44 299 Td (Why can't I hear the output? Check the Fairlight bus, muted tracks and Deliver audio) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 44 283 Td (options. Why does a feature look different? Check your app version, OS, and Free or) Tj ET
+BT /F1 11 Tf .14 .19 .34 rg 44 267 Td (Studio edition.) Tj ET
+BT /F2 10 Tf .08 .12 .37 rg 44 231 Td (Open the official illustrated reference >) Tj ET
+.83 .86 .93 rg 44 58 507 1 re f
+BT /F2 9 Tf .29 .34 .48 rg 44 35 Td (AWWAL BRANDS  /  COURSE FIELD NOTES) Tj ET
+BT /F2 9 Tf .29 .34 .48 rg 505 35 Td (06 / 06) Tj ET
+endstream
+endobj
+21 0 obj
+<< /Type /Annot /Subtype /Link /Rect [44 228 344 242] /Border [0 0 0] /A << /S /URI /URI (https://www.blackmagicdesign.com/products/davinciresolve/training) >> >>
+endobj
+22 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 20 0 R /Annots [21 0 R] >>
+endobj
+xref
+0 23
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000156 00000 n 
+0000000226 00000 n 
+0000000301 00000 n 
+0000002635 00000 n 
+0000002813 00000 n 
+0000002965 00000 n 
+0000005325 00000 n 
+0000005499 00000 n 
+0000005652 00000 n 
+0000007902 00000 n 
+0000008081 00000 n 
+0000008236 00000 n 
+0000010532 00000 n 
+0000010711 00000 n 
+0000010866 00000 n 
+0000013260 00000 n 
+0000013435 00000 n 
+0000013590 00000 n 
+0000016001 00000 n 
+0000016180 00000 n 
+trailer
+<< /Size 23 /Root 1 0 R >>
+startxref
+16335
+%%EOF

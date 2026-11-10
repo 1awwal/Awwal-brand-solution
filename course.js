@@ -131,7 +131,13 @@
     if (b.checked) state.done[b.dataset.lesson] = 1; else delete state.done[b.dataset.lesson];
     save(); render();
   }));
-  $$("[data-track-btn]").forEach((b) => b.addEventListener("click", () => { state.track = b.dataset.trackBtn; save(); render(); }));
+  function selectTrack(track) {
+    state.track = track;
+    save();
+    render();
+  }
+  $("[data-track-btn]").forEach((button) => button.addEventListener("click", () => selectTrack(button.dataset.trackBtn)));
+  $("[data-study-track]").forEach((link) => link.addEventListener("click", () => selectTrack(link.dataset.studyTrack)));
 
   // Click-to-load YouTube embeds (privacy-enhanced mode; nothing loads until asked).
   document.addEventListener("click", (e) => {

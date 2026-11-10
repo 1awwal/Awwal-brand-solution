@@ -275,3 +275,8 @@ html[data-theme="light"] .account-chip{border-color:rgba(9,21,79,.35)}
 .course-registration input::placeholder{color:var(--c-muted)}
 #dash-access-message:empty{display:none}
 #dash-access-message{margin:14px 0 0}
+
+.dash-learning-actions{margin:0 0 28px}
+.dash-settings{scroll-margin-top:125px}
+.dash-settings p{color:var(--c-muted);font-size:14px;line-height:1.6}
+.dash-settings strong{margin-left:8px;color:var(--c-fg)}
