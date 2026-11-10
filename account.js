@@ -69,6 +69,7 @@
       await ready;
       if (!client) { alert("Sign-in is unavailable right now. Please try again in a moment."); return; }
       if (courseDestination) sessionStorage.setItem(destinationKey, courseDestination);
+      sessionStorage.setItem("awwal-after-login", "/profile");
       const { error } = await client.auth.signInWithOAuth({ provider: "google", options: { redirectTo: location.origin + (location.pathname === "/signup" ? "/my-courses" : location.pathname) } });
       if (error) alert("Google sign-in is not available yet. Your progress is still saved on this device.");
     },
@@ -134,7 +135,6 @@
   if (actions) {
     chip = el("a", { class: "account-chip", href: "/my-courses" }, "Sign in");
     actions.insertBefore(chip, actions.firstChild);
-    chip.addEventListener("click", (e) => { if (!user) { e.preventDefault(); api.signIn(); } });
   }
 
   // ---------- strip on course pages ----------
@@ -195,6 +195,9 @@
     gate.hidden = true; body.hidden = false;
     $("#dash-name").textContent = registration.name.trim().split(/\s+/)[0];
     $("#dash-certificate-name").textContent = registration.name;
+    if ($("#profile-name")) $("#profile-name").textContent = registration.name;
+    if ($("#profile-phone")) $("#profile-phone").textContent = registration.phone || "";
+    if ($("#profile-email")) $("#profile-email").textContent = user.email || "";
     $("#dash-email").textContent = (profile && profile.email) || user.email || "";
     const reminders = $("#dash-reminders");
     reminders.checked = !!(profile && profile.reminders_opt_in);
@@ -259,7 +262,11 @@
         if (courseDestination) {
           sessionStorage.removeItem(destinationKey);
           location.replace(courseDestination);
+        } else if (sessionStorage.getItem("awwal-after-login") === "/profile" && location.pathname !== "/profile") {
+          sessionStorage.removeItem("awwal-after-login");
+          location.replace("/profile");
         } else {
+          sessionStorage.removeItem("awwal-after-login");
           renderDash();
         }
       } catch (error) {
@@ -348,7 +355,7 @@
   if (admin) $("#admin-signin").addEventListener("click", () => api.signIn());
 
   function renderAll() {
-    if (chip) { chip.textContent = user ? firstName() : "Sign in"; chip.classList.toggle("is-in", !!user); chip.setAttribute("title", user ? "My courses" : "Sign in with Google"); }
+    if (chip) { chip.href = user ? "/profile" : "/my-courses"; chip.textContent = user ? firstName() : "Sign in"; chip.classList.toggle("is-in", !!user); chip.setAttribute("title", user ? "My courses" : "Sign in with Google"); }
     renderStrip(); renderDash(); renderAdmin();
   }
   api.onChange(renderAll);
