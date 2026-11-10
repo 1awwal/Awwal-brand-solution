@@ -78,8 +78,14 @@
       await clearCourseSession();
       sessionStorage.removeItem(signupKey);
       pendingRegistration = null;
-      const { error } = await client.auth.signOut();
-      if (error) throw error;
+      const { error } = await client.auth.signOut({ scope: "local" });
+      if (error) {
+        localStorage.removeItem("sb-sfaejrunzvsgmovqkrnm-auth-token");
+        localStorage.removeItem("sb-sfaejrunzvsgmovqkrnm-auth-token-code-verifier");
+      }
+      user = null;
+      profile = null;
+      notify();
     },
     async loadProgress(courseKey) {
       if (!client || !user) return null;
@@ -244,6 +250,11 @@
           method: "POST", headers, body: details ? JSON.stringify(details) : undefined,
         });
         const result = await response.json().catch(() => ({}));
+        if (response.status === 401) {
+          await api.signOut();
+          location.replace("/my-courses");
+          return;
+        }
         if (result.registrationRequired) {
           registrationRequired = true;
           accessMessage.textContent = "";
@@ -359,4 +370,5 @@
     renderStrip(); renderDash(); renderAdmin();
   }
   api.onChange(renderAll);
+  ready.then(renderAll);
 })();
