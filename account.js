@@ -62,6 +62,16 @@
 
   const api = {
     ready,
+    async refreshCourseSession() {
+      await ready;
+      if (!client || !user) return false;
+      const { data } = await client.auth.getSession();
+      if (!data.session) return false;
+      const response = await fetch('/api/course-session', {
+        method: 'POST', headers: { Authorization: 'Bearer ' + data.session.access_token },
+      });
+      return response.ok;
+    },
     get user() { return user; },
     get profile() { return profile; },
     onChange(fn) { listeners.push(fn); },

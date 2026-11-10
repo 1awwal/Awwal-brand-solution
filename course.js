@@ -84,9 +84,13 @@
   form.after(certMessage);
 
   async function assessmentApi(input) {
-    const response = await fetch("/api/course-assessments", input ? {
+    const options = input ? {
       method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(input),
-    } : { cache: "no-store" });
+    } : { cache: "no-store" };
+    let response = await fetch("/api/course-assessments", options);
+    if (response.status === 401 && account?.refreshCourseSession && await account.refreshCourseSession()) {
+      response = await fetch("/api/course-assessments", options);
+    }
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || "Could not load course assessments. Please try again.");
     return data;
