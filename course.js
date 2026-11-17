@@ -185,7 +185,7 @@
   };
   const counts = (root) => {
     const req = $$("input[data-lesson]", root).filter((b) => { const l = b.closest(".lesson"); return !l || inTrack(l); });
-    const quizzes = isVideo ? [] : $("form.module-quiz[data-quiz]", root);
+    const quizzes = isVideo ? [] : $$("form.module-quiz[data-quiz]", root);
     const passed = quizzes.filter(form => Object.hasOwn(quizPassed || {}, form.dataset.quiz)).length;
     return { total: req.length + quizzes.length, done: req.filter(b => b.checked).length + passed };
   };
