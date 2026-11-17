@@ -28,10 +28,10 @@ function fakeDb() {
 }
 const call = (db, method, course, body) => quizResponse({ method }, new URL('https://awwalbrands.com/api/course-quizzes?course=' + course), db, { id: 'u1' }, async () => body, json);
 
-test('every course has six module quizzes with valid answer keys', () => {
-  for (const course of ['capcut', 'ai-design', 'claude-video']) {
+test('every course has all expected module quizzes with valid answer keys', () => {
+  for (const [course, expected] of Object.entries({ capcut: 6, 'ai-design': 6, 'claude-video': 6, 'obs-livestream': 3, 'podcast-production': 3, 'youtube-operations': 3 })) {
     const ids = courseQuizIds(course);
-    assert.equal(ids.length, 6, course);
+    assert.equal(ids.length, expected, course);
     for (const id of ids) {
       const quiz = quizzes[id];
       assert.equal(quiz.need, quiz.questions.length - 1);

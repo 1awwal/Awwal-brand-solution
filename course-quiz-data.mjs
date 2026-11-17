@@ -845,5 +845,383 @@ export const quizzes = {
     "answer": 1
    }
   ]
- }
+ },
+  "obs-livestream:l1m1q": {
+    "course": "obs-livestream",
+    "need": 3,
+    "questions": [
+      {
+        "prompt": "What should establish the intended signal path?",
+        "options": [
+          "A camera, audio and destination diagram",
+          "A list of title fonts",
+          "A scene transition preset"
+        ],
+        "answer": 0
+      },
+      {
+        "prompt": "How should you reuse one camera across scenes?",
+        "options": [
+          "Add a new capture device entry in each scene",
+          "Reference the existing source",
+          "Capture the OBS preview window"
+        ],
+        "answer": 1
+      },
+      {
+        "prompt": "What should you do after hearing doubled speech?",
+        "options": [
+          "Raise both faders",
+          "Add reverb to the master",
+          "Check for duplicate active audio paths"
+        ],
+        "answer": 2
+      },
+      {
+        "prompt": "What is the practical purpose of headroom?",
+        "options": [
+          "Leave room for louder peaks without clipping",
+          "Make every speaker as loud as possible",
+          "Increase image sharpness"
+        ],
+        "answer": 0
+      }
+    ]
+  },
+  "obs-livestream:l2m1q": {
+    "course": "obs-livestream",
+    "need": 3,
+    "questions": [
+      {
+        "prompt": "Which feed confirms what viewers receive?",
+        "options": [
+          "Only the camera viewfinder",
+          "The destination return feed on a separate device",
+          "The scene list"
+        ],
+        "answer": 1
+      },
+      {
+        "prompt": "What protects the handover if the stream drops?",
+        "options": [
+          "A second title graphic",
+          "A private thumbnail",
+          "An independent local recording"
+        ],
+        "answer": 2
+      },
+      {
+        "prompt": "Which metric helps diagnose an unstable connection?",
+        "options": [
+          "Network dropped frames during the test",
+          "Number of scene names",
+          "Size of the thumbnail file"
+        ],
+        "answer": 0
+      },
+      {
+        "prompt": "What should the switcher take during a source outage?",
+        "options": [
+          "The source properties dialog",
+          "The rehearsed holding scene",
+          "An empty scene"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  "obs-livestream:l3m1q": {
+    "course": "obs-livestream",
+    "need": 3,
+    "questions": [
+      {
+        "prompt": "Who should confirm the audience feed after recovery?",
+        "options": [
+          "Only the camera operator",
+          "No one until the event ends",
+          "The assigned destination monitor"
+        ],
+        "answer": 2
+      },
+      {
+        "prompt": "What belongs in the incident log?",
+        "options": [
+          "Time, symptoms, action and recovery outcome",
+          "Only the file size",
+          "Only the scene theme"
+        ],
+        "answer": 0
+      },
+      {
+        "prompt": "What should happen before deleting source recordings?",
+        "options": [
+          "Rename the holding scene",
+          "Verify the delivered files and backup copies",
+          "Turn off audio meters"
+        ],
+        "answer": 1
+      },
+      {
+        "prompt": "What should the run of show assign to each cue?",
+        "options": [
+          "A different canvas size",
+          "A separate account password",
+          "A trigger and a responsible person"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  "podcast-production:l1m1q": {
+    "course": "podcast-production",
+    "need": 3,
+    "questions": [
+      {
+        "prompt": "What helps preserve editing control over two speakers?",
+        "options": [
+          "An isolated track per speaker",
+          "A single track with both voices flattened",
+          "An extra cover image"
+        ],
+        "answer": 0
+      },
+      {
+        "prompt": "Why record room tone?",
+        "options": [
+          "To raise the sample rate",
+          "To fill small edit gaps with matching ambience",
+          "To synchronize the camera"
+        ],
+        "answer": 1
+      },
+      {
+        "prompt": "What makes a clap useful?",
+        "options": [
+          "It removes reverb",
+          "It prevents all drift",
+          "It creates a visible sync transient"
+        ],
+        "answer": 2
+      },
+      {
+        "prompt": "What should you adjust first for a distant voice in a reflective room?",
+        "options": [
+          "Mic placement and speaker distance",
+          "Export filename",
+          "Cover artwork"
+        ],
+        "answer": 0
+      }
+    ]
+  },
+  "podcast-production:l2m1q": {
+    "course": "podcast-production",
+    "need": 3,
+    "questions": [
+      {
+        "prompt": "What reduces clicks at dialogue edit points?",
+        "options": [
+          "A brighter thumbnail",
+          "Short crossfades",
+          "Stereo widening"
+        ],
+        "answer": 1
+      },
+      {
+        "prompt": "What is a useful first step for a single quiet phrase?",
+        "options": [
+          "Compress the whole episode heavily",
+          "Increase the final sample rate",
+          "Adjust clip gain on the phrase"
+        ],
+        "answer": 2
+      },
+      {
+        "prompt": "How should you compare cleanup to the original?",
+        "options": [
+          "At similar playback loudness",
+          "With the cleaned version much louder",
+          "By file size alone"
+        ],
+        "answer": 0
+      },
+      {
+        "prompt": "What should you preserve when shortening an answer?",
+        "options": [
+          "Every filler word",
+          "Its intended meaning and natural phrasing",
+          "The longest possible silence"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  "podcast-production:l3m1q": {
+    "course": "podcast-production",
+    "need": 3,
+    "questions": [
+      {
+        "prompt": "Which file should you keep for future re-exports?",
+        "options": [
+          "A low-rate copy of the teaser",
+          "The artwork preview",
+          "The lossless master"
+        ],
+        "answer": 2
+      },
+      {
+        "prompt": "What makes an excerpt suitable for a teaser?",
+        "options": [
+          "A complete idea that makes sense on its own",
+          "A cut immediately before the key point",
+          "The longest uninterrupted silence"
+        ],
+        "answer": 0
+      },
+      {
+        "prompt": "Which file should the final QC listen to?",
+        "options": [
+          "Only the timeline preview",
+          "The actual exported delivery file",
+          "Only an older rough cut"
+        ],
+        "answer": 1
+      },
+      {
+        "prompt": "What should you verify in teaser captions?",
+        "options": [
+          "Only the font size",
+          "Only the export resolution",
+          "Wording, timing and names"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  "youtube-operations:l1m1q": {
+    "course": "youtube-operations",
+    "need": 3,
+    "questions": [
+      {
+        "prompt": "What should the release brief start with?",
+        "options": [
+          "A specific viewer problem and outcome",
+          "A fixed list of unrelated trending tags",
+          "The longest possible title"
+        ],
+        "answer": 0
+      },
+      {
+        "prompt": "Why preview the thumbnail at phone size?",
+        "options": [
+          "To increase the runtime",
+          "To check that the subject and text remain legible",
+          "To change upload visibility"
+        ],
+        "answer": 1
+      },
+      {
+        "prompt": "What should the title and thumbnail promise?",
+        "options": [
+          "The most popular unrelated topic",
+          "A result absent from the footage",
+          "An outcome the video actually delivers"
+        ],
+        "answer": 2
+      },
+      {
+        "prompt": "What belongs at the start of the description?",
+        "options": [
+          "A plain summary of what the viewer will get",
+          "A long unrelated tag list",
+          "An incomplete draft note"
+        ],
+        "answer": 0
+      }
+    ]
+  },
+  "youtube-operations:l2m1q": {
+    "course": "youtube-operations",
+    "need": 3,
+    "questions": [
+      {
+        "prompt": "What should the reviewer watch before release?",
+        "options": [
+          "Only the editing timeline",
+          "The processed upload on a second device",
+          "Only the exported thumbnail"
+        ],
+        "answer": 1
+      },
+      {
+        "prompt": "What should you confirm before scheduling across teams?",
+        "options": [
+          "How many tracks the editor used",
+          "The length of the project folder name",
+          "The release time zone"
+        ],
+        "answer": 2
+      },
+      {
+        "prompt": "What makes a pinned comment useful?",
+        "options": [
+          "A relevant next step or question",
+          "A duplicate of the complete transcript",
+          "A link unrelated to the release"
+        ],
+        "answer": 0
+      },
+      {
+        "prompt": "What should happen when a description link is broken?",
+        "options": [
+          "Publish and hope it redirects",
+          "Correct it and check it again before launch",
+          "Remove all descriptions from the channel"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  "youtube-operations:l3m1q": {
+    "course": "youtube-operations",
+    "need": 3,
+    "questions": [
+      {
+        "prompt": "What can high clicks and an early retention drop suggest?",
+        "options": [
+          "The captions are necessarily broken",
+          "The upload has no viewers",
+          "The opening may not deliver the packaging promise"
+        ],
+        "answer": 2
+      },
+      {
+        "prompt": "What makes comparisons more informative?",
+        "options": [
+          "Similar traffic sources and comparison windows",
+          "Unrelated video lengths and audiences",
+          "Ignoring impressions"
+        ],
+        "answer": 0
+      },
+      {
+        "prompt": "What should a simple editorial test change?",
+        "options": [
+          "The title, intro, topic and schedule all at once",
+          "One primary variable where possible",
+          "Only the report color"
+        ],
+        "answer": 1
+      },
+      {
+        "prompt": "What belongs in an experiment report?",
+        "options": [
+          "Only the publishing date",
+          "Only the editor’s name",
+          "Hypothesis, baseline, window and result"
+        ],
+        "answer": 2
+      }
+    ]
+  }
 };

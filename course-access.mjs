@@ -9,6 +9,9 @@ import page8 from './web-design-course.html';
 import page9 from './capcut-course.html';
 import page10 from './ai-design-course.html';
 import page11 from './claude-video-editing-course.html';
+import page12 from './obs-livestream-course.html';
+import page13 from './podcast-production-course.html';
+import page14 from './youtube-operations-course.html';
 
 import finalCutGuide from './course-guides/fcp.pdf';
 import resolveGuide from './course-guides/resolve.pdf';
@@ -34,6 +37,9 @@ const pages = new Map([
   ['/capcut-course', page9],
   ['/ai-design-course', page10],
   ['/claude-video-editing-course', page11],
+  ['/obs-livestream-course', page12],
+  ['/podcast-production-course', page13],
+  ['/youtube-operations-course', page14],
 ]);
 
 const supabaseUrl = 'https://sfaejrunzvsgmovqkrnm.supabase.co';
@@ -196,7 +202,7 @@ function personalizeCourse(page, name) {
       'Your registered name is used on every certificate and cannot be changed.')
     .replace('courses.css?v=20261113', 'courses.css?v=course-notes-1')
     .replace('account.js?v=20261113', 'account.js?v=module-quizzes-1')
-    .replace('course.js?v=20261113', 'course.js?v=course-notes-1');
+    .replace('course.js?v=20261113', 'course.js?v=course-quiz-progress-2');
 }
 
 export async function coursePage(request, url, db) {
