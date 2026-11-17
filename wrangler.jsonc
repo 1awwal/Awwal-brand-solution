@@ -23,7 +23,10 @@
       "/web-design-course",
       "/capcut-course",
       "/ai-design-course",
-      "/claude-video-editing-course"
+      "/claude-video-editing-course",
+      "/obs-livestream-course",
+      "/podcast-production-course",
+      "/youtube-operations-course"
     ]
   },
   "rules": [
@@ -40,7 +43,10 @@
         "**/web-design-course.html",
         "**/capcut-course.html",
         "**/ai-design-course.html",
-        "**/claude-video-editing-course.html"
+        "**/claude-video-editing-course.html",
+        "**/obs-livestream-course.html",
+        "**/podcast-production-course.html",
+        "**/youtube-operations-course.html"
       ],
       "fallthrough": true
     },

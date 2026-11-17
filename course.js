@@ -185,7 +185,9 @@
   };
   const counts = (root) => {
     const req = $$("input[data-lesson]", root).filter((b) => { const l = b.closest(".lesson"); return !l || inTrack(l); });
-    return { total: req.length, done: req.filter((b) => b.checked).length };
+    const quizzes = isVideo ? [] : $$("form.module-quiz[data-quiz]", root);
+    const passed = quizzes.filter(form => Object.hasOwn(quizPassed || {}, form.dataset.quiz)).length;
+    return { total: req.length + quizzes.length, done: req.filter(b => b.checked).length + passed };
   };
 
   // Module quizzes on the newer courses: the server sends the questions and marks them; a pass counts like a session.
@@ -268,17 +270,17 @@
       const done = visible.filter((l) => l.classList.contains("is-done")).length;
       m.hidden = visible.length === 0;
       const quiz = $("form.module-quiz[data-quiz]", m);
-      const quizOk = !quiz || !!state.done[quiz.dataset.quiz];
+      const quizOk = !quiz || Object.hasOwn(quizPassed || {}, quiz.dataset.quiz);
       m.classList.toggle("is-done", visible.length > 0 && done === visible.length && quizOk);
       const c = $("[data-module-count]", m);
       if (c) c.textContent = `${done}/${visible.length} sessions` + (quiz ? (quizOk ? " · quiz passed" : " · quiz to do") : "");
     });
     quizForms.forEach((f) => {
-      const passed = !!state.done[f.dataset.quiz];
+      const passed = Object.hasOwn(quizPassed || {}, f.dataset.quiz);
       f.classList.toggle("is-passed", passed);
       const button = $("button[type='submit']", f), out = $(".quiz-result", f);
       if (quizPassed) button.disabled = passed || !$("fieldset", f);
-      if (passed && !out.textContent) out.textContent = `Passed · ${quizPassed?.[f.dataset.quiz] ?? 100}%. Module quiz completed.`;
+      if (passed && !out.textContent) out.textContent = `Passed · ${quizPassed[f.dataset.quiz]}%. Module quiz completed.`;
     });
 
     earned = 0; let chain = true;
